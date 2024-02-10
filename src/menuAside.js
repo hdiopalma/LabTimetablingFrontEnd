@@ -20,6 +20,11 @@ export default [
     label: 'Dashboard'
   },
   {
+    to: '/labs',
+    label: 'Labs',
+    icon: mdiViewList
+  },
+  {
     to: '/tables',
     label: 'Tables',
     icon: mdiTable

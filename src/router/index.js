@@ -23,6 +23,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Labs'
+    },
+    path: '/labs',
+    name: 'labs',
+    component: () => import('@/views/Lab/IndexLab.vue')
+  },
+  {
+    meta: {
       title: 'Tables'
     },
     path: '/tables',

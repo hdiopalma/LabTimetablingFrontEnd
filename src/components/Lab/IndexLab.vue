@@ -1,23 +1,27 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useMainStore } from '@/stores/main'
+import { computed, ref, onMounted, defineProps } from 'vue'
+import { useLabStore } from '@/stores/lab'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import UserAvatar from '@/components/UserAvatar.vue'
 
 defineProps({
   checkable: Boolean
 })
 
-const mainStore = useMainStore()
+const labStore = useLabStore()
+
+const items = ref([])
+onMounted(async () => {
+  await labStore.fetchLabs()
+  items.value = labStore.items
+  // console.log("From IndexLab.vue: ", items.value)
+})
 
 // const items = computed(() => mainStore.clients)
-
-
 
 const isModalActive = ref(false)
 
@@ -29,23 +33,23 @@ const currentPage = ref(0)
 
 const checkedRows = ref([])
 
-const itemsPaginated = computed(() =>
-  items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
-)
+// const itemsPaginated = computed(() =>
+//   items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
+// )
 
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
+// const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
 
-const currentPageHuman = computed(() => currentPage.value + 1)
+// const currentPageHuman = computed(() => currentPage.value + 1)
 
-const pagesList = computed(() => {
-  const pagesList = []
+// const pagesList = computed(() => {
+//   const pagesList = []
 
-  for (let i = 0; i < numPages.value; i++) {
-    pagesList.push(i)
-  }
+//   for (let i = 0; i < numPages.value; i++) {
+//     pagesList.push(i)
+//   }
 
-  return pagesList
-})
+//   return pagesList
+// })
 
 const remove = (arr, cb) => {
   const newArr = []
@@ -59,11 +63,11 @@ const remove = (arr, cb) => {
   return newArr
 }
 
-const checked = (isChecked, client) => {
+const checked = (isChecked, lab) => {
   if (isChecked) {
-    checkedRows.value.push(client)
+    checkedRows.value.push(lab)
   } else {
-    checkedRows.value = remove(checkedRows.value, (row) => row.id === client.id)
+    checkedRows.value = remove(checkedRows.value, (row) => lab.id === lab.id)
   }
 }
 </script>
@@ -83,39 +87,19 @@ const checked = (isChecked, client) => {
     <thead>
       <tr>
         <th v-if="checkable" />
-        <th />
+        <th>URL</th>
         <th>Name</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>Progress</th>
-        <th>Created</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
-        <TableCheckboxCell v-if="checkable" @checked="checked($event, client)" />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar :username="client.name" class="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+      <tr v-for="lab in items" :key="lab.id">
+        <TableCheckboxCell v-if="checkable" @checked="checked($event, lab)" />
+        <td data-label="URL">
+          {{ lab.url }}
         </td>
         <td data-label="Name">
-          {{ client.name }}
-        </td>
-        <td data-label="Company">
-          {{ client.company }}
-        </td>
-        <td data-label="City">
-          {{ client.city }}
-        </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress class="flex w-2/5 self-center lg:w-full" max="100" :value="client.progress">
-            {{ client.progress }}
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small class="text-gray-500 dark:text-slate-400" :title="client.created">{{
-            client.created
-          }}</small>
+          {{ lab.name }}
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
@@ -131,7 +115,7 @@ const checked = (isChecked, client) => {
       </tr>
     </tbody>
   </table>
-  <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+  <!-- <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
     <BaseLevel>
       <BaseButtons>
         <BaseButton
@@ -146,5 +130,5 @@ const checked = (isChecked, client) => {
       </BaseButtons>
       <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
-  </div>
+  </div> -->
 </template>
