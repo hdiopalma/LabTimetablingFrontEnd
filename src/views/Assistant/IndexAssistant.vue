@@ -2,7 +2,7 @@
 import { mdiMonitorCellphone, mdiTableBorder, mdiTableOff, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import NotificationBar from '@/components/NotificationBar.vue'
-import TableLab from '@/components/Lab/Table.vue'
+import TableAssistant from '@/components/Assistant/Table.vue'
 import CardBox from '@/components/CardBox.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
@@ -26,7 +26,7 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
       </SectionTitleLineWithButton>
 
       <CardBox class="mb-6" has-table>
-        <TableLab checkable />
+        <TableAssistant checkable />
       </CardBox>
     </SectionMain>
   </LayoutAuthenticated>

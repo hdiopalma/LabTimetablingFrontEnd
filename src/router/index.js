@@ -31,6 +31,14 @@ const routes = [
   },
   {
     meta: {
+      title: 'Assistants'
+    },
+    path: '/assistants',
+    name: 'assistants',
+    component: () => import('@/views/Assistant/IndexAssistant.vue')
+  },
+  {
+    meta: {
       title: 'Tables'
     },
     path: '/tables',

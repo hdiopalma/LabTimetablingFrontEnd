@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const apiUrl = 'http://127.0.0.1:8000/data/lab';
+const apiUrl = 'http://127.0.0.1:8000/data/assistant';
 
-export const useLabStore = defineStore('lab', {
+export const useAssistantStore = defineStore('assistant', {
     state: () => ({
         items: [],
     }),
@@ -13,7 +13,7 @@ export const useLabStore = defineStore('lab', {
             this.items = items;
         },
 
-        async fetchLabs() {
+        async fetchAssistants() {
             try {
                 const response = await axios.get(apiUrl);
                 this.setItems(response.data);
@@ -21,7 +21,7 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error fetching items:', error);
             }
         },
-        async addLab(lab) {
+        async addAssistant(lab) {
             try {
                 const response = await axios.post(apiUrl, lab);
                 this.items.push(response.data);
@@ -29,7 +29,7 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error adding lab:', error);
             }
         },
-        async updateLab(lab) {
+        async updateAssistant(lab) {
             try {
                 const response = await axios.put(`${apiUrl}/${lab.id}`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
@@ -38,7 +38,7 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error updating lab:', error);
             }
         },
-        async deleteLab(id) {
+        async deleteAssistant(id) {
             try {
                 await axios.delete(`${apiUrl}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
@@ -46,7 +46,7 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error deleting lab:', error);
             }
         },
-        async fetchLab(id) {
+        async fetchAssistant(id) {
             try {
                 const response = await axios.get(`${apiUrl}/${id}`);
                 return response.data;

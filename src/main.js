@@ -4,6 +4,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
+import { useAssistantStore } from './stores/assistant'
+import { useLabStore } from './stores/lab'
 
 import './css/main.css'
 
@@ -15,10 +17,15 @@ createApp(App).use(router).use(pinia).mount('#app')
 
 // Init main store
 const mainStore = useMainStore(pinia)
+const assistantStore = useAssistantStore(pinia)
+const labStore = useLabStore(pinia)
 
 // Fetch sample data
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
+
+
+
 
 // Dark mode
 // Uncomment, if you'd like to restore persisted darkMode setting, or use `prefers-color-scheme: dark`. Make sure to uncomment localStorage block in src/stores/darkMode.js

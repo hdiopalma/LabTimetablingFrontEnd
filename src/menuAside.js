@@ -25,6 +25,11 @@ export default [
     icon: mdiViewList
   },
   {
+    to: '/assistants',
+    label: 'Assistants',
+    icon: mdiViewList
+  },
+  {
     to: '/tables',
     label: 'Tables',
     icon: mdiTable
