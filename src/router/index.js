@@ -21,13 +21,32 @@ const routes = [
     name: 'dashboard',
     component: Home
   },
+
+  {
+    meta: {
+      title: 'Semesters'
+    },
+    path: '/semesters',
+    name: 'semesters',
+    component: () => import('@/views/Semester/Index.vue')
+  },
+
+  {
+    meta: {
+      title: 'Input Semester'
+    },
+    path: '/semesters/input',
+    name: 'inputSemester',
+    component: () => import('@/views/Semester/Input.vue')
+  },
+
   {
     meta: {
       title: 'Labs'
     },
     path: '/labs',
     name: 'labs',
-    component: () => import('@/views/Lab/IndexLab.vue')
+    component: () => import('@/views/Lab/Index.vue')
   },
   {
     meta: {
@@ -35,8 +54,46 @@ const routes = [
     },
     path: '/assistants',
     name: 'assistants',
-    component: () => import('@/views/Assistant/IndexAssistant.vue')
+    component: () => import('@/views/Assistant/Index.vue')
   },
+
+  {
+    meta: {
+      title: 'Participants'
+    },
+    path: '/participants',
+    name: 'participants',
+    component: () => import('@/views/Participant/Index.vue')
+  },
+
+  {
+    meta: {
+      title: 'Modules'
+    },
+    path: '/modules',
+    name: 'modules',
+    component: () => import('@/views/Module/Index.vue')
+  },
+
+  {
+    meta: {
+      title: 'Chapters'
+    },
+    path: '/chapters',
+    name: 'chapters',
+    component: () => import('@/views/Chapter/Index.vue')
+  },
+
+  {
+    meta: {
+      title: 'Groups'
+    },
+    path: '/groups',
+    name: 'groups',
+    component: () => import('@/views/Group/Index.vue')
+  },
+
+
   {
     meta: {
       title: 'Tables'

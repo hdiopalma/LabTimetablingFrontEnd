@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted, defineProps } from 'vue'
-import { useAssistantStore } from '@/stores/assistant'
+import { useSemesterStore } from '@/stores/semester'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
@@ -9,15 +9,18 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 
 defineProps({
-    checkable: Boolean
+    checkable: Boolean,
+    all: Boolean,
+    group: String,
+    semester: String
 })
 
-const assistantStore = useAssistantStore()
+const semesterStore = useSemesterStore()
 
 const items = ref([])
 onMounted(async () => {
-    await assistantStore.fetchAssistants()
-    items.value = assistantStore.items
+    await semesterStore.fetchSemesters()
+    items.value = semesterStore.items
 })
 
 // const items = computed(() => mainStore.clients)
@@ -26,7 +29,7 @@ const isModalActive = ref(false)
 
 const isModalDangerActive = ref(false)
 
-const perPage = ref(5)
+const perPage = ref(10)
 
 const currentPage = ref(0)
 
@@ -62,11 +65,11 @@ const remove = (arr, cb) => {
     return newArr
 }
 
-const checked = (isChecked, assistant) => {
+const checked = (isChecked, semester) => {
     if (isChecked) {
-        checkedRows.value.push(assistant)
+        checkedRows.value.push(semester)
     } else {
-        checkedRows.value = remove(checkedRows.value, (row) => assistant.id === assistant.id)
+        checkedRows.value = remove(checkedRows.value, (row) => semester.id === semester.id)
     }
 }
 </script>
@@ -87,26 +90,18 @@ const checked = (isChecked, assistant) => {
             <tr>
                 <th v-if="checkable" />
                 <th>Name</th>
-                <th>NIM</th>
-                <th>Assistant</th>
-                <th>Semester</th>
+                <th>URL</th>
                 <th />
             </tr>
         </thead>
         <tbody>
-            <tr v-for="assistant in itemsPaginated" :key="assistant.id">
-                <TableCheckboxCell v-if="checkable" @checked="checked($event, assistant)" />
+            <tr v-for="semester in itemsPaginated" :key="semester.id">
+                <TableCheckboxCell v-if="checkable" @checked="checked($event, semester)" />
                 <td data-label="Name">
-                    {{ assistant.name }}
+                    {{ semester.name }}
                 </td>
-                <td data-label="NIM">
-                    {{ assistant.nim }}
-                </td>
-                <td data-label="Assistant">
-                    {{ assistant.laboratory.name }}
-                </td>
-                <td data-label="Semester">
-                    {{ assistant.semester.name }}
+                <td data-label="URL">
+                    {{ semester.url }}
                 </td>
                 <td class="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-end" no-wrap>
