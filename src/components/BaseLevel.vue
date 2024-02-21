@@ -17,7 +17,7 @@ export default defineComponent({
 
     const parentBaseClass = ['block', 'md:flex']
 
-    const childBaseClass = ['flex', 'items-center', 'justify-center']
+    const childBaseClass = ['flex', 'items-center', 'justify-center', 'w-full']
 
     return h(
       'div',

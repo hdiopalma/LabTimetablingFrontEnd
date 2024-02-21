@@ -15,6 +15,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  labelColor: {
+    type: String,
+    default: null
+  },
   modelValue: {
     type: [Array, String, Number, Boolean],
     default: null
@@ -41,6 +45,8 @@ const inputType = computed(() => (props.type === 'radio' ? 'radio' : 'checkbox')
   <label :class="type">
     <input v-model="computedValue" :type="inputType" :name="name" :value="inputValue" />
     <span class="check" />
-    <span class="pl-2">{{ label }}</span>
+    <span class="pl-2 text-md bold" :class="labelColor">
+      {{ label }}
+    </span>
   </label>
 </template>

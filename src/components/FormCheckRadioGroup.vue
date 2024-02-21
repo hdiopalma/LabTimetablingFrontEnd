@@ -24,6 +24,10 @@ const props = defineProps({
   modelValue: {
     type: [Array, String, Number, Boolean],
     default: null
+  },
+  labelColor: {
+    type: String,
+    default: 'text-gray-700 dark:text-slate-300'
   }
 })
 
@@ -49,6 +53,7 @@ const computedValue = computed({
       :label="value"
       :class="componentClass"
       class="mr-6 mb-3 last:mr-0"
+      :label-color="labelColor"
     />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { mdiBallotOutline, mdiAccount, mdiMail, mdiRefresh, mdiGithub } from '@mdi/js'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -28,8 +28,26 @@ const customElementsForm = reactive({
   checkbox: ['lorem'],
   radio: 'one',
   switch: ['one'],
-  file: null
+  file: null,
+  switch: false,
 })
+
+const customElementsFormRef = ref({
+  switchStatus: false,
+})
+
+// Change the switch label based on the switch status
+const switchLabel = computed(() => {
+  return customElementsFormRef.value.switchStatus ? 'Aktif' : 'Tidak Aktif'
+})
+
+const switchLabelColor = computed(() => {
+  return customElementsFormRef.value.switchStatus ? 'text-green-500 font-medium' : 'text-red-500'
+})
+
+const toggleSwitch = () => {
+  customElementsFormRef.value.switchStatus = !customElementsFormRef.value.switchStatus
+}
 
 const submit = () => {
   //
@@ -46,6 +64,8 @@ const formStatusSubmit = () => {
     ? formStatusCurrent.value + 1
     : 0
 }
+
+
 </script>
 
 <template>
@@ -69,12 +89,14 @@ const formStatusSubmit = () => {
 
         <BaseDivider />
 
-        <FormField label="Status Semester" help="Aktif atau tidak aktif">
+        <FormField label="Status Semester" help="Ketika diaktifkan, semester akan aktif. Lalu semester yang lain akan dinonaktifkan.">
           <FormCheckRadioGroup
-            v-model="customElementsForm.switch"
-            name="sample-switch"
+            v-model="customElementsFormRef.switch"
+            name="statusSemester"
             type="switch"
-            :options="{ status: '&nbsp Status' }"
+            :options="{statusSemester: switchLabel}"
+            @change="toggleSwitch"
+            :label-color="switchLabelColor"
           />
         </FormField>
 

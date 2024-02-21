@@ -6,6 +6,10 @@ import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/components/BaseIcon.vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 
+import { useAppStore } from '@/stores/app.js'
+
+const store = useAppStore()
+
 const props = defineProps({
   item: {
     type: Object,
@@ -22,7 +26,9 @@ const asideMenuItemActiveStyle = computed(() =>
   hasColor.value ? '' : 'aside-menu-item-active font-bold'
 )
 
-const isDropdownActive = ref(false)
+// const isDropdownActive = ref(false)
+
+const isDropdownActive = computed(() => store.sidebarDropdownActive)
 
 const componentClass = computed(() => [
   props.isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
@@ -33,11 +39,20 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu)
 
-const menuClick = (event) => {
-  emit('menu-click', event, props.item)
+// const menuClick = (event) => {
+//   emit('menu-click', event, props.item)
 
+//   if (hasDropdown.value) {
+//     isDropdownActive.value = !isDropdownActive.value
+//   }
+// }
+
+const menuClick = (event) => {
+  // store.toggleSidebarDropdown(hasDropdown.value ? !isDropdownActive.value : false)
+  // console.log('menuClick', hasDropdown.value, isDropdownActive.value)
+  emit('menu-click', event, props.item)
   if (hasDropdown.value) {
-    isDropdownActive.value = !isDropdownActive.value
+    store.toggleSidebarDropdown(!isDropdownActive.value)
   }
 }
 </script>
