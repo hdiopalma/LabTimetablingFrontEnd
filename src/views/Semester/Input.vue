@@ -89,7 +89,7 @@ const formStatusSubmit = () => {
 
         <BaseDivider />
 
-        <FormField label="Status Semester" help="Ketika diaktifkan, semester akan aktif. Lalu semester yang lain akan dinonaktifkan.">
+        <FormField label="Status Semester" help="Ketika diaktifkan semester yang lain otomatis akan dinonaktifkan">
           <FormCheckRadioGroup
             v-model="customElementsFormRef.switch"
             name="statusSemester"

@@ -13,6 +13,10 @@ const props = defineProps({
   api: {
     type: String,
     default: 'avataaars'
+  },
+  frameShape: {
+    type: String,
+    default: 'rounded'
   }
 })
 
@@ -33,13 +37,14 @@ const username = computed(() => props.username)
     <img
       :src="avatar"
       :alt="username"
-      class="rounded-full
-            block
-            h-auto
-            w-full
-            max-w-full
-            bg-gray-100
-            dark:bg-slate-800"
+      class="
+        block
+        h-full
+        w-full
+        max-w-full
+        bg-gray-100
+        dark:bg-slate-800"
+      :class="`rounded-${frameShape}`"
     />
     <slot />
   </div>

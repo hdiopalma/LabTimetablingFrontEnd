@@ -18,7 +18,7 @@ const userSwitchVal = ref(false)
 <template>
   <CardBox>
     <BaseLevel type="justify-around lg:justify-center">
-      <UserAvatarCurrentUser class="lg:mx-12 w-200 h-auto" />
+      <UserAvatarCurrentUser class="lg:mx-12 h-64" frame-shape="3xl" />
       <div class="space-y-3 text-center md:text-left lg:mx-12">
         <div class="flex justify-center md:block">
           <FormCheckRadio

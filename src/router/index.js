@@ -50,11 +50,29 @@ const routes = [
   },
   {
     meta: {
+      title: 'Input Lab'
+    },
+    path: '/labs/input',
+    name: 'inputLab',
+    component: () => import('@/views/Lab/Input.vue')
+  },
+
+
+  {
+    meta: {
       title: 'Assistants'
     },
     path: '/assistants',
     name: 'assistants',
     component: () => import('@/views/Assistant/Index.vue')
+  },
+  {
+    meta: {
+      title: 'Input Assistant'
+    },
+    path: '/assistants/input',
+    name: 'inputAssistant',
+    component: () => import('@/views/Assistant/Input.vue')
   },
 
   {
@@ -65,6 +83,14 @@ const routes = [
     name: 'participants',
     component: () => import('@/views/Participant/Index.vue')
   },
+  {
+    meta: {
+      title: 'Input Participant'
+    },
+    path: '/participants/input',
+    name: 'inputParticipant',
+    component: () => import('@/views/Participant/Input.vue')
+  },
 
   {
     meta: {
@@ -74,6 +100,14 @@ const routes = [
     name: 'modules',
     component: () => import('@/views/Module/Index.vue')
   },
+  {
+    meta: {
+      title: 'Input Module'
+    },
+    path: '/modules/input',
+    name: 'inputModule',
+    component: () => import('@/views/Module/Input.vue')
+  },
 
   {
     meta: {
@@ -82,6 +116,14 @@ const routes = [
     path: '/chapters',
     name: 'chapters',
     component: () => import('@/views/Chapter/Index.vue')
+  },
+  {
+    meta: {
+      title: 'Input Chapter'
+    },
+    path: '/chapters/input',
+    name: 'inputChapter',
+    component: () => import('@/views/Chapter/Input.vue')
   },
 
   {

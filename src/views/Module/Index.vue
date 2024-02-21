@@ -12,6 +12,13 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goToInput = () => {
+  router.push('/modules/input')
+}
+
 </script>
 
 <template>
@@ -19,7 +26,7 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Module Data" main>
         <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
+          @click="goToInput"
           target="_blank"
           :icon="mdiShapeSquarePlus"
           label="Input New Data"

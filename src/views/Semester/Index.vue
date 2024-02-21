@@ -18,7 +18,6 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 // import { useSemesterStore } from '@/stores/semester'
 // import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { RouterLink } from 'vue-router'
 
 // const semesterStore = useSemesterStore()
 // const store = useStore()
