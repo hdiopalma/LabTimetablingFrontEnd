@@ -1,8 +1,17 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const apiUrl = 'http://127.0.0.1:8000/data/semester';
+// get globalProperties from app, 
+const apiPath = 'data/semester/';
 
+const authorization = 'Token d87044367ff43b11ec84bad377cb533b73020fd1';
+
+const headers = {
+    Authorization: authorization,
+    ContentType: 'application/json',
+};
+
+// $apiURL is a globalProperties from app that stored on pinia, defined in main.js
 export const useSemesterStore = defineStore('semester', {
     state: () => ({
         items: [],
@@ -15,7 +24,7 @@ export const useSemesterStore = defineStore('semester', {
 
         async fetchSemesters() {
             try {
-                const response = await axios.get(apiUrl);
+                const response = await this.$apiURL.get(apiPath);
                 this.setItems(response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);
@@ -23,7 +32,7 @@ export const useSemesterStore = defineStore('semester', {
         },
         async addSemester(lab) {
             try {
-                const response = await axios.post(apiUrl, lab);
+                const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
             } catch (error) {
                 console.error('Error adding lab:', error);
@@ -31,7 +40,7 @@ export const useSemesterStore = defineStore('semester', {
         },
         async updateSemester(lab) {
             try {
-                const response = await axios.put(`${apiUrl}/${lab.id}`, lab);
+                const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
             } catch (error) {
@@ -40,7 +49,7 @@ export const useSemesterStore = defineStore('semester', {
         },
         async deleteSemester(id) {
             try {
-                await axios.delete(`${apiUrl}/${id}`);
+                await this.$apiURL.delete(`${apiPath}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
             } catch (error) {
                 console.error('Error deleting lab:', error);
@@ -48,7 +57,7 @@ export const useSemesterStore = defineStore('semester', {
         },
         async fetchSemester(id) {
             try {
-                const response = await axios.get(`${apiUrl}/${id}`);
+                const response = await this.$apiURL.get(`${apiPath}/${id}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);

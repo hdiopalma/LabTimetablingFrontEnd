@@ -7,13 +7,35 @@ import { useMainStore } from '@/stores/main.js'
 import { useAssistantStore } from './stores/assistant'
 import { useLabStore } from './stores/lab'
 
+import axios from 'axios'
+
+const apiURL = axios.create({
+  baseURL: 'http://localhost:8000/'
+})
+
+const localURL = axios.create({
+  baseURL: axios.defaults.baseURL
+})
+
 import './css/main.css'
+
+// Create Vue app
+const app = createApp(App)
+
+app.config.globalProperties.$apiURL = apiURL
+app.config.globalProperties.$localURL = localURL
+
+app.use(router)
 
 // Init Pinia
 const pinia = createPinia()
+pinia.use(({ store }) => {
+  store.$apiURL = apiURL
+  store.$localURL = localURL
+})
 
-// Create Vue app
-createApp(App).use(router).use(pinia).mount('#app')
+app.use(pinia)
+app.mount('#app')
 
 // Init main store
 const mainStore = useMainStore(pinia)
@@ -23,9 +45,6 @@ const labStore = useLabStore(pinia)
 // Fetch sample data
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
-
-
-
 
 // Dark mode
 // Uncomment, if you'd like to restore persisted darkMode setting, or use `prefers-color-scheme: dark`. Make sure to uncomment localStorage block in src/stores/darkMode.js

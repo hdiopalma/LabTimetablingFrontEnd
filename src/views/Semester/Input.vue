@@ -16,8 +16,10 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 
 import { useRouter } from 'vue-router'
+import { useSemesterStore } from '@/stores/semester'
 
 const router = useRouter()
+const semesterStore = useSemesterStore()
 
 const goToBack = () => {
   router.push('/semesters')
@@ -36,6 +38,16 @@ const customElementsFormRef = ref({
   switchStatus: false,
 })
 
+const formData = reactive({
+  namaSemester: '',
+  statusSemester: false,
+})
+
+const formReset = () => {
+  formData.namaSemester = ''
+  formData.statusSemester = false
+}
+
 // Change the switch label based on the switch status
 const switchLabel = computed(() => {
   return customElementsFormRef.value.switchStatus ? 'Aktif' : 'Tidak Aktif'
@@ -50,7 +62,8 @@ const toggleSwitch = () => {
 }
 
 const submit = () => {
-  //
+  console.log(formData)
+
 }
 
 const formStatusWithHeader = ref(true)
@@ -63,6 +76,12 @@ const formStatusSubmit = () => {
   formStatusCurrent.value = formStatusOptions[formStatusCurrent.value + 1]
     ? formStatusCurrent.value + 1
     : 0
+}
+
+//Database operation
+const formSubmit = async () => {
+  await semesterStore.create(formData)
+  console.log('Form submitted')
 }
 
 
@@ -82,16 +101,16 @@ const formStatusSubmit = () => {
           small
         />
       </SectionTitleLineWithButton>
-      <CardBox form @submit.prevent="submit">
+      <CardBox is-form @submit.prevent="submit">
         <FormField label="Nama Semester">
-          <FormControl :icon="mdiAccount" placeholder="Nama Semester" />
+          <FormControl :icon="mdiAccount" placeholder="Nama Semester" name="namaSemester" v-model="formData.namaSemester" />
         </FormField>
 
         <BaseDivider />
 
         <FormField label="Status Semester" help="Ketika diaktifkan semester yang lain otomatis akan dinonaktifkan">
           <FormCheckRadioGroup
-            v-model="customElementsFormRef.switch"
+            v-model="formData.statusSemester"
             name="statusSemester"
             type="switch"
             :options="{statusSemester: switchLabel}"
@@ -103,7 +122,7 @@ const formStatusSubmit = () => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Submit" />
-            <BaseButton type="reset" color="info" outline label="Reset" />
+            <BaseButton type="reset" color="info" outline label="Reset" @click="formReset" />
           </BaseButtons>
         </template>
       </CardBox>

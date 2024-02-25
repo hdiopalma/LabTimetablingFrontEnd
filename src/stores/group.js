@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const apiUrl = 'http://127.0.0.1:8000/data/group';
+const apiPath = 'data/group';
 
 export const useGroupStore = defineStore('group', {
     state: () => ({
@@ -15,7 +15,7 @@ export const useGroupStore = defineStore('group', {
 
         async fetchGroups() {
             try {
-                const response = await axios.get(apiUrl);
+                const response = await this.$apiURL.get(apiPath);
                 this.setItems(response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);
@@ -23,7 +23,7 @@ export const useGroupStore = defineStore('group', {
         },
         async addGroup(lab) {
             try {
-                const response = await axios.post(apiUrl, lab);
+                const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
             } catch (error) {
                 console.error('Error adding lab:', error);
@@ -31,7 +31,7 @@ export const useGroupStore = defineStore('group', {
         },
         async updateGroup(lab) {
             try {
-                const response = await axios.put(`${apiUrl}/${lab.id}`, lab);
+                const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
             } catch (error) {
@@ -40,7 +40,7 @@ export const useGroupStore = defineStore('group', {
         },
         async deleteGroup(id) {
             try {
-                await axios.delete(`${apiUrl}/${id}`);
+                await this.$apiURL.delete(`${apiPath}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
             } catch (error) {
                 console.error('Error deleting lab:', error);
@@ -48,7 +48,7 @@ export const useGroupStore = defineStore('group', {
         },
         async fetchGroup(id) {
             try {
-                const response = await axios.get(`${apiUrl}/${id}`);
+                const response = await this.$apiURL.get(`${apiPath}/${id}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);
