@@ -3,64 +3,51 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 
 export const useMainStore = defineStore('main', () => {
-  const userName = ref('Hu Tao')
-  const userEmail = ref('hutao@wansheng.com')
 
-  const userAvatar = computed(
-    () =>
-      // `https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail.value.replace(
-      //   /[^a-z0-9]+/gi,
-      //   '-'
-      // )}`
-      // favicon from public folder
-      `/humaret.jpg`
-  )
+  // State
+  const state = {
+    userName: ref('Hu Tao'),
+    userEmail: ref('hutaowansheng.com'),
+    isFieldFocusRegistered: ref(false),
+    clients: ref([]),
+    history: ref([]),
+    apiURL: null,
+    localURL: null,
+  }
 
-  const isFieldFocusRegistered = ref(false)
+  // Getters
+  const getters = {
+    userAvatar: computed(() => '/humaret.jpg')
+  }
 
-  const clients = ref([])
-  const history = ref([])
-
+  // Actions
   function setUser(payload) {
-    if (payload.name) {
-      userName.value = payload.name
-    }
-    if (payload.email) {
-      userEmail.value = payload.email
-    }
+    if (payload.name) state.userName.value = payload.name
+    if (payload.email) state.userEmail.value = payload.email
   }
 
-  function fetchSampleClients() {
+  function fetchSampleData(endpoint, target) {
     this.$localURL
-      .get(`data-sources/clients.json?v=3`)
+      .get(endpoint)
       .then((result) => {
-        clients.value = result?.data?.data
+        state[target].value = result?.data?.data
       })
       .catch((error) => {
         alert(error.message)
       })
   }
 
-  function fetchSampleHistory() {
-    this.$localURL
-      .get(`data-sources/history.json`)
-      .then((result) => {
-        history.value = result?.data?.data
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+  const actions = {
+    setUser,
+    fetchSampleClients: () => fetchSampleData('data-sources/clients.json?v=3', 'clients'),
+    fetchSampleHistory: () => fetchSampleData('data-sources/history.json', 'history'),
+    setApiURL: (url) => state.apiURL = url,
+    setLocalURL: (url) => state.localURL = url,
   }
 
   return {
-    userName,
-    userEmail,
-    userAvatar,
-    isFieldFocusRegistered,
-    clients,
-    history,
-    setUser,
-    fetchSampleClients,
-    fetchSampleHistory
+    ...state,
+    ...getters,
+    ...actions
   }
 })

@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useMainStore } from './main';
 
-const apiPath = 'data/assistant';
+const apiPath = 'data/assistant'
 
 export const useAssistantStore = defineStore('assistant', {
     state: () => ({
