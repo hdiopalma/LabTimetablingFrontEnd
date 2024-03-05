@@ -12,6 +12,8 @@ import {
   mdiReact
 } from '@mdi/js'
 
+import { useAuthService } from './services/authService'
+
 export default [
   {
     icon: mdiMenu,
@@ -71,6 +73,7 @@ export default [
     icon: mdiLogout,
     label: 'Log out',
     isDesktopNoLabel: true,
-    isLogout: true
+    isLogout: true,
+    to: '/logout'
   }
 ]

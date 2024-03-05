@@ -1,4 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useRouteGuard } from '@/services/routeGuard'
+
 import Style from '@/views/StyleView.vue'
 import Home from '@/views/HomeView.vue'
 
@@ -28,12 +30,13 @@ const routes = [
     },
     path: '/semesters',
     name: 'semesters',
-    component: () => import('@/views/Semester/Index.vue')
+    component: () => import('@/views/Semester/Index.vue'),
   },
 
   {
     meta: {
-      title: 'Input Semester'
+      title: 'Input Semester',
+      requiresAuth: true
     },
     path: '/semesters/input',
     name: 'inputSemester',
@@ -50,7 +53,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Input Lab'
+      title: 'Input Lab',
+      requiresAuth: true
     },
     path: '/labs/input',
     name: 'inputLab',
@@ -68,7 +72,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Input Assistant'
+      title: 'Input Assistant',
+      requiresAuth: true
     },
     path: '/assistants/input',
     name: 'inputAssistant',
@@ -85,7 +90,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Input Participant'
+      title: 'Input Participant',
+      requiresAuth: true
     },
     path: '/participants/input',
     name: 'inputParticipant',
@@ -102,7 +108,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Input Module'
+      title: 'Input Module',
+      requiresAuth: true
     },
     path: '/modules/input',
     name: 'inputModule',
@@ -119,7 +126,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Input Chapter'
+      title: 'Input Chapter',
+      requiresAuth: true
     },
     path: '/chapters/input',
     name: 'inputChapter',
@@ -200,6 +208,11 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 }
   }
+})
+
+router.beforeEach((to, from, next) => {
+  const routeGuard = useRouteGuard()
+  routeGuard.requireAuth(to, from, next)
 })
 
 export default router

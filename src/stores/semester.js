@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { AppConfig } from '@/services/appConfig';
 
 // get globalProperties from app, 
 const apiPath = 'data/semester/';
-
-const authorization = 'Token d87044367ff43b11ec84bad377cb533b73020fd1';
-
-const headers = {
-    Authorization: authorization,
-    ContentType: 'application/json',
+const token = localStorage.getItem(AppConfig.tokenKey) || null;
+const header = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+    },
 };
 
 // $apiURL is a globalProperties from app that stored on pinia, defined in main.js

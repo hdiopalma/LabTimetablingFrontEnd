@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthService } from '@/services/authService'
 import { mdiAccount, mdiAsterisk } from '@mdi/js'
 import SectionFullScreen from '@/components/SectionFullScreen.vue'
 import CardBox from '@/components/CardBox.vue'
@@ -12,15 +13,25 @@ import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
 const form = reactive({
-  login: 'john.doe',
-  pass: 'highly-secure-password-fYjUw-',
+  username: 'john.doe',
+  password: 'highly-secure-password-fYjUw-',
   remember: true
 })
+
+const authService = useAuthService()
+const login = async () => {
+  if (await authService.login(form)) {
+    alert('Logged in')
+    router.push('/dashboard')
+  } else {
+    alert('Invalid credentials')
+  }
+}
 
 const router = useRouter()
 
 const submit = () => {
-  router.push('/dashboard')
+  login()
 }
 </script>
 
@@ -30,16 +41,16 @@ const submit = () => {
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
         <FormField label="Login" help="Please enter your login">
           <FormControl
-            v-model="form.login"
+            v-model="form.username"
             :icon="mdiAccount"
-            name="login"
+            name="username"
             autocomplete="username"
           />
         </FormField>
 
         <FormField label="Password" help="Please enter your password">
           <FormControl
-            v-model="form.pass"
+            v-model="form.password"
             :icon="mdiAsterisk"
             type="password"
             name="password"

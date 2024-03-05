@@ -1,18 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { AppConfig } from '@/services/appConfig'
 
 export const useMainStore = defineStore('main', () => {
 
   // State
   const state = {
-    userName: ref('Hu Tao'),
-    userEmail: ref('hutaowansheng.com'),
+    userName: localStorage.getItem('userName') ? ref(JSON.parse(localStorage.getItem('userName'))) : ref('Hu Tao as a guest'),
+    userEmail: localStorage.getItem('userEmail') ? ref(JSON.parse(localStorage.getItem('userEmail'))) : ref('hutaowansheng.com'),
     isFieldFocusRegistered: ref(false),
     clients: ref([]),
     history: ref([]),
-    apiURL: null,
-    localURL: null,
   }
 
   // Getters
@@ -22,12 +21,25 @@ export const useMainStore = defineStore('main', () => {
 
   // Actions
   function setUser(payload) {
-    if (payload.name) state.userName.value = payload.name
-    if (payload.email) state.userEmail.value = payload.email
+    if (payload.name) {
+      state.userName.value = payload.name
+      localStorage.setItem('userName', JSON.stringify(state.userName.value))
+    } else {
+      state.userName.value = 'Hu Tao as a guest'
+      localStorage.setItem('userName', JSON.stringify(state.userName.value))
+    }
+
+    if (payload.email) {
+      state.userEmail.value = payload.email
+      localStorage.setItem('userEmail', JSON.stringify(state.userEmail.value))
+    } else {
+      state.userEmail.value = 'hutaowansheng.com'
+      localStorage.setItem('userEmail', JSON.stringify(state.userEmail.value))
+    }
   }
 
   function fetchSampleData(endpoint, target) {
-    this.$localURL
+    AppConfig.localURL
       .get(endpoint)
       .then((result) => {
         state[target].value = result?.data?.data
@@ -41,8 +53,6 @@ export const useMainStore = defineStore('main', () => {
     setUser,
     fetchSampleClients: () => fetchSampleData('data-sources/clients.json?v=3', 'clients'),
     fetchSampleHistory: () => fetchSampleData('data-sources/history.json', 'history'),
-    setApiURL: (url) => state.apiURL = url,
-    setLocalURL: (url) => state.localURL = url,
   }
 
   return {

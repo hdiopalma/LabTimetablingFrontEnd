@@ -3,49 +3,51 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useMainStore } from '@/stores/main.js'
+import { AppConfig } from '@/services/appConfig'
 
-const apiPath = 'api-token-auth'
+const apiPath = 'api-token-auth/'
 
 export const useAuthService = defineStore('auth', () => {
   const mainStore = useMainStore()
-
   const state = {
-    token: localStorage.getItem(TOKEN_KEY) || null,
-    isAuthenticated: false
+    token: localStorage.getItem(AppConfig.tokenKey || null),
   }
 
   const mutations = {
     setToken(token) {
       state.token = token
-      state.isAuthenticated = !!token
       if (token) {
-        localStorage.setItem(this.$tokenKey, token)
+        localStorage.setItem(AppConfig.tokenKey, token)
       }
     },
 
     clearToken() {
       state.token = null
-      state.isAuthenticated = false
-      localStorage.removeItem(this.$tokenKey)
+      localStorage.removeItem(AppConfig.tokenKey)
     }
   }
 
   const actions = {
+
+    isAuthenticated() {
+      return state.token !== null
+    },
+    
     async login(credentials) {
       try {
-        const response = await axios.post(apiPath, credentials)
+        console.log(AppConfig.tokenKey)
+        const response = await this.$apiURL.post(apiPath, credentials)
         mutations.setToken(response.data.token)
         mainStore.setUser({ name: credentials.username })
         return true
       } catch (error) {
-        console.error('Error logging in:', error)
         return false
       }
     },
     
     async logout() {
       mutations.clearToken()
-      mainStore.setUser({ name: 'Hu Tao as a guest' })
+      mainStore.setUser({ name: null })
     },
 
     async refreshToken() {

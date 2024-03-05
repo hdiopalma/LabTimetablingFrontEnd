@@ -5,6 +5,8 @@ import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
 
+import { useAuthService } from '@/services/authService'
+
 defineProps({
   menu: {
     type: Array,
@@ -28,6 +30,14 @@ const menuClick = (event, item) => {
 const asideLgCloseClick = (event) => {
   emit('aside-lg-close-click', event)
 }
+
+const authService = useAuthService()
+const logout = async () => {
+  await authService.logout()
+  alert('Logged out')
+  window.location.href = 'login'
+}
+
 </script>
 
 <template>
@@ -51,7 +61,7 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @menu-click="logout" />
       </ul>
     </div>
   </aside>
