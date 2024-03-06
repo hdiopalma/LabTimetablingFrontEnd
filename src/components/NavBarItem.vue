@@ -15,7 +15,7 @@ import Swal from 'sweetalert2'
 
 const authService = useAuthService()
 const router = useRouter()
-const isAuthenticated = authService.isAuthenticated()
+const isAuthenticated = computed(() => authService.isAuthenticated())
 
 const props = defineProps({
   item: {

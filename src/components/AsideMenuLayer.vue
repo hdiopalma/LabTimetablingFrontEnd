@@ -10,7 +10,7 @@ import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
 import router from '@/router'
 
-const isAuthenticated = useAuthService().isAuthenticated
+const isAuthenticated = computed(() => useAuthService().isAuthenticated())
 
 defineProps({
   menu: {
