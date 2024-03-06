@@ -184,6 +184,7 @@ const routes = [
     name: 'responsive',
     component: () => import('@/views/ResponsiveView.vue')
   },
+
   {
     meta: {
       title: 'Login'
@@ -192,6 +193,16 @@ const routes = [
     name: 'login',
     component: () => import('@/views/LoginView.vue')
   },
+  {
+    meta: {
+      title: 'Logout'
+    },
+    path: '/logout',
+    name: 'logout',
+    component: () => import('@/components/Auth/LogOut.vue')
+  },
+
+
   {
     meta: {
       title: 'Error'

@@ -1,11 +1,16 @@
 <script setup>
-import { mdiLogout, mdiClose } from '@mdi/js'
+import { mdiLogin, mdiClose } from '@mdi/js'
 import { computed } from 'vue'
 import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
+import AsideMenuLogOut from '@/components/Auth/AsideMenuLogOut.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
+import { useRouter } from 'vue-router'
 
 import { useAuthService } from '@/services/authService'
+import router from '@/router'
+
+const isAuthenticated = useAuthService().isAuthenticated
 
 defineProps({
   menu: {
@@ -16,27 +21,25 @@ defineProps({
 
 const emit = defineEmits(['menu-click', 'aside-lg-close-click'])
 
-const logoutItem = computed(() => ({
-  label: 'Logout',
-  icon: mdiLogout,
+const loginItem = computed(() => ({
+  label: 'Login',
+  icon: mdiLogin,
   color: 'info',
-  isLogout: true
 }))
 
 const menuClick = (event, item) => {
   emit('menu-click', event, item)
 }
 
+const loginClick = (event, item) => {
+  emit('menu-click', event, item)
+  router.push('/login')
+}
+
 const asideLgCloseClick = (event) => {
   emit('aside-lg-close-click', event)
 }
 
-const authService = useAuthService()
-const logout = async () => {
-  await authService.logout()
-  alert('Logged out')
-  window.location.href = 'login'
-}
 
 </script>
 
@@ -61,7 +64,8 @@ const logout = async () => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="logout" />
+        <AsideMenuLogOut v-if="isAuthenticated" />
+        <AsideMenuItem v-if="!isAuthenticated" :item="loginItem" @menu-click="loginClick" />
       </ul>
     </div>
   </aside>

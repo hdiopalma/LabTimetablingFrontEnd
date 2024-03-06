@@ -12,6 +12,8 @@ import BaseButton from '@/components/BaseButton.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import LayoutGuest from '@/layouts/LayoutGuest.vue'
 
+import Swal from 'sweetalert2'
+
 const form = reactive({
   username: 'john.doe',
   password: 'highly-secure-password-fYjUw-',
@@ -20,18 +22,50 @@ const form = reactive({
 
 const authService = useAuthService()
 const login = async () => {
-  if (await authService.login(form)) {
-    alert('Logged in')
-    router.push('/dashboard')
-  } else {
-    alert('Invalid credentials')
+  try {
+    if (await authService.login(form)) {
+      handleLoginSuccess()
+      router.push('/dashboard')
+    } else {
+      handleLoginError(new Error('Invalid credentials'))
+    }
+  } catch (error) {
+    handleLoginError(error)
   }
+}
+
+const handleLoginError = (error) => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Failed To Login!',
+    text: error.message
+  })
+}
+
+const handleLoginSuccess = () => {
+  Swal.fire({
+    icon: 'success',
+    title: 'Welcome!',
+    text: 'You have successfully logged in'
+  })
+}
+
+const handleLogin = async () => {
+  Swal.fire({
+    title: 'Logging in...',
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading(),
+      login()
+    }
+  })
 }
 
 const router = useRouter()
 
 const submit = () => {
-  login()
+  handleLogin()
 }
 </script>
 

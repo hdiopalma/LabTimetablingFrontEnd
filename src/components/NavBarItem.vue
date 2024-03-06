@@ -7,6 +7,15 @@ import BaseIcon from '@/components/BaseIcon.vue'
 import UserAvatarCurrentUser from '@/components/UserAvatarCurrentUser.vue'
 import NavBarMenuList from '@/components/NavBarMenuList.vue'
 import BaseDivider from '@/components/BaseDivider.vue'
+import { defineProps, defineEmits } from 'vue'
+import { useAuthService } from '@/services/authService'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
+
+const authService = useAuthService()
+const router = useRouter()
+const isAuthenticated = authService.isAuthenticated()
 
 const props = defineProps({
   item: {
@@ -40,7 +49,7 @@ const componentClass = computed(() => {
   if (props.item.isDesktopNoLabel) {
     base.push('lg:w-16', 'lg:justify-center')
   }
-
+  
   return base
 })
 
@@ -55,6 +64,10 @@ const menuClick = (event) => {
 
   if (props.item.menu) {
     isDropdownActive.value = !isDropdownActive.value
+  }
+
+  if (props.item.isLogout) {
+    handleLogout()
   }
 }
 
@@ -81,6 +94,54 @@ onBeforeUnmount(() => {
     window.removeEventListener('click', forceClose)
   }
 })
+
+
+const handleLogout = async () => {
+    Swal.fire({
+        title: 'Logout',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Logging out...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading(),
+                    logout()
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('Logout cancelled', '', 'info')
+        }
+    })
+}
+
+const handleLogoutSuccess = () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Goodbye!',
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
+const logout = async () => {
+    try {
+        await authService.logout()
+        handleLogoutSuccess()
+        router.push('/login')
+    } catch (error) {
+        handleLoginError(error)
+    }
+}
+
 </script>
 
 <template>
@@ -95,6 +156,7 @@ onBeforeUnmount(() => {
     :href="item.href ?? null"
     :target="item.target ?? null"
     @click="menuClick"
+    v-if= "item.needAuth == null ? true : item.needAuth === isAuthenticated" 
   >
     <div
       class="flex items-center"

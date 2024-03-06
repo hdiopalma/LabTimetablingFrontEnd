@@ -9,19 +9,19 @@ import {
   mdiLogout,
   mdiThemeLightDark,
   mdiGithub,
-  mdiReact
+  mdiReact,
+  mdiLogin
 } from '@mdi/js'
-
-import { useAuthService } from './services/authService'
 
 export default [
   {
     icon: mdiMenu,
     label: 'Sample menu',
+    needAuth: true,
     menu: [
       {
         icon: mdiClockOutline,
-        label: 'Item One'
+        label: 'Item One',
       },
       {
         icon: mdiCloud,
@@ -38,19 +38,23 @@ export default [
   },
   {
     isCurrentUser: true,
+    needAuth: true,
     menu: [
       {
         icon: mdiAccount,
         label: 'My Profile',
-        to: '/profile'
+        to: '/profile',
+        needAuth: true
       },
       {
         icon: mdiCogOutline,
-        label: 'Settings'
+        label: 'Settings',
+        needAuth: true
       },
       {
         icon: mdiEmail,
-        label: 'Messages'
+        label: 'Messages',
+        needAuth: true
       },
       {
         isDivider: true
@@ -58,7 +62,8 @@ export default [
       {
         icon: mdiLogout,
         label: 'Log Out',
-        isLogout: true
+        isLogout: true,
+        needAuth: true
       }
     ]
   },
@@ -66,14 +71,20 @@ export default [
     icon: mdiThemeLightDark,
     label: 'Light/Dark',
     isDesktopNoLabel: true,
-    isToggleLightDark: true
+    isToggleLightDark: true,
   },
-  
   {
     icon: mdiLogout,
     label: 'Log out',
     isDesktopNoLabel: true,
     isLogout: true,
-    to: '/logout'
+    needAuth: true
+  },
+  {
+    icon: mdiLogin,
+    label: 'Log In',
+    isDesktopNoLabel: false,
+    needAuth: false,
+    to: '/login'
   }
 ]
