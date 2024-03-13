@@ -6,7 +6,7 @@ const apiPath = 'data/semester/';
 const token = localStorage.getItem(AppConfig.tokenKey) || null;
 const header = {
     headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Token ${token}`,
     },
 };
@@ -22,20 +22,23 @@ export const useSemesterStore = defineStore('semester', {
             this.items = items;
         },
 
-        async fetchSemesters() {
+        async fetchSemesters(page = 1, page_size = 10) {
             try {
-                const response = await this.$apiURL.get(apiPath);
+                const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
                 this.setItems(response.data);
+                console.log('fetchSemesters', response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);
             }
         },
         async addSemester(lab) {
             try {
-                const response = await this.$apiURL.post(apiPath, lab);
+                const response = await this.$apiURL.post(apiPath, lab, header);
                 this.items.push(response.data);
+                return response;
             } catch (error) {
                 console.error('Error adding lab:', error);
+                return error;
             }
         },
         async updateSemester(lab) {
@@ -49,10 +52,13 @@ export const useSemesterStore = defineStore('semester', {
         },
         async deleteSemester(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}/${id}`);
+                const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
+                return response;
+                // console.log('deleteSemester', id);
             } catch (error) {
                 console.error('Error deleting lab:', error);
+                return error;
             }
         },
         async fetchSemester(id) {

@@ -16,4 +16,4 @@ export function useRouteGuard() {
     return {
         requireAuth,
     };
-    }
+}

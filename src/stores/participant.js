@@ -6,17 +6,33 @@ const apiPath = 'data/participant';
 export const useParticipantStore = defineStore('participant', {
     state: () => ({
         items: [],
+        itemsCount: 0,
+        previousPage: null,
+        nextPage: null,
     }),
     actions: {
 
         setItems(items) {
             this.items = items;
         },
+        setCount(count) {
+            this.itemsCount = count;
+        },
+        setPreviousPage(page) {
+            this.previousPage = page;
+        },
+        setNextPage(page) {
+            this.nextPage = page;
+        },
 
-        async fetchParticipants() {
+        async fetchParticipants(page = 1, page_size = 10) {
             try {
-                const response = await this.$apiURL.get(apiPath);
-                this.setItems(response.data);
+                const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
+                this.setItems(response.data.results);
+                this.setCount(response.data.count);
+                this.setPreviousPage(response.data.previous);
+                this.setNextPage(response.data.next);
+                
             } catch (error) {
                 console.error('Error fetching items:', error);
             }
@@ -25,6 +41,7 @@ export const useParticipantStore = defineStore('participant', {
             try {
                 const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
+                this.setCount(this.count + 1);
             } catch (error) {
                 console.error('Error adding lab:', error);
             }
@@ -42,6 +59,7 @@ export const useParticipantStore = defineStore('participant', {
             try {
                 await this.$apiURL.delete(`${apiPath}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
+                this.setCount(this.count - 1);
             } catch (error) {
                 console.error('Error deleting lab:', error);
             }

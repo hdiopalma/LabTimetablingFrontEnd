@@ -68,7 +68,7 @@ window.addEventListener('keydown', (e) => {
         />
       </CardBoxComponentTitle>
 
-      <div class="space-y-3">
+      <div class="space-y-3 testing">
         <slot />
       </div>
 
@@ -76,6 +76,7 @@ window.addEventListener('keydown', (e) => {
         <BaseButtons>
           <BaseButton :label="buttonLabel" :color="button" @click="confirm" />
           <BaseButton v-if="hasCancel" label="Cancel" :color="button" outline @click="cancel" />
+          
         </BaseButtons>
       </template>
     </CardBox>

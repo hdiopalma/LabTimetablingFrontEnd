@@ -16,7 +16,7 @@ import {
 export default [
   {
     icon: mdiMenu,
-    label: 'Sample menu',
+    label: 'Semester Aktif',
     needAuth: true,
     menu: [
       {

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, defineProps } from 'vue'
+import { computed, ref, onMounted, defineProps, watch } from 'vue'
 import { useParticipantStore } from '@/stores/participant'
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import CardBoxModal from '@/components/CardBoxModal.vue'
@@ -18,53 +18,67 @@ defineProps({
 const participantStore = useParticipantStore()
 
 const items = ref([])
+const itemsCount = ref(0)
 onMounted(async () => {
-    await participantStore.fetchParticipants()
+    await participantStore.fetchParticipants(currentPage.value + 1, perPage.value)
     items.value = participantStore.items
+    itemsCount.value = participantStore.itemsCount
+    console.log(itemsCount.value)
 })
+const refresh = async () => {
+    await participantStore.fetchParticipants(currentPage.value + 1, perPage.value)
+    items.value = participantStore.items
+    itemsCount.value = participantStore.itemsCount
+}
 
-// const items = computed(() => mainStore.clients)
-
+//Modal
 const isModalActive = ref(false)
-
 const isModalDangerActive = ref(false)
 
+//Pagination
 const perPage = ref(10)
-
 const currentPage = ref(0)
-
-const checkedRows = ref([])
-
-const itemsPaginated = computed(() =>
-    items.value.slice(perPage.value * currentPage.value, perPage.value * (currentPage.value + 1))
-)
-
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value))
-
-const currentPageData = computed(() => currentPage.value + 1)
-
+const currentPageWatcher = watch(currentPage, () => {
+    currentPageData.value = currentPage.value + 1
+    refresh()
+})
+const margin = 2
+const numPages = computed(() => Math.ceil(itemsCount.value / perPage.value))
+const currentPageData = ref(currentPage.value + 1)
 const pagesList = computed(() => {
     const pagesList = []
-
+    // for (let i = 0; i < numPages.value; i++) {
+    //     pagesList.push(i)
+    // }
     for (let i = 0; i < numPages.value; i++) {
-        pagesList.push(i)
+        if ((i >= currentPage.value - margin && i <= currentPage.value + margin)) {
+            pagesList.push(i)
+        }
     }
-
     return pagesList
 })
 
+const goToPage = () => {
+    const page = parseInt(currentPageData.value) - 1
+    console.log(page)
+    if (page >= 0 && page < numPages.value) {
+        currentPage.value = page
+    } else {
+        currentPageData.value = currentPage.value + 1
+    }
+}
+
+//Checkbox
+const checkedRows = ref([])
 const remove = (arr, cb) => {
     const newArr = []
-
     arr.forEach((item) => {
         if (!cb(item)) {
             newArr.push(item)
         }
     })
-
     return newArr
 }
-
 const checked = (isChecked, participant) => {
     if (isChecked) {
         checkedRows.value.push(participant)
@@ -85,6 +99,9 @@ const checked = (isChecked, participant) => {
         <p>This is sample modal</p>
     </CardBoxModal>
 
+
+    
+
     <table>
         <thead>
             <tr>
@@ -97,7 +114,7 @@ const checked = (isChecked, participant) => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="participant in itemsPaginated" :key="participant.id">
+            <tr v-for="participant in items" :key="participant.id">
                 <TableCheckboxCell v-if="checkable" @checked="checked($event, participant)" />
                 <td data-label="Name">
                     {{ participant.name }}
@@ -124,16 +141,42 @@ const checked = (isChecked, participant) => {
     <BaseLevel>
       <BaseButtons>
         <BaseButton
+          v-if="currentPage > 0"
+          :key="page"
+          :active="page === currentPage"
+          label="First"
+          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
+          small
+          @click="currentPage = 0"
+        />
+        <BaseButton
           v-for="page in pagesList"
           :key="page"
           :active="page === currentPage"
-          :label="page + 1"
+          :label="page === currentPage ? page + 1 : page + 1"
           :color="page === currentPage ? 'lightDark' : 'whiteDark'"
           small
           @click="currentPage = page"
         />
+        <BaseButton
+          v-if="currentPage < numPages - 1"
+          :key="page"
+          :active="page === currentPage"
+          label="Last"
+          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
+          small
+          @click="currentPage = numPages - 1"
+        />
       </BaseButtons>
-      <small>Page {{ currentPageData }} of {{ numPages }}</small>
+      <small>Page 
+        <input v-model="currentPageData" 
+        type="number" 
+        class="appearance-none border-blue-500 bottom bg-transparent w-12 text-gray-700 mr-1 ml-1 py-1 px-2 leading-tight focus:outline-none text-center dark:text-gray-300"
+        @keyup.enter="goToPage" 
+        :max="numPages" 
+        />
+        of 
+        {{ numPages }} </small>
     </BaseLevel>
   </div>
 </template>

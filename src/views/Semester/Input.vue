@@ -15,6 +15,8 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 
+import Swal from 'sweetalert2'
+
 import { useRouter } from 'vue-router'
 import { useSemesterStore } from '@/stores/semester'
 
@@ -46,6 +48,7 @@ const formData = reactive({
 const formReset = () => {
   formData.namaSemester = ''
   formData.statusSemester = false
+  customElementsFormRef.value.switchStatus = false
 }
 
 // Change the switch label based on the switch status
@@ -62,8 +65,10 @@ const toggleSwitch = () => {
 }
 
 const submit = () => {
-  console.log(formData)
-
+  formSubmit()
+  // formStatusSubmit()
+  // formStatusWithHeader.value = !formStatusWithHeader.value
+  // formReset()
 }
 
 const formStatusWithHeader = ref(true)
@@ -80,10 +85,44 @@ const formStatusSubmit = () => {
 
 //Database operation
 const formSubmit = async () => {
-  await semesterStore.create(formData)
-  console.log('Form submitted')
+  const data = {
+    name: formData.namaSemester,
+    status: formData.statusSemester,
+  }
+  try {
+    const response = await semesterStore.addSemester(data)
+    if (response.status === 201) {
+      formReset()
+      successAlert()
+    } else {
+      errorAlert()
+    }
+  } catch (error) {
+    console.log(error)
+    errorAlert()
+  }
 }
 
+//Sweetalert2
+const successAlert = () => {
+  Swal.fire({
+    title: 'Data berhasil disimpan',
+    icon: 'success',
+    showCancelButton: true,
+    showCloseButton: true,
+    confirmButtonText: 'Lihat Table',
+    cancelButtonText: 'Lihat Data',
+    cancelButtonColor: '#d33',
+  })
+}
+
+const errorAlert = () => {
+  Swal.fire({
+    title: 'Data gagal disimpan',
+    icon: 'error',
+    confirmButtonText: 'OK',
+  })
+}
 
 </script>
 

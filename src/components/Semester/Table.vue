@@ -7,6 +7,7 @@ import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import DeleteModal from '@/components/Action/DeleteModal.vue'
 
 defineProps({
     checkable: Boolean,
@@ -22,6 +23,15 @@ onMounted(async () => {
     await semesterStore.fetchSemesters()
     items.value = semesterStore.items
 })
+
+const refresh = async () => {
+    await semesterStore.fetchSemesters()
+    items.value = semesterStore.items
+}
+
+const handleDeleted = () => {
+    refresh()
+}
 
 // const items = computed(() => mainStore.clients)
 
@@ -45,17 +55,14 @@ const currentPageData = computed(() => currentPage.value + 1)
 
 const pagesList = computed(() => {
     const pagesList = []
-
     for (let i = 0; i < numPages.value; i++) {
         pagesList.push(i)
     }
-
     return pagesList
 })
 
 const remove = (arr, cb) => {
     const newArr = []
-
     arr.forEach((item) => {
         if (!cb(item)) {
             newArr.push(item)
@@ -90,7 +97,7 @@ const checked = (isChecked, semester) => {
             <tr>
                 <th v-if="checkable" />
                 <th>Name</th>
-                <th>URL</th>
+                <th>Status Semester</th>
                 <th />
             </tr>
         </thead>
@@ -100,13 +107,13 @@ const checked = (isChecked, semester) => {
                 <td data-label="Name">
                     {{ semester.name }}
                 </td>
-                <td data-label="URL">
-                    {{ semester.url }}
+                <td data-label="Status">
+                    {{ semester.status }}
                 </td>
                 <td class="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-end" no-wrap>
                         <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
-                        <BaseButton color="danger" :icon="mdiTrashCan" small @click="isModalDangerActive = true" />
+                        <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester" @onDeleted="handleDeleted" />
                     </BaseButtons>
                 </td>
             </tr>
