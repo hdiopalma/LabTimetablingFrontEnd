@@ -37,7 +37,6 @@ const submitPass = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiAccount" title="Profile" main>
         <BaseButton
@@ -132,5 +131,4 @@ const submitPass = () => {
         </CardBox>
       </div>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

@@ -7,7 +7,6 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
 </script>
 
 <template>
-  <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="pinkRed">
       <CardBox :class="cardClass">
         <div class="space-y-3">
@@ -23,5 +22,4 @@ import LayoutGuest from '@/layouts/LayoutGuest.vue'
         </template>
       </CardBox>
     </SectionFullScreen>
-  </LayoutGuest>
 </template>

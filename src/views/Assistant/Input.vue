@@ -87,7 +87,6 @@ const formStatusSubmit = () => {
 </script>
 
 <template>
-    <LayoutAuthenticated>
         <SectionMain>
             <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Forms Assistant" main>
                 <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast"
@@ -125,5 +124,4 @@ const formStatusSubmit = () => {
                 </template>
             </CardBox>
         </SectionMain>
-    </LayoutAuthenticated>
 </template>

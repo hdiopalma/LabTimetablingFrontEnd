@@ -5,7 +5,7 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <div>
     <SectionTitle first>Mobile & Tablet</SectionTitle>
 
     <SectionMain>
@@ -55,5 +55,5 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
         />
       </div>
     </SectionMain>
-  </LayoutAuthenticated>
+  </div>
 </template>

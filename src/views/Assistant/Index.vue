@@ -18,7 +18,6 @@ const goToInput = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Assistant Data" main>
         <BaseButton
@@ -36,5 +35,4 @@ const goToInput = () => {
         <TableAssistant checkable />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

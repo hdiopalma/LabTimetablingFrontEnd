@@ -22,7 +22,6 @@ const goToInput = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Module Data" main>
         <BaseButton
@@ -40,5 +39,4 @@ const goToInput = () => {
         <TableModule />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

@@ -8,10 +8,10 @@ import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
+import CardBoxComponentLoadingVue from '@/components/CardBoxComponentLoading.vue'
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Tables" main>
         <BaseButton
@@ -39,8 +39,7 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
       </NotificationBar>
 
       <CardBox>
-        <CardBoxComponentEmpty />
+        <CardBoxComponentLoadingVue duration="10s" />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

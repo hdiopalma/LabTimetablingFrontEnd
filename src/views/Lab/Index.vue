@@ -18,7 +18,6 @@ const goToInput = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Labs Data" main>
         <BaseButton
@@ -36,5 +35,4 @@ const goToInput = () => {
         <TableLab checkable />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

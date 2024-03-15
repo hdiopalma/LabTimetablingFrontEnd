@@ -82,57 +82,56 @@ const checked = (isChecked, semester) => {
 </script>
 
 <template>
-    <CardBoxModal v-model="isModalActive" title="Sample modal">
-        <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-        <p>This is sample modal</p>
-    </CardBoxModal>
+        <div>
+            <CardBoxModal v-model="isModalActive" title="Sample modal">
+                <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+                <p>This is sample modal</p>
+            </CardBoxModal>
 
-    <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
-        <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-        <p>This is sample modal</p>
-    </CardBoxModal>
+            <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
+                <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+                <p>This is sample modal</p>
+            </CardBoxModal>
 
-    <table>
-        <thead>
-            <tr>
-                <th v-if="checkable" />
-                <th>Name</th>
-                <th>Status Semester</th>
-                <th />
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="semester in itemsPaginated" :key="semester.id">
-                <TableCheckboxCell v-if="checkable" @checked="checked($event, semester)" />
-                <td data-label="Name">
-                    {{ semester.name }}
-                </td>
-                <td data-label="Status">
-                    {{ semester.status }}
-                </td>
-                <td class="before:hidden lg:w-1 whitespace-nowrap">
-                    <BaseButtons type="justify-start lg:justify-end" no-wrap>
-                        <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
-                        <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester" @onDeleted="handleDeleted" />
+
+            <table>
+                <thead>
+                    <tr>
+                        <th v-if="checkable" />
+                        <th>Name</th>
+                        <th>Status Semester</th>
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="semester in itemsPaginated" :key="semester.id">
+                        <TableCheckboxCell v-if="checkable" @checked="checked($event, semester)" />
+                        <td data-label="Name">
+                            {{ semester.name }}
+                        </td>
+                        <td data-label="Status">
+                            {{ semester.status }}
+                        </td>
+                        <td class="before:hidden lg:w-1 whitespace-nowrap">
+                            <BaseButtons type="justify-start lg:justify-end" no-wrap>
+                                <BaseButton color="info" :icon="mdiEye" small @click="isModalActive = true" />
+                                <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester"
+                                    @onDeleted="handleDeleted" />
+                            </BaseButtons>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+                <BaseLevel>
+                    <BaseButtons>
+                        <BaseButton v-for="page in pagesList" :key="page" :active="page === currentPage"
+                            :label="page + 1" :color="page === currentPage ? 'lightDark' : 'whiteDark'" small
+                            @click="currentPage = page" />
                     </BaseButtons>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
-    <BaseLevel>
-      <BaseButtons>
-        <BaseButton
-          v-for="page in pagesList"
-          :key="page"
-          :active="page === currentPage"
-          :label="page + 1"
-          :color="page === currentPage ? 'lightDark' : 'whiteDark'"
-          small
-          @click="currentPage = page"
-        />
-      </BaseButtons>
-      <small>Page {{ currentPageData }} of {{ numPages }}</small>
-    </BaseLevel>
-  </div>
+                    <small>Page {{ currentPageData }} of {{ numPages }}</small>
+                </BaseLevel>
+            </div>
+        </div>
+
 </template>

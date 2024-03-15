@@ -8,7 +8,7 @@ import CardBox from '@/components/CardBox.vue'
 import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
+import CardBoxComponentLoading from '@/components/CardBoxComponentLoading.vue'
 
 import { useRouter } from 'vue-router'
 
@@ -21,7 +21,6 @@ const goToInput = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Participant Data" main>
         <BaseButton
@@ -39,5 +38,4 @@ const goToInput = () => {
         <TableParticipant />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

@@ -27,7 +27,6 @@ const goToBack = () => {
   router.push('/semesters')
 }
 
-
 const customElementsForm = reactive({
   checkbox: ['lorem'],
   radio: 'one',
@@ -124,10 +123,13 @@ const errorAlert = () => {
   })
 }
 
+const isRouteActive = computed(() => {
+  return router.currentRoute.value.name === 'inputSemester'
+})
+
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Forms Semester" main>
         <BaseButton
@@ -166,5 +168,5 @@ const errorAlert = () => {
         </template>
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>
+

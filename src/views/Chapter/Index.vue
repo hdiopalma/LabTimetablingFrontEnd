@@ -20,7 +20,6 @@ const goToInput = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Chapters Data" main>
         <BaseButton
@@ -38,5 +37,4 @@ const goToInput = () => {
         <TableChapter checkable />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

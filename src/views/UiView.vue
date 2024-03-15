@@ -62,7 +62,7 @@ const darkModeStore = useDarkModeStore()
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <div>
     <CardBoxModal
       v-model="modalOneActive"
       title="Please confirm action"
@@ -501,5 +501,5 @@ const darkModeStore = useDarkModeStore()
         <CardBoxComponentEmpty />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+  </div>
 </template>

@@ -26,7 +26,6 @@ const handleStyleChange = (slug) => {
 </script>
 
 <template>
-  <LayoutGuest>
     <div :class="gradientBgPurplePink" class="flex min-h-screen items-center justify-center">
       <SectionMain>
         <h1 class="text-4xl md:text-5xl text-center text-white font-bold mt-12 mb-3 lg:mt-0">
@@ -60,5 +59,4 @@ const handleStyleChange = (slug) => {
         </div>
       </SectionMain>
     </div>
-  </LayoutGuest>
 </template>

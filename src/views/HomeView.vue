@@ -42,7 +42,6 @@ const transactionBarItems = computed(() => mainStore.history)
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
         <BaseButton
@@ -132,5 +131,4 @@ const transactionBarItems = computed(() => mainStore.history)
         <TableSampleClients />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

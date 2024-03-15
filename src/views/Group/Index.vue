@@ -11,7 +11,6 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 </script>
 
 <template>
-  <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Tables" main>
         <BaseButton
@@ -29,5 +28,4 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
         <TableGroup checkable />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
 </template>

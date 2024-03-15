@@ -91,7 +91,6 @@ const formReset = () => {
 </script>
 
 <template>
-    <LayoutAuthenticated>
         <SectionMain>
             <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Forms Participant" main>
                 <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast"
@@ -122,5 +121,4 @@ const formReset = () => {
                 </template>
             </CardBox>
         </SectionMain>
-    </LayoutAuthenticated>
 </template>

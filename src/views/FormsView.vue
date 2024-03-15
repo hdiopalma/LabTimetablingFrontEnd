@@ -55,7 +55,7 @@ const formStatusSubmit = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <div> <!-- This is the main container, to make it as a single component, so that the transition can be applied to the whole page -->
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Forms example" main>
         <BaseButton
@@ -166,5 +166,5 @@ const formStatusSubmit = () => {
         </template>
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+  </div>
 </template>
