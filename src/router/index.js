@@ -44,6 +44,17 @@ const routes = [
   },
 
   {
+    meta:{
+      title: 'Show Semester',
+      requiresAuth: true
+    },
+    path: '/semesters/:id',
+    name: 'showSemester',
+    component: () => import('@/views/Semester/Show.vue'),
+    props: true
+  },
+
+  {
     meta: {
       title: 'Labs'
     },

@@ -7,8 +7,6 @@ export const useParticipantStore = defineStore('participant', {
     state: () => ({
         items: [],
         itemsCount: 0,
-        previousPage: null,
-        nextPage: null,
     }),
     actions: {
 
@@ -18,21 +16,12 @@ export const useParticipantStore = defineStore('participant', {
         setCount(count) {
             this.itemsCount = count;
         },
-        setPreviousPage(page) {
-            this.previousPage = page;
-        },
-        setNextPage(page) {
-            this.nextPage = page;
-        },
 
         async fetchParticipants(page = 1, page_size = 10) {
             try {
                 const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
                 this.setItems(response.data.results);
-                this.setCount(response.data.count);
-                this.setPreviousPage(response.data.previous);
-                this.setNextPage(response.data.next);
-                
+                this.setCount(response.data.count);               
             } catch (error) {
                 console.error('Error fetching items:', error);
             }

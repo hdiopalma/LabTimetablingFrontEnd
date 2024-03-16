@@ -4,7 +4,7 @@
 import { mdiAccount } from '@mdi/js'
 
 //Vue
-import { reactive, ref, computed, defineProps } from 'vue'
+import { reactive, ref, computed, defineProps , watch, toRef, defineEmits } from 'vue'
 
 //Component
 import CardBox from '@/components/CardBox.vue'
@@ -43,15 +43,37 @@ const props = defineProps({
   },
 })
 
+//Define emits for updated message
+const emit = defineEmits(['data-updated'])
+const dataUpdated = () => {
+  emit('data-updated')
+}
+
 //Data
 const formData = reactive({
-  namaSemester: props.data ? props.data.name : '',
-  statusSemester: props.data ? props.data.status : false,
+  namaSemester: '',
+  statusSemester: false,
 })
+
+const tempData = computed(() => {
+  return {
+    id: props.data ? props.data.id : null,
+    namaSemester: props.data ? props.data.name : '',
+    statusSemester: props.data ? props.data.status : false,
+  }
+})
+
+//Updata form data when props.data is changed
+watch(tempData, (value) => {
+  formData.namaSemester = value.namaSemester
+  formData.statusSemester = value.statusSemester
+})
+
 
 const customElementsFormRef = ref({
   switchStatus: false,
 })
+
 
 //Method
 const formReset = () => {
@@ -61,10 +83,10 @@ const formReset = () => {
 
 // Change the switch label based on the switch status
 const switchLabel = computed(() => {
-    return customElementsFormRef.value.switchStatus ? 'Aktif' : 'Tidak Aktif'
+    return formData.statusSemester ? 'Aktif' : 'Tidak Aktif'
 })
 const switchLabelColor = computed(() => {
-  return customElementsFormRef.value.switchStatus ? 'text-green-500 font-medium' : 'text-red-500'
+  return formData.statusSemester ? 'text-green-500 font-medium' : 'text-red-500'
 })
 const toggleSwitch = () => {
   customElementsFormRef.value.switchStatus = !customElementsFormRef.value.switchStatus
@@ -91,8 +113,34 @@ const formSubmit = async () => {
   }
 }
 
+//Update
+//Database operation
+const formUpdate = async () => {
+  const data = {
+    id: props.data.id,
+    name: formData.namaSemester,
+    status: formData.statusSemester,
+  }
+  try {
+    const response = await semesterStore.updateSemester(data)
+    if (response.status === 200) {
+      successAlert()
+      dataUpdated()
+    } else {
+      errorAlert()
+    }
+  } catch (error) {
+    console.log(error)
+    errorAlert()
+  }
+}
+
 const submit = () => {
-  formSubmit()
+  if (props.update) {
+    formUpdate()
+  } else {
+    formSubmit()
+  }
 }
 
 //Sweetalert2
@@ -123,7 +171,7 @@ const errorAlert = () => {
 </script>
 
 <template>
-    <CardBox is-form @submit.prevent="submit">
+    <CardBox is-form @submit.prevent="submit" @reset.prevent="formReset">
         <FormField label="Nama Semester">
           <FormControl :icon="mdiAccount" placeholder="Nama Semester" name="namaSemester" v-model="formData.namaSemester" />
         </FormField>
@@ -144,7 +192,7 @@ const errorAlert = () => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" />
-            <BaseButton type="reset" color="info" outline label="Reset" @click="formReset" />
+            <BaseButton type="reset" color="info" outline label="Reset" />
           </BaseButtons>
         </template>
       </CardBox>

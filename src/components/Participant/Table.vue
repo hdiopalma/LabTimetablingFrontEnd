@@ -20,22 +20,36 @@ defineProps({
 const participantStore = useParticipantStore()
 
 const items = ref([])
-const visibleItems = ref([])
 const itemsCount = ref(0)
 const itemsLoaded = ref(false)
-onMounted(async () => {
-    await participantStore.fetchParticipants(currentPage.value + 1, perPage.value)
-    items.value = participantStore.items
-    itemsCount.value = participantStore.itemsCount
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    itemsLoaded.value = true
-})
+const isFailed = ref(false)
+
 const refresh = async () => {
+    try {
+        await load()
+        isFailed.value = false
+    } catch (error) {
+        isFailed.value = true
+    }
+}
+
+const load = async () => {
     await participantStore.fetchParticipants(currentPage.value + 1, perPage.value)
     items.value = participantStore.items
     itemsCount.value = participantStore.itemsCount
-    itemsLoaded.value = true
 }
+
+onMounted(async () => {
+    try {
+        await load()
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        itemsLoaded.value = true
+        isFailed.value = false
+    } catch (error) {
+        isFailed.value = true
+    }
+})
+
 
 //Modal
 const isModalActive = ref(false)
@@ -109,7 +123,6 @@ const checked = (isChecked, participant) => {
     <table>
         <thead>
             <tr>
-                <th v-if="checkable" />
                 <th>Name</th>
                 <th>NIM</th>
                 <th>Group</th>
@@ -120,7 +133,7 @@ const checked = (isChecked, participant) => {
         <tbody v-if="!itemsLoaded" class="divide-gray-200 dark:divide-slate-800">
             <tr v-for="n in perPage" :key="n">
                 <td colspan="6">
-                    <CardBoxComponentLoading padding="py-4 pt-2" height="h-8" />
+                    <CardBoxComponentLoading padding="py-4 pt-2" height="h-8" duration="2.5s" />
                 </td>
             </tr>
         </tbody>

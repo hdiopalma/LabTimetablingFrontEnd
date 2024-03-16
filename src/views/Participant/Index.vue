@@ -1,6 +1,12 @@
 
 <script setup>
+//Icon
 import { mdiMonitorCellphone, mdiTableBorder, mdiTableOff, mdiGithub, mdiShapeSquarePlus } from '@mdi/js'
+
+//Vue
+import { ref, defineAsyncComponent } from 'vue'
+
+//Component
 import SectionMain from '@/components/SectionMain.vue'
 import NotificationBar from '@/components/NotificationBar.vue'
 import TableParticipant from '@/components/Participant/Table.vue'
@@ -12,7 +18,20 @@ import CardBoxComponentLoading from '@/components/CardBoxComponentLoading.vue'
 
 import { useRouter } from 'vue-router'
 
+//Variable
 const router = useRouter()
+const AsyncTableParticipant = defineAsyncComponent(({
+  loader: () => import('@/components/Participant/Table.vue'),
+  loadingComponent: CardBoxComponentLoading,
+  delay: 200,
+  timeout: 3000,
+  errorComponent: {
+    render() {
+      return h('div', 'Error! Component loading failed.')
+    },
+  },
+}))
+
 
 const goToInput = () => {
   router.push('/participants/input')
@@ -35,7 +54,8 @@ const goToInput = () => {
       </SectionTitleLineWithButton>
 
       <CardBox class="mb-6" has-table>
-        <TableParticipant />
+        <!-- <TableParticipant /> -->
+        <AsyncTableParticipant />
       </CardBox>
     </SectionMain>
 </template>
