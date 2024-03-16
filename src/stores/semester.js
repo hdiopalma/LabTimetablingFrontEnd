@@ -26,6 +26,13 @@ export const useSemesterStore = defineStore('semester', {
             this.itemsCount = count;
             localStorage.setItem('semesterCount', count);
         },
+        setAllStatus(status) {
+            this.items.forEach((item) => {
+                if (item.status !== status) {
+                    item.status = status;
+                }
+            });
+        },
 
         async fetchSemesters(page = 1, page_size = 10) {
             try {
@@ -51,6 +58,9 @@ export const useSemesterStore = defineStore('semester', {
             try {
                 const response = await this.$apiURL.put(`${apiPath}${lab.id}/`, lab, header);
                 const index = this.items.findIndex((l) => l.id === lab.id);
+                if (lab.status === true) {
+                    this.setAllStatus(false);
+                }
                 this.items[index] = response.data;
                 return response;
             } catch (error) {
