@@ -117,7 +117,7 @@ const checked = (isChecked, participant) => {
                 <th />
             </tr>
         </thead>
-        <tbody v-if="!itemsLoaded">
+        <tbody v-if="!itemsLoaded" class="divide-gray-200 dark:divide-slate-800">
             <tr v-for="n in perPage" :key="n">
                 <td colspan="6">
                     <CardBoxComponentLoading padding="py-4 pt-2" height="h-8" />

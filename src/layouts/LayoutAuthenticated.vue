@@ -54,7 +54,7 @@ const menuClick = (event, item) => {
       <AsideMenu :is-aside-mobile-expanded="isAsideMobileExpanded" :is-aside-lg-active="isAsideLgActive"
         :menu="menuAside" @menu-click="menuClick" @aside-lg-close-click="isAsideLgActive = false" />
           <slot />
-      <FooterBar>
+      <FooterBar> 
 
       </FooterBar>
     </div>
@@ -62,8 +62,5 @@ const menuClick = (event, item) => {
 </template>
 
 <style>
-/* Add this style to disable transition on sidebar elements */
-.no-transition {
-  transition: none !important;
-}
+
 </style>

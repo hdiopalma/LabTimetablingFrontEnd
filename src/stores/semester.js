@@ -26,9 +26,9 @@ export const useSemesterStore = defineStore('semester', {
             try {
                 const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
                 this.setItems(response.data);
-                console.log('fetchSemesters', response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);
+                return error;
             }
         },
         async addSemester(lab) {
