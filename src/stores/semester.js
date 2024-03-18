@@ -79,7 +79,7 @@ export const useSemesterStore = defineStore('semester', {
         },
         async fetchSemester(id) {
             try {
-                const response = await this.$apiURL.get(`${apiPath}/${id}`);
+                const response = await this.$apiURL.get(`${apiPath}${id}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);

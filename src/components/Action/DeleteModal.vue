@@ -15,7 +15,7 @@ const props = defineProps({
     },
 })
 
-const emits = defineEmits(['onDeleted'])
+const emits = defineEmits(['onDeleted', 'isLoading'])
 
 const loading = ref(false)
 
@@ -38,6 +38,7 @@ const confirm = () => {
 const handleDelete = async (id) => {
     try {
         loading.value = true
+        emits('isLoading', loading.value)
         const response = await props.delete(id)
         if (response.status === 200 || response.status === 204) {
             Swal.fire('Deleted!', 'Your record has been deleted.', 'success')
@@ -49,6 +50,7 @@ const handleDelete = async (id) => {
         Swal.fire('Error!', error.message, 'error')
     } finally {
         loading.value = false
+        emits('isLoading', loading.value)
     }
 }
 

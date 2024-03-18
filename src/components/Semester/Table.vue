@@ -140,6 +140,9 @@ const remove = (arr, cb) => {
     })
     return newArr
 }
+
+const disabledButton = ref(false)
+
 const checked = (isChecked, participant) => {
     if (isChecked) {
         checkedRows.value.push(participant)
@@ -186,10 +189,12 @@ const checked = (isChecked, participant) => {
                     </td>
                     <td class="before:hidden lg:w-1 whitespace-nowrap">
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
-                            <BaseButton color="info" :icon="mdiEye" small />
-                            <BaseButton color="success" :icon="mdiPencilBox" small @click="handleUpdate(semester)" />
+                            <BaseButton color="info" :icon="mdiEye" small :disabled="disabledButton" :to="`/semesters/${semester.id}`" />
+                            <BaseButton color="success" :icon="mdiPencilBox" small @click="handleUpdate(semester)" :disabled="disabledButton" />
                             <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester"
-                                @onDeleted="handleDeleted" />
+                                @onDeleted="handleDeleted" 
+                                @isLoading="disabledButton = $event"
+                                />
                         </BaseButtons>
                     </td>
                 </tr>
