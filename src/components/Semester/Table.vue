@@ -1,14 +1,20 @@
 <script setup>
+//vue
 import { computed, ref, onMounted, defineProps, watch, reactive } from 'vue'
+
+//icons
+import { mdiEye, mdiTrashCan, mdiPencilBox } from '@mdi/js'
+
+//store
 import { useSemesterStore } from '@/stores/semester'
-import { mdiEye, mdiTrashCan } from '@mdi/js'
+
+//components
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import DeleteModal from '@/components/Action/DeleteModal.vue'
-
 import CardBoxComponentLoading from '@/components/CardBoxComponentLoading.vue'
 import FormInputSemester from '@/components/Semester/FormInput.vue'
 
@@ -180,7 +186,8 @@ const checked = (isChecked, participant) => {
                     </td>
                     <td class="before:hidden lg:w-1 whitespace-nowrap">
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
-                            <BaseButton color="info" :icon="mdiEye" small @click="handleUpdate(semester)" />
+                            <BaseButton color="info" :icon="mdiEye" small />
+                            <BaseButton color="success" :icon="mdiPencilBox" small @click="handleUpdate(semester)" />
                             <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester"
                                 @onDeleted="handleDeleted" />
                         </BaseButtons>

@@ -1,8 +1,8 @@
 <script setup>
-import { computed, defineEmits, defineProps } from 'vue'
+import { computed, defineEmits, defineProps, ref } from 'vue'
 import Swal from 'sweetalert2'
 import BaseButton from '@/components/BaseButton.vue'
-import { mdiTrashCan } from '@mdi/js'
+import { mdiTrashCan, mdiLoading } from '@mdi/js'
 
 const props = defineProps({
     id: {
@@ -17,6 +17,8 @@ const props = defineProps({
 
 const emits = defineEmits(['onDeleted'])
 
+const loading = ref(false)
+
 const confirm = () => {
     Swal.fire({
         title: 'Are you sure?',
@@ -28,7 +30,6 @@ const confirm = () => {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            // console.log('Delete', props.id)
             handleDelete(props.id)
         }
     })
@@ -36,6 +37,7 @@ const confirm = () => {
 
 const handleDelete = async (id) => {
     try {
+        loading.value = true
         const response = await props.delete(id)
         if (response.status === 200 || response.status === 204) {
             Swal.fire('Deleted!', 'Your record has been deleted.', 'success')
@@ -45,11 +47,16 @@ const handleDelete = async (id) => {
         }
     } catch (error) {
         Swal.fire('Error!', error.message, 'error')
+    } finally {
+        loading.value = false
     }
 }
 
 </script>
 
 <template>
-    <BaseButton color="danger" :icon="mdiTrashCan" small @click="confirm" />
+    <BaseButton color="danger" :icon="mdiTrashCan" small @click="confirm" :disabled="loading" v-if="!loading" />
+    <!-- Loading -->
+    <BaseButton color="danger" :icon="mdiLoading" small :loading="true" v-else disabled />
+    
 </template>
