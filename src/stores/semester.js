@@ -72,10 +72,9 @@ export const useSemesterStore = defineStore('semester', {
                 const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
                 return response;
-                // console.log('deleteSemester', id);
             } catch (error) {
-                console.error('Error deleting lab:', error);
-                return error;
+                console.error('Error deleting lab:', error.response);
+                return error.response;
             }
         },
         async fetchSemester(id) {

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 import { AppConfig } from '@/services/appConfig'
+import { useDarkModeStore } from '@/stores/darkMode.js'
 
 export const useMainStore = defineStore('main', () => {
 
@@ -13,6 +14,11 @@ export const useMainStore = defineStore('main', () => {
     clients: ref([]),
     history: ref([]),
   }
+
+  //Dark Mode
+// Initialize dark mode setting from localStorage when the application starts
+  const darkModeStore = useDarkModeStore();
+  darkModeStore.set(localStorage.getItem('darkMode') ? localStorage.getItem('darkMode') === '1' : false);
 
   // Getters
   const getters = {

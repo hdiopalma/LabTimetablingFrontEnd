@@ -41,10 +41,10 @@ const handleDelete = async (id) => {
             Swal.fire('Deleted!', 'Your record has been deleted.', 'success')
             emits('onDeleted')
         } else {
-            Swal.fire('Error!', 'Your record has not been deleted.', 'error')
+            Swal.fire('Error!', response.data.message, 'error')
         }
     } catch (error) {
-        Swal.fire('Error!', 'Your record has not been deleted.', 'error')
+        Swal.fire('Error!', error.message, 'error')
     }
 }
 
