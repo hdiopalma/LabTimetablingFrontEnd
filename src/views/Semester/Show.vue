@@ -4,7 +4,7 @@
 import { ref, defineProps, onMounted } from 'vue'
 
 //icons
-import { mdiChartTimelineVariant, mdiGithub } from '@mdi/js'
+import { mdiAccountMultiple, mdiAccount, mdiFolderAccountOutline } from '@mdi/js'
 
 //components
 import { mdiBallotOutline, mdiRefresh } from '@mdi/js'
@@ -35,6 +35,14 @@ const data = ref({
     status: false
 })
 
+const countData = ref({
+  module: 0,
+  group: 0,
+  participant: 0
+})
+
+const disabled = ref(true)
+
 const pageData = ref({
   title: 'Semester',
 })
@@ -48,6 +56,18 @@ const load = async () => {
     data.value.name = response.name
     data.value.status = response.status
     pageData.value.title = 'Semester ' + response.name
+    disabled.value = false
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const loadCount = async () => {
+  try {
+    const response = await semesterStore.fetchCount(props.id)
+    countData.value.module = response.module_count
+    countData.value.group = response.group_count
+    countData.value.participant = response.participant_count
   } catch (error) {
     console.log(error)
   }
@@ -56,6 +76,7 @@ const load = async () => {
 //Load data before page loaded
 onMounted(async () => {
   await load()
+  await loadCount()
 })
 
 
@@ -81,12 +102,12 @@ const goToBack = () => {
         />
       </SectionTitleLineWithButton>
 
-      <FormInputSemester :data="data" :update="true" />
+      <FormInputSemester :data="data" :update="true" :disabled="disabled" />
     </SectionMain>
 
     <SectionMain>
 
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
+      <SectionTitleLineWithButton :icon="mdiFolderAccountOutline" title="Detail" main>
         
       </SectionTitleLineWithButton>
 
@@ -95,27 +116,28 @@ const goToBack = () => {
           trend="12%"
           trend-type="up"
           color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
+          :icon="mdiFolderAccountOutline"
+          :number="countData.module"
+          suffix=" Modul"
+          label="Module"
         />
         <CardBoxWidget
           trend="12%"
           trend-type="down"
           color="text-blue-500"
-          :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
+          :icon="mdiAccount"
+          :number="countData.group"
+          suffix=" Grup"
+          label="Group"
         />
         <CardBoxWidget
           trend="Overflow"
           trend-type="alert"
           color="text-red-500"
-          :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          :icon="mdiAccountMultiple"
+          :number="countData.participant"
+          suffix=" Peserta"
+          label="Participant"
         />
       </div>
       

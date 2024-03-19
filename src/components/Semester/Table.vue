@@ -9,6 +9,7 @@ import { mdiEye, mdiTrashCan, mdiPencilBox } from '@mdi/js'
 import { useSemesterStore } from '@/stores/semester'
 
 //components
+import PillTag from '@/components/PillTag.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
 import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
@@ -158,11 +159,6 @@ const checked = (isChecked, participant) => {
             <FormInputSemester :data = "computedData" update @dataUpdated="isModalActive = false" />
         </CardBoxModal>
 
-        <CardBoxModal v-model="isModalDangerActive" title="Please confirm" button="danger" has-cancel>
-            <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-            <p>This is sample modal</p>
-        </CardBoxModal>
-
 
         <table>
             <thead>
@@ -185,7 +181,7 @@ const checked = (isChecked, participant) => {
                         {{ semester.name }}
                     </td>
                     <td data-label="Status">
-                        {{ semester.status }}
+                        <PillTag :label="semester.status ? 'Active' : 'Inactive'" :color="semester.status ? 'success' : 'danger'" />
                     </td>
                     <td class="before:hidden lg:w-1 whitespace-nowrap">
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
