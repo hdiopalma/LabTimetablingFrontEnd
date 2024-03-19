@@ -1,14 +1,12 @@
 
-import { mdiShape } from '@mdi/js';
-
-import { mdiShapeSquarePlus } from '@mdi/js';
 <script setup>
+//icons
 import { mdiMonitorCellphone, mdiTableBorder, mdiTableOff, mdiGithub, mdiShapeSquarePlus } from '@mdi/js'
+
+//components
 import SectionMain from '@/components/SectionMain.vue'
-import NotificationBar from '@/components/NotificationBar.vue'
 import TableSemester from '@/components/Semester/Table.vue'
 import CardBox from '@/components/CardBox.vue'
-import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'

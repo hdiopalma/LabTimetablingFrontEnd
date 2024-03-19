@@ -41,6 +41,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 //Define emits for updated message
@@ -103,7 +107,7 @@ const formSubmit = async () => {
     const response = await semesterStore.addSemester(data)
     if (response.status === 201) {
       formReset()
-      successAlert()
+      successAlert(response.data.id)
     } else {
       errorAlert()
     }
@@ -144,7 +148,7 @@ const submit = () => {
 }
 
 //Sweetalert2
-const successAlert = () => {
+const successAlert = (id) => {
   Swal.fire({
     title: 'Data berhasil disimpan',
     icon: 'success',
@@ -156,6 +160,8 @@ const successAlert = () => {
   }).then((result) => {
     if (result.isConfirmed) {
       router.push('/semesters')
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      router.push('/semesters/' + id)
     }
   })
 }
@@ -173,7 +179,7 @@ const errorAlert = () => {
 <template>
     <CardBox is-form @submit.prevent="submit" @reset.prevent="formReset">
         <FormField label="Nama Semester">
-          <FormControl :icon="mdiAccount" placeholder="Nama Semester" name="namaSemester" v-model="formData.namaSemester" />
+          <FormControl :icon="mdiAccount" placeholder="Nama Semester" name="namaSemester" v-model="formData.namaSemester" :disabled="props.disabled" />
         </FormField>
 
         <BaseDivider />
@@ -186,6 +192,7 @@ const errorAlert = () => {
             :options="{statusSemester: switchLabel}"
             @change="toggleSwitch"
             :label-color="switchLabelColor"
+            :disabled="props.disabled"
           />
         </FormField>
 

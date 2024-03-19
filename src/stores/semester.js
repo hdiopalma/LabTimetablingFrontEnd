@@ -85,6 +85,15 @@ export const useSemesterStore = defineStore('semester', {
                 console.error('Error fetching lab:', error);
             }
         },
+        //count
+        async fetchCount(id, child = 'all') {
+            try {
+                const response = await this.$apiURL.get(`${apiPath}${id}/count/${child}`);
+                return response.data;
+            } catch (error) {
+                console.error('Error counting lab:', error);
+            }
+        }
     },
 });
 
