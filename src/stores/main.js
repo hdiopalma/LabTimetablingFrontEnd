@@ -22,7 +22,7 @@ export const useMainStore = defineStore('main', () => {
 
   // Getters
   const getters = {
-    userAvatar: computed(() => '/humaret.jpg')
+    userAvatar: computed(() => '/gotao.jpg')
   }
 
   // Actions

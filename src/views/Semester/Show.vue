@@ -113,8 +113,7 @@ const goToBack = () => {
 
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
-          trend="12%"
-          trend-type="up"
+          trend="Jumlah modul yang tersedia"
           color="text-emerald-500"
           :icon="mdiFolderAccountOutline"
           :number="countData.module"
@@ -122,8 +121,7 @@ const goToBack = () => {
           label="Module"
         />
         <CardBoxWidget
-          trend="12%"
-          trend-type="down"
+          trend="Grup yang aktif pada semester ini"
           color="text-blue-500"
           :icon="mdiAccount"
           :number="countData.group"
@@ -131,8 +129,7 @@ const goToBack = () => {
           label="Group"
         />
         <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
+          trend="Peserta yang terdaftar pada semester ini"
           color="text-red-500"
           :icon="mdiAccountMultiple"
           :number="countData.participant"

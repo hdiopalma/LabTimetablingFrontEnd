@@ -36,7 +36,7 @@ const isFailed = ref(false)
 onMounted(async () => {
     try {
         await load()
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise(resolve => setTimeout(resolve, 500))
         itemsLoaded.value = true
         isFailed.value = false
         
@@ -155,12 +155,12 @@ const checked = (isChecked, participant) => {
 
 <template>
     <div>
-        <CardBoxModal v-model="isModalActive" title="Update Data Semester" :hasFooter = false>
+        <CardBoxModal v-model="isModalActive" title="Update Data Semester" :hasFooter = false has-cancel>
             <FormInputSemester :data = "computedData" update @dataUpdated="isModalActive = false" />
         </CardBoxModal>
 
-
-        <table>
+        <CardBoxComponentLoading height="h-12" duration="1.5s" margin="mb-4" v-if="!itemsLoaded" v-for="i in displayCount" :key="i" />
+        <table v-else class="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -168,14 +168,7 @@ const checked = (isChecked, participant) => {
                     <th />
                 </tr>
             </thead>
-            <tbody v-if="!itemsLoaded" class="divide-gray-200 dark:divide-slate-800">
-                <tr v-for="n in displayCount" :key="n">
-                    <td colspan="6">
-                        <CardBoxComponentLoading padding="py-4 pt-2" height="h-8" duration="2.5s" />
-                    </td>
-                </tr>
-            </tbody>
-            <tbody class="divide-gray-200 dark:divide-slate-800" v-else>
+            <tbody class="divide-gray-200 dark:divide-slate-800">
                 <tr v-for="semester in items" :key="semester.id">
                     <td data-label="Name">
                         {{ semester.name }}
@@ -196,7 +189,7 @@ const checked = (isChecked, participant) => {
                 </tr>
             </tbody>
         </table>
-        <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
+        <div class="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800" v-if="numPages > 1 && itemsLoaded">
             <BaseLevel>
                 <BaseButtons>
                     <BaseButton v-if="currentPage > 0" label="First" small @click="currentPage = 0" />

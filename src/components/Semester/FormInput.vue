@@ -198,7 +198,7 @@ const errorAlert = () => {
 
         <template #footer>
           <BaseButtons>
-            <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" />
+            <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" :disabled="props.disabled" />
             <BaseButton type="reset" color="info" outline label="Reset" />
           </BaseButtons>
         </template>

@@ -39,7 +39,7 @@ import CardBoxComponentLoadingVue from '@/components/CardBoxComponentLoading.vue
       </NotificationBar>
 
       <CardBox>
-        <CardBoxComponentLoadingVue duration="10s" />
+        <CardBoxComponentLoadingVue duration="1s" />
       </CardBox>
     </SectionMain>
 </template>

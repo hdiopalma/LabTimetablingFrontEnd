@@ -42,7 +42,7 @@ const load = async () => {
 onMounted(async () => {
     try {
         await load()
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise(resolve => setTimeout(resolve, 500))
         itemsLoaded.value = true
         isFailed.value = false
     } catch (error) {
@@ -62,7 +62,7 @@ const currentPageWatcher = watch(currentPage, () => {
     currentPageData.value = currentPage.value + 1
     refresh()
 })
-const margin = 2
+const margin = 1
 const numPages = computed(() => Math.ceil(itemsCount.value / perPage.value))
 const currentPageData = ref(currentPage.value + 1)
 const pagesList = computed(() => {
@@ -133,7 +133,7 @@ const checked = (isChecked, participant) => {
         <tbody v-if="!itemsLoaded" class="divide-gray-200 dark:divide-slate-800">
             <tr v-for="n in perPage" :key="n">
                 <td colspan="6">
-                    <CardBoxComponentLoading padding="py-4 pt-2" height="h-8" duration="2.5s" />
+                    <CardBoxComponentLoading padding="py-4 pt-2" margin="mb-2" height="h-8" duration="1.5s" />
                 </td>
             </tr>
         </tbody>

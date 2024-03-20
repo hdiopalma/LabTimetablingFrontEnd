@@ -18,6 +18,10 @@ export default {
       type: String,
       default: 'py-24'
     },
+    margin: {
+      type: String,
+      default: 'mb-4'
+    },
     bold: {
       type: Boolean,
       default: false
@@ -32,7 +36,7 @@ export default {
   },
   methods: {
     getAnimationDelay(index) {
-      const delay = parseFloat(this.duration) / 10;
+      const delay = parseFloat(this.duration) / 20;
       return `animation-delay: -${delay * index}s`;
     }
   }
@@ -40,10 +44,10 @@ export default {
 </script>
 
 <template>
-  <div class='flex space-x-2 justify-center items-center text-gray-500 dark:text-gray-400'
-    :class="`${height} ${padding} ${bold ? 'font-bold' : ''}`"
+  <div class='flex space-x-2 justify-center items-center text-gray-500 dark:text-gray-400 md:p-4'
+    :class="`${height} ${padding} ${bold ? 'font-bold' : ''} ${margin}`"
     :style="cssProps">
-    <span class='sr-only'>Loading...</span>
+    <span class='sr-only'>{{ title }}</span>
 
     <div v-for="(letter, index) in ['L', 'O', 'A', 'D', 'I', 'N', 'G']"
       :key="index"
@@ -58,7 +62,7 @@ export default {
 .animate-bounce {
   animation-duration: var(--animation-duration);
   animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear; /* Updated: changed from ease-in-out to linear */
   transform-origin: center bottom;
   animation-name: fadeInOut;
 }

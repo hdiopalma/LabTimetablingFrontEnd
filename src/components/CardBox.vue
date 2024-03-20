@@ -12,6 +12,9 @@ const props = defineProps({
     type: String,
     default: 'flex-col'
   },
+  hasFooter: {
+    type: Boolean,
+    default: true},
   hasComponentLayout: Boolean,
   hasTable: Boolean,
   isForm: Boolean,
@@ -56,7 +59,7 @@ const submit = (event) => {
       <CardBoxComponentBody :no-padding="hasTable">
         <slot />
       </CardBoxComponentBody>
-      <CardBoxComponentFooter v-if="hasFooterSlot">
+      <CardBoxComponentFooter v-if="hasFooterSlot && props.hasFooter">
         <slot name="footer" />
       </CardBoxComponentFooter>
     </template>

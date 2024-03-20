@@ -61,12 +61,13 @@ window.addEventListener('keydown', (e) => {
       v-show="value"
       class="shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50"
       is-modal
+      :has-footer="hasFooter"
     >
       <CardBoxComponentTitle :title="title">
         <BaseButton
           v-if="hasCancel"
           :icon="mdiClose"
-          color="whiteDark"
+          color="lightDark"
           small
           rounded-full
           @click.prevent="cancel"
