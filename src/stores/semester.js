@@ -44,36 +44,37 @@ export const useSemesterStore = defineStore('semester', {
                 return error;
             }
         },
-        async addSemester(lab) {
+        async addSemester(semester) {
             try {
-                const response = await this.$apiURL.post(apiPath, lab, header);
+                const response = await this.$apiURL.post(apiPath, semester, header);
                 this.items.push(response.data);
                 return response;
             } catch (error) {
-                console.error('Error adding lab:', error);
+                console.error('Error adding semester:', error);
                 return error;
             }
         },
-        async updateSemester(lab) {
+        async updateSemester(semester) {
             try {
-                const response = await this.$apiURL.put(`${apiPath}${lab.id}/`, lab, header);
-                const index = this.items.findIndex((l) => l.id === lab.id);
-                if (lab.status === true) {
+                const response = await this.$apiURL.put(`${apiPath}${semester.id}/`, semester, header);
+                const index = this.items.findIndex((l) => l.id === semester.id);
+                if (semester.status === true) {
                     this.setAllStatus(false);
                 }
                 this.items[index] = response.data;
                 return response;
             } catch (error) {
-                console.error('Error updating lab:', error);
+                console.error('Error updating semester:', error);
+                return error.response;
             }
         },
         async deleteSemester(id) {
             try {
                 const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
-                this.items = this.items.filter((lab) => lab.id !== id);
+                this.items = this.items.filter((semester) => semester.id !== id);
                 return response;
             } catch (error) {
-                console.error('Error deleting lab:', error.response);
+                console.error('Error deleting semester:', error.response);
                 return error.response;
             }
         },
@@ -82,7 +83,8 @@ export const useSemesterStore = defineStore('semester', {
                 const response = await this.$apiURL.get(`${apiPath}${id}`);
                 return response.data;
             } catch (error) {
-                console.error('Error fetching lab:', error);
+                console.error('Error fetching semester:', error);
+                return error.response;
             }
         },
         //count
@@ -91,7 +93,8 @@ export const useSemesterStore = defineStore('semester', {
                 const response = await this.$apiURL.get(`${apiPath}${id}/count/${child}`);
                 return response.data;
             } catch (error) {
-                console.error('Error counting lab:', error);
+                console.error('Error counting semester:', error);
+                return error.response;
             }
         }
     },

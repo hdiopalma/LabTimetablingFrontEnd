@@ -92,6 +92,7 @@ const textareaEl = ref(null)
 const inputEl = ref(null)
 
 onMounted(() => {
+  
   if (selectEl.value) {
     emit('setRef', selectEl.value)
   } else if (textareaEl.value) {
@@ -138,7 +139,7 @@ if (props.ctrlKFocus) {
       :required="required"
       :disabled="props.disabled"
     >
-      <option v-for="option in options" :key="option.id ?? option" :value="option">
+      <option v-for="option in options" :key="option.id ?? option" :value="option.id">
         {{ option.label ?? option }}
       </option>
     </select>

@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+import { AppConfig } from '@/services/appConfig';
+
 const apiPath = 'data/laboratory';
+const token = localStorage.getItem(AppConfig.tokenKey) || null;
+const header = {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Token ${token}`,
+    },
+};
 
 export const useLabStore = defineStore('lab', {
     state: () => ({
@@ -29,27 +38,33 @@ export const useLabStore = defineStore('lab', {
         },
         async addLab(lab) {
             try {
-                const response = await this.$apiURL.post(apiPath, lab);
+                const response = await this.$apiURL.post(`${apiPath}/`, lab, header);
                 this.items.push(response.data);
+                return response;
             } catch (error) {
                 console.error('Error adding lab:', error);
+                return error.response;
             }
         },
         async updateLab(lab) {
             try {
-                const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
+                const response = await this.$apiURL.put(`${apiPath}/${lab.id}/`, lab, header);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
+                return response;
             } catch (error) {
                 console.error('Error updating lab:', error);
+                return error.response;
             }
         },
         async deleteLab(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}/${id}`);
+                const response = await this.$apiURL.delete(`${apiPath}/${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
+                return response;
             } catch (error) {
                 console.error('Error deleting lab:', error);
+                return error.response;
             }
         },
         async fetchLab(id) {
@@ -58,14 +73,16 @@ export const useLabStore = defineStore('lab', {
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);
+                return error.response;
             }
         },
         async fetchCount(id, child = 'all') {
             try {
-                const response = await this.$apiURL.get(`${apiPath}${id}/count/${child}`);
+                const response = await this.$apiURL.get(`${apiPath}/${id}/count/${child}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching count:', error);
+                return error.response;
             }
         }
     },

@@ -1,7 +1,7 @@
 <script setup>
 
 import { mdiCalendar } from '@mdi/js';
-import { reactive, ref, computed, onMounted } from 'vue'
+import { reactive, ref, computed, onMounted , defineEmits} from 'vue'
 import { useSemesterStore } from '@/stores/semester'
 
 import FormControl from '@/components/FormControl.vue'
@@ -12,23 +12,39 @@ const semesterItems = ref([])
 onMounted(async () => {
     await semesterStore.fetchSemesters()
     semesterItems.value = semesterStore.items.map(item => ({ id: item.id, label: item.name }))
-    form.items = semesterItems.value[0]
+    if (computedValue.value === '') {
+        computedValue.value = semesterItems.value[0].id
+    }
+    console.log(computedValue.value)
 })
 
-const form = reactive({
-    items: null,
-})
-
-defineProps({
+const props = defineProps({
     name: {
         type: String,
-        default: 'Semester'
+        default: 'semester',
     },
+    modelValue: {
+    type: [String, Number, Boolean, Array, Object],
+    default: ''
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+// alert parent when selected value is changed
+const computedValue = computed({
+  get: () => props.modelValue,
+  set: (value) => {
+    emit('update:modelValue', value)
+  }
 })
 
 </script>
 
 <template>
-    <FormControl v-model="form.items" :options="semesterItems" :name="name" :icon="mdiCalendar"/>
+    <FormControl v-model="computedValue"
+    :options="semesterItems" 
+    :name="props.name"
+    :icon="mdiCalendar"/>
 </template>
 

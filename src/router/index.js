@@ -71,6 +71,16 @@ const routes = [
     name: 'inputLab',
     component: () => import('@/views/Lab/Input.vue')
   },
+  {
+    meta: {
+      title: 'Show Lab',
+      requiresAuth: true
+    },
+    path: '/labs/:id',
+    name: 'showLab',
+    component: () => import('@/views/Lab/Show.vue'),
+    props: true
+  },
 
 
   {
