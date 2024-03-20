@@ -1,22 +1,28 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const apiPath = 'data/lab';
+const apiPath = 'data/laboratory';
 
 export const useLabStore = defineStore('lab', {
     state: () => ({
         items: [],
+        itemsCount: 0,
     }),
     actions: {
 
         setItems(items) {
             this.items = items;
         },
+        setCount(count) {
+            this.itemsCount = count;
+            localStorage.setItem('labCount', count);
+        },
 
-        async fetchLabs() {
+        async fetchLabs(page = 1, page_size = 10) {
             try {
-                const response = await this.$apiURL.get(apiPath);
-                this.setItems(response.data);
+                const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
+                this.setItems(response.data.results);
+                this.setCount(response.data.count);
             } catch (error) {
                 console.error('Error fetching items:', error);
             }
@@ -54,6 +60,14 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error fetching lab:', error);
             }
         },
+        async fetchCount(id, child = 'all') {
+            try {
+                const response = await this.$apiURL.get(`${apiPath}${id}/count/${child}`);
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching count:', error);
+            }
+        }
     },
 });
 
