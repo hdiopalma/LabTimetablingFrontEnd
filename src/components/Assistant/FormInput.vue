@@ -67,17 +67,18 @@ const tempData = computed(() => {
         id: props.data ? props.data.id : null,
         namaAsisten: props.data ? props.data.name : '',
         nimAsisten: props.data ? props.data.nim : '',
-        labAsisten: props.data ? props.data.lab.id : '',
-        semesterAsisten: props.data ? props.data.semester.id : '',
+        labAsisten: props.data ? props.data.laboratory : '',
+        semesterAsisten: props.data ? props.data.semester : '',
     }
 })
 
 //Updata form data when props.data is changed
 watch(tempData, (value) => {
-    formData.namaAsisten = value.namaLab
-    formData.nimAsisten = value.semesterLab
+    formData.namaAsisten = value.namaAsisten
+    formData.nimAsisten = value.nimAsisten
     formData.labAsisten = value.labAsisten
     formData.semesterAsisten = value.semesterAsisten
+
 })
 
 //Method
@@ -141,6 +142,7 @@ const submit = () => {
         formUpdate()
     } else {
         formSubmit()
+        
     }
 }
 
@@ -156,9 +158,9 @@ const successAlert = (id) => {
         cancelButtonColor: '#d33',
     }).then((result) => {
         if (result.isConfirmed) {
-            router.push('/labs')
+            router.push('/assistants')
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-            router.push('/labs/' + id)
+            router.push('/assistants/' + id)
         }
     })
 }
@@ -174,15 +176,15 @@ const errorAlert = () => {
 </script>
 
 <template>
-    <CardBox form @submit.prevent="submit">
+    <CardBox form @submit.prevent="submit" @reset.prevent="formReset" isForm>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField label="Nama Asisten">
-                <FormControl :icon="mdiAccount" placeholder="Nama Asisten" name="namaAsisten" />
+                <FormControl :icon="mdiAccount" placeholder="Nama Asisten" name="namaAsisten" v-model="formData.namaAsisten" />
             </FormField>
 
             <FormField label="NIM Asisten">
-                <FormControl :icon="mdiAccountBox" placeholder="NIM Asisten" name="nimAsisten" type="number" />
+                <FormControl :icon="mdiAccountBox" placeholder="NIM Asisten" name="nimAsisten" type="number" v-model="formData.nimAsisten" />
             </FormField>
         </div>
 
@@ -201,7 +203,7 @@ const errorAlert = () => {
 
         <template #footer>
             <BaseButtons>
-                <BaseButton type="submit" color="info" label="Submit" />
+                <BaseButton type="submit" color="info" :label="props.update ? 'Update' : 'Simpan'" />
                 <BaseButton type="reset" color="info" outline label="Reset" />
             </BaseButtons>
         </template>
