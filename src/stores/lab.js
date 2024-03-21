@@ -76,7 +76,7 @@ export const useLabStore = defineStore('lab', {
                 return error.response;
             }
         },
-        async fetchCount(id, child = 'all') {
+        async fetchCountLab(id, child = 'all') {
             try {
                 const response = await this.$apiURL.get(`${apiPath}/${id}/count/${child}`);
                 return response.data;

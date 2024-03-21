@@ -116,7 +116,7 @@ function dateToReadable(date) {
                     {{ module.laboratory.name }}
                 </td>
                 <td data-label="Semester">
-                    {{ module.semester.name }}
+                    {{ module.laboratory.semester.name }}
                 </td>
                 <td data-label="Start Date">
                     {{ dateToReadable(new Date(module.start_date)) }}

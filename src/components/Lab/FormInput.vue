@@ -108,7 +108,7 @@ const formUpdate = async () => {
     try {
         const response = await labStore.updateLab(data)
         if (response.status === 200) {
-            successAlert()
+            successAlert(props.data.id)
             dataUpdated()
         } else {
             errorAlert()

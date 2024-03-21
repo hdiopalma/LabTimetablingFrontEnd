@@ -109,7 +109,7 @@ const checked = (isChecked, group) => {
                     {{ group.module.laboratory.name }}
                 </td>
                 <td data-label="Semester">
-                    {{ group.module.semester.name }}
+                    {{ group.module.laboratory.semester.name }}
                 </td>
                 <td class="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-end" no-wrap>
