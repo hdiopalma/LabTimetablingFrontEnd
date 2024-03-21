@@ -17,7 +17,7 @@ export const useParticipantStore = defineStore('participant', {
             this.itemsCount = count;
         },
 
-        async fetchParticipants(page = 1, page_size = 10) {
+        async fetchItems(page = 1, page_size = 10) {
             try {
                 const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
                 this.setItems(response.data.results);
@@ -26,7 +26,7 @@ export const useParticipantStore = defineStore('participant', {
                 console.error('Error fetching items:', error);
             }
         },
-        async addParticipant(lab) {
+        async addItem(lab) {
             try {
                 const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
@@ -35,7 +35,7 @@ export const useParticipantStore = defineStore('participant', {
                 console.error('Error adding lab:', error);
             }
         },
-        async updateParticipant(lab) {
+        async updateItem(lab) {
             try {
                 const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
@@ -44,7 +44,7 @@ export const useParticipantStore = defineStore('participant', {
                 console.error('Error updating lab:', error);
             }
         },
-        async deleteParticipant(id) {
+        async deleteItem(id) {
             try {
                 await this.$apiURL.delete(`${apiPath}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
@@ -53,7 +53,7 @@ export const useParticipantStore = defineStore('participant', {
                 console.error('Error deleting lab:', error);
             }
         },
-        async fetchParticipant(id) {
+        async fetchItem(id) {
             try {
                 const response = await this.$apiURL.get(`${apiPath}/${id}`);
                 return response.data;

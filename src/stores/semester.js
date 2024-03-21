@@ -34,7 +34,7 @@ export const useSemesterStore = defineStore('semester', {
             });
         },
 
-        async fetchSemesters(page = 1, page_size = 10) {
+        async fetchItems(page = 1, page_size = 10) {
             try {
                 const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
                 this.setItems(response.data.results);
@@ -44,7 +44,7 @@ export const useSemesterStore = defineStore('semester', {
                 return error;
             }
         },
-        async addSemester(semester) {
+        async addItem(semester) {
             try {
                 const response = await this.$apiURL.post(apiPath, semester, header);
                 this.items.push(response.data);
@@ -54,7 +54,7 @@ export const useSemesterStore = defineStore('semester', {
                 return error;
             }
         },
-        async updateSemester(semester) {
+        async updateItem(semester) {
             try {
                 const response = await this.$apiURL.put(`${apiPath}${semester.id}/`, semester, header);
                 const index = this.items.findIndex((l) => l.id === semester.id);
@@ -68,7 +68,7 @@ export const useSemesterStore = defineStore('semester', {
                 return error.response;
             }
         },
-        async deleteSemester(id) {
+        async deleteItem(id) {
             try {
                 const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((semester) => semester.id !== id);
@@ -78,7 +78,7 @@ export const useSemesterStore = defineStore('semester', {
                 return error.response;
             }
         },
-        async fetchSemester(id) {
+        async fetchItem(id) {
             try {
                 const response = await this.$apiURL.get(`${apiPath}${id}`);
                 return response.data;
@@ -88,7 +88,7 @@ export const useSemesterStore = defineStore('semester', {
             }
         },
         //count
-        async fetchCount(id, child = 'all') {
+        async countItem(id, child = 'all') {
             try {
                 const response = await this.$apiURL.get(`${apiPath}${id}/count/${child}`);
                 return response.data;

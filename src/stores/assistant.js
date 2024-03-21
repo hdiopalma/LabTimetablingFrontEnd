@@ -20,7 +20,7 @@ export const useAssistantStore = defineStore('assistant', {
             this.items = items;
         },
 
-        async fetchAssistants() {
+        async fetchItems() {
             try {
                 const response = await this.$apiURL.get(apiPath);
                 this.setItems(response.data);
@@ -28,7 +28,7 @@ export const useAssistantStore = defineStore('assistant', {
                 console.error('Error fetching items:', error);
             }
         },
-        async addAssistant(lab) {
+        async addItem(lab) {
             try {
                 const response = await this.$apiURL.post(apiPath, lab, header);
                 this.items.push(response.data);
@@ -36,7 +36,7 @@ export const useAssistantStore = defineStore('assistant', {
                 console.error('Error adding lab:', error);
             }
         },
-        async updateAssistant(lab) {
+        async updateItem(lab) {
             try {
                 const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab, header);
                 const index = this.items.findIndex((l) => l.id === lab.id);
@@ -45,7 +45,7 @@ export const useAssistantStore = defineStore('assistant', {
                 console.error('Error updating lab:', error);
             }
         },
-        async deleteAssistant(id) {
+        async deleteItem(id) {
             try {
                 await this.$apiURL.delete(`${apiPath}/${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
@@ -53,7 +53,7 @@ export const useAssistantStore = defineStore('assistant', {
                 console.error('Error deleting lab:', error);
             }
         },
-        async fetchAssistant(id) {
+        async fetchItem(id) {
             try {
                 const response = await this.$apiURL.get(`${apiPath}/${id}`);
                 return response.data;

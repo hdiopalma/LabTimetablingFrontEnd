@@ -13,7 +13,7 @@ export const useGroupStore = defineStore('group', {
             this.items = items;
         },
 
-        async fetchGroups() {
+        async fetchItems() {
             try {
                 const response = await this.$apiURL.get(apiPath);
                 this.setItems(response.data);
@@ -21,7 +21,7 @@ export const useGroupStore = defineStore('group', {
                 console.error('Error fetching items:', error);
             }
         },
-        async addGroup(lab) {
+        async addItem(lab) {
             try {
                 const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
@@ -29,7 +29,7 @@ export const useGroupStore = defineStore('group', {
                 console.error('Error adding lab:', error);
             }
         },
-        async updateGroup(lab) {
+        async updateItem(lab) {
             try {
                 const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
@@ -38,7 +38,7 @@ export const useGroupStore = defineStore('group', {
                 console.error('Error updating lab:', error);
             }
         },
-        async deleteGroup(id) {
+        async deleteItem(id) {
             try {
                 await this.$apiURL.delete(`${apiPath}/${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
@@ -46,7 +46,7 @@ export const useGroupStore = defineStore('group', {
                 console.error('Error deleting lab:', error);
             }
         },
-        async fetchGroup(id) {
+        async fetchItem(id) {
             try {
                 const response = await this.$apiURL.get(`${apiPath}/${id}`);
                 return response.data;
