@@ -51,7 +51,7 @@ export const useSemesterStore = defineStore('semester', {
                 return response;
             } catch (error) {
                 console.error('Error adding semester:', error);
-                return error;
+                return error.response;
             }
         },
         async updateItem(semester) {

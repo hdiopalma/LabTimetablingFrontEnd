@@ -100,6 +100,16 @@ const routes = [
     name: 'inputAssistant',
     component: () => import('@/views/Assistant/Input.vue')
   },
+  {
+    meta: {
+      title: 'Show Assistant',
+      requiresAuth: true
+    },
+    path: '/assistants/:id',
+    name: 'showAssistant',
+    component: () => import('@/views/Assistant/Show.vue'),
+    props: true
+  },
 
   {
     meta: {
