@@ -19,7 +19,8 @@ const props = defineProps({
   hasTable: Boolean,
   isForm: Boolean,
   isHoverable: Boolean,
-  isModal: Boolean
+  isModal: Boolean,
+  isScrollable: Boolean
 })
 
 const emit = defineEmits(['submit'])
@@ -32,7 +33,8 @@ const componentClass = computed(() => {
   const base = [
     props.rounded,
     props.flex,
-    props.isModal ? 'dark:bg-slate-900' : 'dark:bg-slate-900/70'
+    props.isModal ? 'dark:bg-slate-900' : 'dark:bg-slate-900/70',
+    props.isScrollable ? 'overflow-y-auto' : 'overflow-hidden'
   ]
 
   if (props.isHoverable) {
