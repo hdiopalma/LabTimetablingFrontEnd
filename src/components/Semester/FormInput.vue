@@ -104,7 +104,7 @@ const formSubmit = async () => {
     status: formData.statusSemester,
   }
   try {
-    const response = await semesterStore.addSemester(data)
+    const response = await semesterStore.addItem(data)
     if (response.status === 201) {
       formReset()
       successAlert(response.data.id)
@@ -126,7 +126,7 @@ const formUpdate = async () => {
     status: formData.statusSemester,
   }
   try {
-    const response = await semesterStore.updateSemester(data)
+    const response = await semesterStore.updateItem(data)
     if (response.status === 200) {
       successAlert(props.data.id)
       dataUpdated()

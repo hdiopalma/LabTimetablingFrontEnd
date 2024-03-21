@@ -10,7 +10,7 @@ const moduleStore = useModuleStore()
 
 const moduleItems = ref([])
 onMounted(async () => {
-    await moduleStore.fetchModules()
+    await moduleStore.fetchItems()
     moduleItems.value = moduleStore.items.map(item => ({ id: item.id, label: item.name }))
     form.modules = moduleItems.value[0]
 })

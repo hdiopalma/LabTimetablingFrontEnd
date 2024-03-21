@@ -19,7 +19,7 @@ const moduleStore = useModuleStore()
 
 const items = ref([])
 onMounted(async () => {
-    await moduleStore.fetchModules()
+    await moduleStore.fetchItems()
     items.value = moduleStore.items
 })
 

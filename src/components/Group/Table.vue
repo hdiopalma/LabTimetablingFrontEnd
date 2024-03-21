@@ -19,7 +19,7 @@ const groupStore = useGroupStore()
 
 const items = ref([])
 onMounted(async () => {
-    await groupStore.fetchGroups()
+    await groupStore.fetchItems()
     items.value = groupStore.items
 })
 

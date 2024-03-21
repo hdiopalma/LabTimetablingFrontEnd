@@ -34,7 +34,7 @@ const refresh = async () => {
 }
 
 const load = async () => {
-    await participantStore.fetchParticipants(currentPage.value + 1, perPage.value)
+    await participantStore.fetchItems(currentPage.value + 1, perPage.value)
     items.value = participantStore.items
     itemsCount.value = participantStore.itemsCount
 }

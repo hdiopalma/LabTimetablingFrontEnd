@@ -16,7 +16,7 @@ const assistantStore = useAssistantStore()
 
 const items = ref([])
 onMounted(async () => {
-    await assistantStore.fetchAssistants()
+    await assistantStore.fetchItems()
     items.value = assistantStore.items
 })
 

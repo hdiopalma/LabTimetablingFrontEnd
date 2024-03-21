@@ -19,7 +19,7 @@ const chapterStore = useChapterStore()
 
 const items = ref([])
 onMounted(async () => {
-    await chapterStore.fetchChapters()
+    await chapterStore.fetchItems()
     items.value = chapterStore.items
 })
 

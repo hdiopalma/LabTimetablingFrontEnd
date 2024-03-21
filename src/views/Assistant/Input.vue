@@ -18,6 +18,8 @@ import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import LabSelectOption from '@/components/Lab/SelectOption.vue'
 import SemesterSelectOption from '@/components/Semester/SelectOption.vue'
 
+import FormInputAssistant from '@/components/Assistant/FormInput.vue'
+
 //Lab Store
 import { useLabStore } from '@/stores/lab'
 
@@ -33,7 +35,7 @@ const goToBack = () => {
 
 const labsItems = ref([])
 onMounted(async () => {
-    await labStore.fetchLabs()
+    await labStore.fetchItems()
     labsItems.value = labStore.items.map(item => ({ id: item.id, label: item.name }))
 })
 
@@ -92,36 +94,8 @@ const formStatusSubmit = () => {
                 <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast"
                     rounded-full small />
             </SectionTitleLineWithButton>
-            <CardBox form @submit.prevent="submit">
 
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <FormField label="Nama Asisten">
-                        <FormControl :icon="mdiAccount" placeholder="Nama Asisten" name="namaAsisten" />
-                    </FormField>
-
-                    <FormField label="NIM Asisten">
-                        <FormControl :icon="mdiAccountBox" placeholder="NIM Asisten" name="nimAsisten" type="number" />
-                    </FormField>
-                </div>
-
-                <BaseDivider />
-
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <FormField label="Laboratorium" labelFor="labAsisten" help="Pilih lab untuk asisten ini">
-                        <LabSelectOption name="labAsisten" />
-                    </FormField>
-
-                    <FormField label="Semester Aktif" labelFor="semesterAsisten" help="Pilih semester dimana mahasiswa ini aktif sebagai asisten">
-                        <SemesterSelectOption name="semesterAsisten" />
-                    </FormField>
-                </div>
-
-                <template #footer>
-                    <BaseButtons>
-                        <BaseButton type="submit" color="info" label="Submit" />
-                        <BaseButton type="reset" color="info" outline label="Reset" />
-                    </BaseButtons>
-                </template>
-            </CardBox>
+            <FormInputAssistant />
+            
         </SectionMain>
 </template>

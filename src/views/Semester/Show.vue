@@ -51,7 +51,7 @@ const semesterStore = useSemesterStore()
 
 const load = async () => {
   try {
-    const response = await semesterStore.fetchSemester(props.id)
+    const response = await semesterStore.fetchItem(props.id)
     data.value.id = response.id
     data.value.name = response.name
     data.value.status = response.status
@@ -64,7 +64,7 @@ const load = async () => {
 
 const loadCount = async () => {
   try {
-    const response = await semesterStore.fetchCount(props.id)
+    const response = await semesterStore.countItem(props.id)
     countData.value.module = response.module_count
     countData.value.group = response.group_count
     countData.value.participant = response.participant_count

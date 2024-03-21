@@ -46,7 +46,7 @@ onMounted(async () => {
 })
 
 const load = async () => {
-    await semesterStore.fetchSemesters(currentPage.value + 1, perPage.value)
+    await semesterStore.fetchItems(currentPage.value + 1, perPage.value)
     items.value = semesterStore.items
     itemsCount.value = semesterStore.itemsCount
 }
@@ -180,7 +180,7 @@ const checked = (isChecked, participant) => {
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
                             <BaseButton color="info" :icon="mdiEye" small :disabled="disabledButton" :to="`/semesters/${semester.id}`" />
                             <BaseButton color="success" :icon="mdiPencilBox" small @click="handleUpdate(semester)" :disabled="disabledButton" />
-                            <DeleteModal :id="semester.id" :delete="semesterStore.deleteSemester"
+                            <DeleteModal :id="semester.id" :delete="semesterStore.deleteItem"
                                 @onDeleted="handleDeleted" 
                                 @isLoading="disabledButton = $event"
                                 />

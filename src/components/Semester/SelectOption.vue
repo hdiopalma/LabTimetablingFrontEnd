@@ -10,7 +10,7 @@ const semesterStore = useSemesterStore()
 
 const semesterItems = ref([])
 onMounted(async () => {
-    await semesterStore.fetchSemesters()
+    await semesterStore.fetchItems()
     semesterItems.value = semesterStore.items.map(item => ({ id: item.id, label: item.name }))
     if (computedValue.value === '') {
         computedValue.value = semesterItems.value[0].id

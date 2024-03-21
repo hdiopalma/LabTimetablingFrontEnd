@@ -10,7 +10,7 @@ const labStore = useLabStore()
 
 const labsItems = ref([])
 onMounted(async () => {
-    await labStore.fetchLabs()
+    await labStore.fetchItems()
     labsItems.value = labStore.items.map(item => ({ id: item.id, label: item.name }))
     form.labs = labsItems.value[0]
 })

@@ -46,7 +46,7 @@ onMounted(async () => {
 })
 
 const load = async () => {
-    await labStore.fetchLabs(currentPage.value + 1, perPage.value)
+    await labStore.fetchItems(currentPage.value + 1, perPage.value)
     items.value = labStore.items
     itemsCount.value = labStore.itemsCount
 }
@@ -180,7 +180,7 @@ const checked = (isChecked, participant) => {
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
                             <BaseButton color="info" :icon="mdiEye" small :disabled="disabledButton" :to="`/labs/${lab.id}`" />
                             <BaseButton color="success" :icon="mdiPencilBox" small @click="handleUpdate(lab)" :disabled="disabledButton" />
-                            <DeleteModal :id="lab.id" :delete="labStore.deleteLab"
+                            <DeleteModal :id="lab.id" :delete="labStore.deleteItem"
                                 @onDeleted="handleDeleted" 
                                 @isLoading="disabledButton = $event"
                                 />

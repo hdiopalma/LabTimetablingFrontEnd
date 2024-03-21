@@ -59,7 +59,7 @@ import { useLabStore } from '@/stores/lab'
 //Load
 const load = async () => {
   try {
-    const response = await labStore.fetchLab(props.id)
+    const response = await labStore.fetchItem(props.id)
     data.value.id = response.id
     data.value.name = response.name
     data.value.semester = response.semester.id
@@ -72,7 +72,7 @@ const load = async () => {
 
 const loadCount = async () => {
   try {
-    const response = await labStore.fetchCountLab(props.id)
+    const response = await labStore.countItem(props.id)
     countData.value.module = response.module_count
     countData.value.group = response.group_count
     countData.value.participant = response.participant_count
