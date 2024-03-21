@@ -130,27 +130,9 @@ const goToPage = () => {
     }
 }
 
-//Checkbox
-const checkedRows = ref([])
-const remove = (arr, cb) => {
-    const newArr = []
-    arr.forEach((item) => {
-        if (!cb(item)) {
-            newArr.push(item)
-        }
-    })
-    return newArr
-}
-
+//Button
 const disabledButton = ref(false)
 
-const checked = (isChecked, participant) => {
-    if (isChecked) {
-        checkedRows.value.push(participant)
-    } else {
-        checkedRows.value = remove(checkedRows.value, (row) => participant.id === participant.id)
-    }
-}
 </script>
 
 <template>

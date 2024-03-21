@@ -31,7 +31,6 @@ onMounted(async () => {
     if (computedValue.value === '') {
         computedValue.value = items.value[0].id
     }
-    console.log(computedValue.value)
 })
 
 const emit = defineEmits(['update:modelValue'])
