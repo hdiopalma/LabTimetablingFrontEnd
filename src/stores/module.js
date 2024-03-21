@@ -6,17 +6,23 @@ const apiPath = 'data/module';
 export const useModuleStore = defineStore('module', {
     state: () => ({
         items: [],
+        itemsCount: 0,
     }),
     actions: {
 
         setItems(items) {
             this.items = items;
         },
+        setCount(count) {
+            this.itemsCount = count;
+            localStorage.setItem('moduleCount', count);
+        },
 
-        async fetchItems() {
+        async fetchItems(page = 1, page_size = 10) {
             try {
-                const response = await this.$apiURL.get(apiPath);
-                this.setItems(response.data);
+                const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
+                this.setItems(response.data.results);
+                this.setCount(response.data.count);
             } catch (error) {
                 console.error('Error fetching items:', error);
             }

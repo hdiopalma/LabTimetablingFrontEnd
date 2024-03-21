@@ -20,7 +20,8 @@ const props = defineProps({
   isForm: Boolean,
   isHoverable: Boolean,
   isModal: Boolean,
-  isScrollable: Boolean
+  isScrollable: Boolean,
+  wide: Boolean
 })
 
 const emit = defineEmits(['submit'])

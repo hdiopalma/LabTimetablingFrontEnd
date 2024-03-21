@@ -146,6 +146,16 @@ const routes = [
     name: 'inputModule',
     component: () => import('@/views/Module/Input.vue')
   },
+  {
+    meta: {
+      title: 'Show Module',
+      requiresAuth: true
+    },
+    path: '/modules/:id',
+    name: 'showModule',
+    component: () => import('@/views/Module/Show.vue'),
+    props: true
+  },
 
   {
     meta: {

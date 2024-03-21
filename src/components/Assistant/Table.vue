@@ -106,9 +106,6 @@ const numPages = computed(() => Math.ceil(itemsCount.value / perPage.value))
 const currentPageData = ref(currentPage.value + 1)
 const pagesList = computed(() => {
     const pagesList = []
-    // for (let i = 0; i < numPages.value; i++) {
-    //     pagesList.push(i)
-    // }
     for (let i = 0; i < numPages.value; i++) {
         if ((i >= currentPage.value - margin && i <= currentPage.value + margin)) {
             pagesList.push(i)
