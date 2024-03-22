@@ -13,6 +13,9 @@ import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.
 import FormInputLab from '@/components/Lab/FormInput.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
 
+//Lab Store
+import { useLabStore } from '@/stores/lab'
+
 
 //Router
 import { useRouter } from 'vue-router'
@@ -52,9 +55,6 @@ const disabled = ref(true)
 const pageData = ref({
   title: 'Lab',
 })
-
-//Lab Store
-import { useLabStore } from '@/stores/lab'
 
 //Load
 const load = async () => {
