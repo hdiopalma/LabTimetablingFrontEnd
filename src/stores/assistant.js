@@ -38,7 +38,6 @@ export const useAssistantStore = defineStore('assistant', {
             try {
                 const response = await this.$apiURL.post(apiPath, lab, header);
                 this.items.push(response.data);
-                this.setCount(this.count + 1);
                 return response;
             } catch (error) {
                 console.error('Error adding lab:', error);
@@ -58,8 +57,9 @@ export const useAssistantStore = defineStore('assistant', {
         },
         async deleteItem(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}${id}`, header);
+                const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
+                return response;
             } catch (error) {
                 console.error('Error deleting lab:', error);
             }

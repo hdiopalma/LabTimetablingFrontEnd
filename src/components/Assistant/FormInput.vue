@@ -85,8 +85,8 @@ watch(tempData, (value) => {
 const formReset = () => {
     formData.namaAsisten = props.data ? props.data.name : ''
     formData.nimAsisten = props.data ? props.data.nim : ''
-    formData.labAsisten = props.data ? props.data.lab.id : ''
-    formData.semesterAsisten = props.data ? props.data.semester.id : ''
+    formData.labAsisten = props.data ? props.data.laboratory : ''
+    formData.semesterAsisten = props.data ? props.data.semester : ''
 }
 
 
