@@ -1,7 +1,14 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { AppConfig } from '@/services/appConfig';
 
-const apiPath = 'data/participant';
+const apiPath = 'data/participant/';
+const token = localStorage.getItem(AppConfig.tokenKey) || null;
+const header = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+    },
+};
 
 export const useParticipantStore = defineStore('participant', {
     state: () => ({
@@ -28,16 +35,16 @@ export const useParticipantStore = defineStore('participant', {
         },
         async addItem(lab) {
             try {
-                const response = await this.$apiURL.post(apiPath, lab);
+                const response = await this.$apiURL.post(apiPath, lab, header);
                 this.items.push(response.data);
-                this.setCount(this.count + 1);
+                return response;
             } catch (error) {
                 console.error('Error adding lab:', error);
             }
         },
         async updateItem(lab) {
             try {
-                const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
+                const response = await this.$apiURL.put(`${apiPath}${lab.id}`, lab, header);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
             } catch (error) {
@@ -46,16 +53,16 @@ export const useParticipantStore = defineStore('participant', {
         },
         async deleteItem(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}/${id}`);
+                const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((lab) => lab.id !== id);
-                this.setCount(this.count - 1);
+                return response;
             } catch (error) {
                 console.error('Error deleting lab:', error);
             }
         },
         async fetchItem(id) {
             try {
-                const response = await this.$apiURL.get(`${apiPath}/${id}`);
+                const response = await this.$apiURL.get(`${apiPath}${id}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);

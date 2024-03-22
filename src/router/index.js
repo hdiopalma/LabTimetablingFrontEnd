@@ -128,6 +128,15 @@ const routes = [
     name: 'inputParticipant',
     component: () => import('@/views/Participant/Input.vue')
   },
+  {
+    meta: {
+      title: 'Show Participant',
+      requiresAuth: true
+    },
+    path: '/participants/:id',
+    name: 'showParticipant',
+    component: () => import('@/views/Participant/Show.vue'),
+  },
 
   {
     meta: {
