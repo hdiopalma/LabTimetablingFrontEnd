@@ -44,9 +44,10 @@ export const useParticipantStore = defineStore('participant', {
         },
         async updateItem(lab) {
             try {
-                const response = await this.$apiURL.put(`${apiPath}${lab.id}`, lab, header);
+                const response = await this.$apiURL.put(`${apiPath}${lab.id}/`, lab, header);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
+                return response;
             } catch (error) {
                 console.error('Error updating lab:', error);
             }

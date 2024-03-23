@@ -136,6 +136,7 @@ const routes = [
     path: '/participants/:id',
     name: 'showParticipant',
     component: () => import('@/views/Participant/Show.vue'),
+    props: true
   },
 
   {

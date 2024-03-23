@@ -18,6 +18,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import CardBoxComponentLoading from '@/components/CardBoxComponentLoading.vue'
 import DeleteModal from '@/components/Action/DeleteModal.vue'
 import FormInputParticipant from '@/components/Participant/FormInput.vue'
+import PillTag from '@/components/PillTag.vue'
 
 
 defineProps({
@@ -164,7 +165,9 @@ const disabledButton = ref(false)
                         {{ participant.nim }}
                     </td>
                     <td data-label="Group">
-                        {{ participant.groups.map(group => group.name).join(', ') }}
+                        <PillTag v-if="participant.groups.length === 0" color="danger" label="No Group" small />
+                        <PillTag v-else color="info" v-for="group in participant.groups"
+                            :key="group.id" :label="group.name" small />
                     </td>
                     <td data-label="Semester">
                         {{ participant.semester.name }}

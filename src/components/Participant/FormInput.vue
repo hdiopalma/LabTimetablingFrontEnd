@@ -130,8 +130,7 @@ const formUpdate = async () => {
 
 const submit = () => {
     if (props.update) {
-        // formUpdate()
-        console.log('Update', formData)
+        formUpdate()
     } else {
         formSubmit()
 
