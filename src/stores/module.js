@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const apiPath = 'data/module';
+const apiPath = 'data/module/';
 
 export const useModuleStore = defineStore('module', {
     state: () => ({
@@ -31,30 +31,36 @@ export const useModuleStore = defineStore('module', {
             try {
                 const response = await this.$apiURL.post(apiPath, lab);
                 this.items.push(response.data);
+                return response;
             } catch (error) {
                 console.error('Error adding lab:', error);
             }
         },
         async updateItem(lab) {
             try {
-                const response = await this.$apiURL.put(`${apiPath}/${lab.id}`, lab);
+                const response = await this.$apiURL.put(`${apiPath}${lab.id}/`, lab);
                 const index = this.items.findIndex((l) => l.id === lab.id);
                 this.items[index] = response.data;
+                return response;
             } catch (error) {
                 console.error('Error updating lab:', error);
+                return error.response;
             }
         },
         async deleteItem(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}/${id}`);
+                const response = await this.$apiURL.delete(`${apiPath}${id}`);
                 this.items = this.items.filter((lab) => lab.id !== id);
+                return response;
+
             } catch (error) {
                 console.error('Error deleting lab:', error);
+                return error.response;
             }
         },
         async fetchItem(id) {
             try {
-                const response = await this.$apiURL.get(`${apiPath}/${id}`);
+                const response = await this.$apiURL.get(`${apiPath}${id}`);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching lab:', error);
