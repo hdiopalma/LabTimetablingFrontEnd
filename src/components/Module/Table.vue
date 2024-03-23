@@ -174,6 +174,9 @@ const dateToReadable = (date) => {
         </thead>
         <tbody>
             <tr v-for="module in items" :key="module.id">
+                <td data-label="Name">
+                    {{ module.name }}
+                </td>
                 <td data-label="Laboratory">
                     {{ module.laboratory.name }}
                 </td>

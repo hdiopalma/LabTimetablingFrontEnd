@@ -19,6 +19,7 @@ import SelectOption from '@/components/CommonForm/SelectOption.vue'
 import { useLabStore } from '@/stores/lab'
 import { useSemesterStore } from '@/stores/semester'
 import { useAssistantStore } from '@/stores/assistant'
+import { useModuleStore } from '@/stores/module'    
 
 //Router
 import { useRouter } from 'vue-router'
@@ -31,6 +32,7 @@ const router = useRouter()
 const labStore = useLabStore()
 const semesterStore = useSemesterStore()
 const assistantStore = useAssistantStore()
+const moduleStore = useModuleStore()
 
 //Props (optional, for update data)
 const props = defineProps({
@@ -58,7 +60,6 @@ const dataUpdated = () => {
 const formData = reactive({
     namaModul: '',
     labModul: '',
-    semesterModul: '',
     startModule: '',
     endModule: '',
 })
@@ -68,7 +69,6 @@ const tempData = computed(() => {
         id: props.data ? props.data.id : null,
         namaModul: props.data ? props.data.name : '',
         labModul: props.data ? props.data.laboratory : '',
-        semesterModul: props.data ? props.data.semester : '',
         startModule: props.data ? props.data.start_date : '',
         endModule: props.data ? props.data.end_date : '',
     }
@@ -78,7 +78,6 @@ const tempData = computed(() => {
 watch(tempData, (value) => {
     formData.namaModul = value.namaModul
     formData.labModul = value.labModul
-    formData.semesterModul = value.semesterModul
     formData.startModule = dateToReadable(value.startModule)
     formData.endModule = dateToReadable(value.endModule)
 })
@@ -87,7 +86,6 @@ watch(tempData, (value) => {
 const formReset = () => {
     formData.namaModul = props.data ? props.data.name : ''
     formData.labModul = props.data ? props.data.laboratory.id : ''
-    formData.semesterModul = props.data ? props.data.semester.id : ''
     formData.startModule = props.data ? props.data.start_date : ''
     formData.endModule = props.data ? props.data.end_date : ''
 }
@@ -99,12 +97,11 @@ const formSubmit = async () => {
     const data = {
         name: formData.namaModul,
         laboratory: formData.labModul,
-        semester: formData.semesterModul,
         start_date: formData.startModule,
         end_date: formData.endModule,
     }
     try {
-        const response = await assistantStore.addItem(data)
+        const response = await moduleStore.addItem(data)
         if (response.status === 201) {
             formReset()
             successAlert(response.data.id)
@@ -124,12 +121,11 @@ const formUpdate = async () => {
         id: props.data.id,
         name: formData.namaModul,
         laboratory: formData.labModul,
-        semester: formData.semesterModul,
         start_date: formData.startModule,
         end_date: formData.endModule,
     }
     try {
-        const response = await assistantStore.updateItem(data)
+        const response = await moduleStore.updateItem(data)
         if (response.status === 200) {
             successAlert(props.data.id)
             dataUpdated()
@@ -144,8 +140,7 @@ const formUpdate = async () => {
 
 const submit = () => {
     if (props.update) {
-        // formUpdate()
-        console.log('update', formData)
+        formUpdate()
     } else {
         formSubmit()
 
@@ -164,9 +159,9 @@ const successAlert = (id) => {
         cancelButtonColor: '#d33',
     }).then((result) => {
         if (result.isConfirmed) {
-            router.push('/assistants')
+            router.push('/modules')
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-            router.push('/assistants/' + id)
+            router.push('/modules/' + id)
         }
     })
 }
@@ -188,7 +183,7 @@ const dateToReadable = (date) => {
 <template>
     <CardBox isForm @submit.prevent="submit" @reset.prevent="formReset">
 
-        <div class="grid grid-cols-1 gap-4 xl:grid-cols-3 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 md:grid-cols-2">
             <FormField label="Nama Module" help="Nama modul yang akan diajarkan">
                 <FormControl :icon="mdiAccount" placeholder="E.g: Pengukuran Listrik" name="namaModule"
                     v-model="formData.namaModul" />
@@ -197,10 +192,6 @@ const dateToReadable = (date) => {
             <FormField label="Laboratorium" labelFor="labModul"
                 help="Pilih laboratorium dari modul yang akan diajarkan">
                 <SelectOption name="labModul" :store="labStore" v-model="formData.labModul" />
-            </FormField>
-
-            <FormField label="Semester Aktif" labelFor="semesterModul" help="Pilih semester dimana modul ini aktif">
-                <SelectOption name="semesterModul" :store="semesterStore" v-model="formData.semesterModul" />
             </FormField>
 
         </div>
