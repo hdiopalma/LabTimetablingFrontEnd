@@ -184,6 +184,16 @@ const routes = [
     name: 'inputChapter',
     component: () => import('@/views/Chapter/Input.vue')
   },
+  {
+    meta: {
+      title: 'Show Chapter',
+      requiresAuth: true
+    },
+    path: '/chapters/:id',
+    name: 'showChapter',
+    component: () => import('@/views/Chapter/Show.vue'),
+    props: true
+  },
 
   {
     meta: {

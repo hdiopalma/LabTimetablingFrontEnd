@@ -63,6 +63,7 @@ const handleDeleted = () => {
     refresh()
 }
 
+//Update start
 //Update Data Reactive
 const dataUpdate = reactive({
     id: '',
@@ -73,37 +74,24 @@ const dataUpdate = reactive({
     end_date: '',
 })
 
-const computedData = computed(() => {
-    return dataUpdate
-})
-
-const fillData = (module) => {
+//handle Update
+const handleUpdate = (module) => {
     dataUpdate.id = module.id
     dataUpdate.name = module.name
     dataUpdate.semester = module.laboratory.semester.id
     dataUpdate.laboratory = module.laboratory.id
     dataUpdate.start_date = module.start_date
     dataUpdate.end_date = module.end_date
-}
-
-//handle Update
-const handleUpdate = (lab) => {
-    fillData(lab)
     isModalActive.value = true
 }
 
-
 //Modal
 const isModalActive = ref(false)
-const isModalDangerActive = ref(false)
+//Update end
 
 //Pagination
-const perPage = ref(5)
+const perPage = ref(5   )
 const currentPage = ref(0)
-const currentPageWatcher = watch(currentPage, () => {
-    currentPageData.value = currentPage.value + 1
-    refresh()
-})
 const margin = 2
 const numPages = computed(() => Math.ceil(itemsCount.value / perPage.value))
 const currentPageData = ref(currentPage.value + 1)
@@ -131,6 +119,11 @@ const goToPage = () => {
     }
 }
 
+watch(currentPage, () => {
+    currentPageData.value = currentPage.value + 1
+    refresh()
+})
+
 //Button
 const disabledButton = ref(false)
 
@@ -142,20 +135,11 @@ const dateToReadable = (date) => {
         year: 'numeric'
     })
 }
-
-// function dateToReadable(date) {
-//     // Turn 2022-09-12T07:30:00.530000Z to 12 September 2022
-//     const d = date.getDate()
-//     const m = date.toLocaleString('default', { month: 'long' })
-//     const y = date.getFullYear()
-//     return `${d} ${m} ${y}`
-// }
-
 </script>
 
 <template>
     <CardBoxModal v-model="isModalActive" title="Update Data Assistant" :hasFooter=false has-cancel is-scrollable>
-        <FormInputModule :data="computedData" update @dataUpdated="isModalActive = false" />
+        <FormInputModule :data="dataUpdate" update @dataUpdated="isModalActive = false" />
     </CardBoxModal>
 
     <CardBoxComponentLoading height="h-12" duration="1.5s" margin="mb-4" v-if="!itemsLoaded" v-for="i in displayCount"
