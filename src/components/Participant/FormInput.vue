@@ -60,12 +60,22 @@ const formData = reactive({
     semesterAsisten: '',
 })
 
+const shiftData = reactive({
+    Monday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Tuesday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Wednesday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Thursday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Friday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Saturday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+})
+
 const tempData = computed(() => {
     return {
         id: props.data ? props.data.id : null,
         namaAsisten: props.data ? props.data.name : '',
         nimAsisten: props.data ? props.data.nim : '',
         semesterAsisten: props.data ? props.data.semester : '',
+        shiftData: props.data ? props.data.regular_schedule : '',
     }
 })
 
@@ -74,6 +84,11 @@ watch(tempData, (value) => {
     formData.namaPartisipan = value.namaAsisten
     formData.nimPartisipan = value.nimAsisten
     formData.semesterAsisten = value.semesterAsisten
+    for (const day in shiftData) {
+        for (const shift in shiftData[day]) {
+            shiftData[day][shift] = value.shiftData[day][shift]
+        }
+    }
 
 })
 
@@ -82,6 +97,11 @@ const formReset = () => {
     formData.namaPartisipan = props.data ? props.data.name : ''
     formData.nimPartisipan = props.data ? props.data.nim : ''
     formData.semesterAsisten = props.data ? props.data.semester : ''
+    for (const day in shiftData) {
+        for (const shift in shiftData[day]) {
+            shiftData[day][shift] = props.data ? props.data.regular_schedule[day][shift] : false
+        }
+    }
 }
 
 
@@ -132,11 +152,17 @@ const formUpdate = async () => {
 
 const submit = () => {
     if (props.update) {
-        formUpdate()
+        // formUpdate()
+        console.log(shiftDataToJson())
     } else {
-        formSubmit()
-
+        // formSubmit()
+        console.log(shiftDataToJson())
     }
+}
+
+//Schedule to JSON
+const shiftDataToJson = () => {
+    return JSON.stringify(shiftData)
 }
 
 //Sweetalert2
@@ -191,9 +217,9 @@ const errorAlert = () => {
         <BaseDivider />
 
         <div class = "grid grid-cols-1 gap-4">
-            <FormField label="Jadwal Reguler" labelFor="jadwalReguler"
-                help="Pilih jadwal reguler yang akan diikuti oleh partisipan">
-                <ShiftSelector />
+            <FormField label="Jadwal Kosong Partisipan"
+                help="Pilih jadwal kosong yang dimiliki oleh partisipan ini">
+                <ShiftSelector v-model="shiftData" />
             </FormField>
         </div>
 

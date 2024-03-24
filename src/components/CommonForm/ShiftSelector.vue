@@ -1,19 +1,23 @@
 <script setup>
 
-import { ref } from 'vue'
+import { ref, defineProps, defineEmits, computed, reactive } from 'vue';
 
 import FormCheckRadio from '../FormCheckRadio.vue';
 
-const shiftData = ref({
-    Monday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
-    Tuesday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
-    Wednesday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
-    Thursday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
-    Friday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
-    Saturday: {Shift1: true, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+const props = defineProps({
+    name: String,
+    modelValue: Object,
+    inputValue: String,
 })
 
-const shift = ref(['Shift 1', 'Shift 2', 'Shift 3', 'Shift 4', 'Shift 5', 'Shift 6'])
+const emit = defineEmits(['update:modelValue'])
+
+const computedValue = computed({
+    get: () => props.modelValue,
+    set: (value) => {
+        emit('update:modelValue', value)
+    }
+})
 
 </script>
 
@@ -23,18 +27,20 @@ const shift = ref(['Shift 1', 'Shift 2', 'Shift 3', 'Shift 4', 'Shift 5', 'Shift
             <thead>
                 <tr>
                     <th>Day</th>
-                    <th class="text-center" v-for="s in shift" :key="s">{{ s }}</th>
+                    <th class="text-center" v-for="(value,key) in computedValue.Monday" :key="key">{{ key }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(value, key) in shiftData" :key="key">
-                    <td data-label="Day">
-                        <span class="font-semibold">
-                            {{ key }}
-                        </span>
+                <tr v-for="(shifts, day) in computedValue" :key="day">
+                    <td data-label="Day" class="font-semibold text-gray-700 dark:text-gray-200">
+                        {{ day }}
                     </td>
-                    <td v-for="s in shift" :key="s" :data-label="s" class="text-center">
-                        <FormCheckRadio :name="key" :modelValue="shiftData[key][s]" :inputValue="s" />
+                    <td v-for="(value, shift) in shifts" :key="shift" :data-label="shift" class="text-center">
+                        <FormCheckRadio 
+                            :name= "`${day}-${shift}`"
+                            v-model="computedValue[day][shift]"
+                            :inputValue="computedValue[day][shift]"
+                            />
                     </td>
                 </tr>
             </tbody>
@@ -44,28 +50,9 @@ const shift = ref(['Shift 1', 'Shift 2', 'Shift 3', 'Shift 4', 'Shift 5', 'Shift
 
 <style scoped>
 /* color data-label */
-[data-label="Day"] {
-    color: rgb(81, 68, 68);
-}
-
-/* color Shift1-6 */
-[data-label="Shift1"] {
-    color: rgb(81, 68, 68);
-}
-[data-label="Shift2"] {
-    color: rgb(81, 68, 68);
-}
-[data-label="Shift3"] {
-    color: rgb(81, 68, 68);
-}
-[data-label="Shift4"] {
-    color: rgb(81, 68, 68);
-}
-[data-label="Shift5"] {
-    color: rgb(81, 68, 68);
-}
-[data-label="Shift6"] {
-    color: rgb(81, 68, 68);
+[data-label="Day"],
+[data-label^="Shift"] {
+  color: rgb(81, 68, 68);
 }
 
 </style>
