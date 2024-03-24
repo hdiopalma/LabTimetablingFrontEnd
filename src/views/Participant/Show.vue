@@ -57,6 +57,7 @@ const load = async () => {
         data.value.semester = response.semester.id
         data.value.group = response.group
         data.value.regular_schedule = response.regular_schedule
+        pageData.value.title = response.name
         disabled.value = false
     } catch (error) {
         console.log(error)
@@ -79,13 +80,11 @@ const goToBack = () => {
 <template>
     <div>
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Lab Form" main>
+            <SectionTitleLineWithButton :icon="mdiBallotOutline" :title="pageData.title" main>
                 <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast"
                     rounded-full small />
             </SectionTitleLineWithButton>
-
             <FormInputParticipant :data="data" :disabled="disabled" :update="true" />
-
         </SectionMain>
 
     </div>

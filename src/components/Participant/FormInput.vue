@@ -11,8 +11,10 @@ import BaseButton from '@/components/BaseButton.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
+import BaseDivider from '../BaseDivider.vue'
 
 import SelectOption from '@/components/CommonForm/SelectOption.vue'
+import ShiftSelector from '@/components/CommonForm/ShiftSelector.vue'
 
 //Store
 import { useSemesterStore } from '@/stores/semester'
@@ -184,7 +186,15 @@ const errorAlert = () => {
                 help="Pilih semester dimana mahasiswa ini aktif sebagai partisipan">
                 <SelectOption name="semesterPartisipan" :store="semesterStore" v-model="formData.semesterAsisten" />
             </FormField>
+        </div>
 
+        <BaseDivider />
+
+        <div class = "grid grid-cols-1 gap-4">
+            <FormField label="Jadwal Reguler" labelFor="jadwalReguler"
+                help="Pilih jadwal reguler yang akan diikuti oleh partisipan">
+                <ShiftSelector />
+            </FormField>
         </div>
 
         <template #footer>
