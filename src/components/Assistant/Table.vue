@@ -69,6 +69,7 @@ const dataUpdate = reactive({
     nim: '',
     semester: '',
     laboratory: '',
+    regular_schedule: '',
 })
 
 const computedData = computed(() => {
@@ -81,6 +82,7 @@ const fillData = (lab) => {
     dataUpdate.nim = lab.nim
     dataUpdate.semester = lab.semester.id
     dataUpdate.laboratory = lab.laboratory.id
+    dataUpdate.regular_schedule = lab.regular_schedule
 }
 
 //handle Update
@@ -97,7 +99,7 @@ const isModalDangerActive = ref(false)
 //Pagination
 const perPage = ref(5)
 const currentPage = ref(0)
-const currentPageWatcher = watch(currentPage, () => {
+watch(currentPage, () => {
     currentPageData.value = currentPage.value + 1
     refresh()
 })

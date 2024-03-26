@@ -14,6 +14,7 @@ import FormControl from '@/components/FormControl.vue'
 import BaseDivider from '../BaseDivider.vue'
 
 import SelectOption from '@/components/CommonForm/SelectOption.vue'
+import ShiftSelector from '@/components/CommonForm/ShiftSelector.vue'
 
 //Store
 import { useLabStore } from '@/stores/lab'
@@ -62,6 +63,15 @@ const formData = reactive({
     semesterAsisten: '',
 })
 
+const shiftData = reactive({
+    Monday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Tuesday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Wednesday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Thursday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Friday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+    Saturday: {Shift1: false, Shift2: false, Shift3: false, Shift4: false, Shift5: false, Shift6: false},
+})
+
 const tempData = computed(() => {
     return {
         id: props.data ? props.data.id : null,
@@ -69,6 +79,7 @@ const tempData = computed(() => {
         nimAsisten: props.data ? props.data.nim : '',
         labAsisten: props.data ? props.data.laboratory : '',
         semesterAsisten: props.data ? props.data.semester : '',
+        shiftData: props.data ? props.data.regular_schedule : '',
     }
 })
 
@@ -78,6 +89,11 @@ watch(tempData, (value) => {
     formData.nimAsisten = value.nimAsisten
     formData.labAsisten = value.labAsisten
     formData.semesterAsisten = value.semesterAsisten
+    for (const day in shiftData) {
+        for (const shift in shiftData[day]) {
+            shiftData[day][shift] = value.shiftData[day][shift]
+        }
+    }
 
 })
 
@@ -87,6 +103,11 @@ const formReset = () => {
     formData.nimAsisten = props.data ? props.data.nim : ''
     formData.labAsisten = props.data ? props.data.laboratory : ''
     formData.semesterAsisten = props.data ? props.data.semester : ''
+    for (const day in shiftData) {
+        for (const shift in shiftData[day]) {
+            shiftData[day][shift] = props.data ? props.data.regular_schedule[day][shift] : false
+        }
+    }
 }
 
 
@@ -98,6 +119,7 @@ const formSubmit = async () => {
         nim: formData.nimAsisten,
         laboratory: formData.labAsisten,
         semester: formData.semesterAsisten,
+        regular_schedule: shiftData,
     }
     try {
         const response = await assistantStore.addItem(data)
@@ -122,6 +144,7 @@ const formUpdate = async () => {
         nim: formData.nimAsisten,
         laboratory: formData.labAsisten,
         semester: formData.semesterAsisten,
+        regular_schedule: shiftData,
     }
     try {
         const response = await assistantStore.updateItem(data)
@@ -198,6 +221,13 @@ const errorAlert = () => {
             <FormField label="Semester Aktif" labelFor="semesterAsisten"
                 help="Pilih semester dimana mahasiswa ini aktif sebagai asisten">
                 <SelectOption name="semesterAsisten" :store="semesterStore" v-model="formData.semesterAsisten" />
+            </FormField>
+        </div>
+
+        <div class = "grid grid-cols-1 gap-4">
+            <FormField label="Jadwal Kosong Asisten"
+                help="Pilih jadwal kosong yang dimiliki oleh asisten ini">
+                <ShiftSelector v-model="shiftData" />
             </FormField>
         </div>
 

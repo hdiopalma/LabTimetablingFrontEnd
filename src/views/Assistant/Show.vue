@@ -38,6 +38,7 @@ const data = ref({
     nim: '',
     laboratory: '',
     semester: '',
+    regular_schedule: '',
 })
 
 //Page Data
@@ -54,6 +55,7 @@ const load = async () => {
         data.value.nim = response.nim
         data.value.laboratory = response.laboratory.id
         data.value.semester = response.semester.id
+        data.value.regular_schedule = response.regular_schedule
         disabled.value = false
     } catch (error) {
         console.log(error)
