@@ -112,6 +112,7 @@ const formSubmit = async () => {
         name: formData.namaPartisipan,
         nim: formData.nimPartisipan,
         semester: formData.semesterAsisten,
+        regular_schedule: shiftData,
     }
     try {
         const response = await participantStore.addItem(data)
@@ -135,6 +136,7 @@ const formUpdate = async () => {
         name: formData.namaPartisipan,
         nim: formData.nimPartisipan,
         semester: formData.semesterAsisten,
+        regular_schedule: shiftData,
     }
     try {
         const response = await participantStore.updateItem(data)
@@ -152,17 +154,10 @@ const formUpdate = async () => {
 
 const submit = () => {
     if (props.update) {
-        // formUpdate()
-        console.log(shiftDataToJson())
+        formUpdate()
     } else {
-        // formSubmit()
-        console.log(shiftDataToJson())
+        formSubmit()
     }
-}
-
-//Schedule to JSON
-const shiftDataToJson = () => {
-    return JSON.stringify(shiftData)
 }
 
 //Sweetalert2

@@ -72,6 +72,8 @@ const dataUpdate = reactive({
     name: '',
     nim: '',
     semester: '',
+    regular_schedule: '',
+
 })
 
 const computedData = computed(() => {
@@ -83,6 +85,7 @@ const fillData = (participant) => {
     dataUpdate.name = participant.name
     dataUpdate.nim = participant.nim
     dataUpdate.semester = participant.semester.id
+    dataUpdate.regular_schedule = participant.regular_schedule
 }
 
 
@@ -138,7 +141,7 @@ const disabledButton = ref(false)
 </script>
 
 <template>
-    <CardBoxModal v-model="isModalActive" title="Update Data Partisipan" :hasFooter=false has-cancel>
+    <CardBoxModal v-model="isModalActive" title="Update Data Partisipan" :hasFooter=false has-cancel is-scrollable>
         <FormInputParticipant :data="computedData" update @dataUpdated="isModalActive = false" />
     </CardBoxModal>
 
