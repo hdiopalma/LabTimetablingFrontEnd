@@ -39,6 +39,7 @@ const data = ref({
     semester: '',
     group: '',
     regular_schedule: '',
+    ipk: '',
 })
 
 //Page Data
@@ -56,6 +57,7 @@ const load = async () => {
         data.value.nim = response.nim
         data.value.semester = response.semester.id
         data.value.group = response.group
+        data.value.ipk = response.ipk
         data.value.regular_schedule = response.regular_schedule
         pageData.value.title = response.name
         disabled.value = false

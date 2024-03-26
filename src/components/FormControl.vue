@@ -48,6 +48,22 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  step: {
+    type: String,
+    default: null
+  },
+  pattern: {
+    type: String,
+    default: null
+  },
+  min: {
+    type: String,
+    default: null
+  },
+  max: {
+    type: String,
+    default: null
+  },
   required: Boolean,
   borderless: Boolean,
   transparent: Boolean,
@@ -168,6 +184,10 @@ if (props.ctrlKFocus) {
       :type="computedType"
       :class="inputElClass"
       :disabled="props.disabled"
+      :pattern="pattern"
+      :min="min"
+      :max="max"
+      :step="step"
     />
     <FormControlIcon v-if="icon" :icon="icon" :h="controlIconH" />
   </div>

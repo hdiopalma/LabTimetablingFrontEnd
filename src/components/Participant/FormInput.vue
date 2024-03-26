@@ -57,7 +57,8 @@ const dataUpdated = () => {
 const formData = reactive({
     namaPartisipan: '',
     nimPartisipan: '',
-    semesterAsisten: '',
+    semesterPartisipan: '',
+    ipkPartisipan: '',
 })
 
 const shiftData = reactive({
@@ -74,7 +75,8 @@ const tempData = computed(() => {
         id: props.data ? props.data.id : null,
         namaAsisten: props.data ? props.data.name : '',
         nimAsisten: props.data ? props.data.nim : '',
-        semesterAsisten: props.data ? props.data.semester : '',
+        semesterPartisipan: props.data ? props.data.semester : '',
+        ipkPartisipan: props.data ? props.data.ipk : '',
         shiftData: props.data ? props.data.regular_schedule : '',
     }
 })
@@ -83,7 +85,8 @@ const tempData = computed(() => {
 watch(tempData, (value) => {
     formData.namaPartisipan = value.namaAsisten
     formData.nimPartisipan = value.nimAsisten
-    formData.semesterAsisten = value.semesterAsisten
+    formData.semesterPartisipan = value.semesterPartisipan
+    formData.ipkPartisipan = value.ipkPartisipan
     for (const day in shiftData) {
         for (const shift in shiftData[day]) {
             shiftData[day][shift] = value.shiftData[day][shift]
@@ -96,7 +99,8 @@ watch(tempData, (value) => {
 const formReset = () => {
     formData.namaPartisipan = props.data ? props.data.name : ''
     formData.nimPartisipan = props.data ? props.data.nim : ''
-    formData.semesterAsisten = props.data ? props.data.semester : ''
+    formData.semesterPartisipan = props.data ? props.data.semester : ''
+    formData.ipkPartisipan = props.data ? props.data.ipk : ''
     for (const day in shiftData) {
         for (const shift in shiftData[day]) {
             shiftData[day][shift] = props.data ? props.data.regular_schedule[day][shift] : false
@@ -111,7 +115,8 @@ const formSubmit = async () => {
     const data = {
         name: formData.namaPartisipan,
         nim: formData.nimPartisipan,
-        semester: formData.semesterAsisten,
+        semester: formData.semesterPartisipan,
+        ipk: formData.ipkPartisipan,
         regular_schedule: shiftData,
     }
     try {
@@ -135,7 +140,8 @@ const formUpdate = async () => {
         id: props.data.id,
         name: formData.namaPartisipan,
         nim: formData.nimPartisipan,
-        semester: formData.semesterAsisten,
+        semester: formData.semesterPartisipan,
+        ipk: formData.ipkPartisipan,
         regular_schedule: shiftData,
     }
     try {
@@ -192,7 +198,7 @@ const errorAlert = () => {
 <template>
     <CardBox @submit.prevent="submit" @reset.prevent="formReset" isForm>
 
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField label="Nama Partisipan" help="Nama lengkap Mahasiswa">
                 <FormControl :icon="mdiAccount" placeholder="E.g: Hernando Dicaprio" name="namaPartisipan"
                     v-model="formData.namaPartisipan" />
@@ -203,9 +209,14 @@ const errorAlert = () => {
                     v-model="formData.nimPartisipan" />
             </FormField>
 
+            <FormField label="IPK Partisipan" help="Indeks Prestasi Kumulatif Mahasiswa">
+                <FormControl :icon="mdiAccountBox" placeholder="E.g: 3.5" name="ipkPartisipan" type="number" min="0" max="4" step="0.01"
+                    v-model="formData.ipkPartisipan" />
+            </FormField>
+
             <FormField label="Semester Aktif" labelFor="semesterPartisipan"
                 help="Pilih semester dimana mahasiswa ini aktif sebagai partisipan">
-                <SelectOption name="semesterPartisipan" :store="semesterStore" v-model="formData.semesterAsisten" />
+                <SelectOption name="semesterPartisipan" :store="semesterStore" v-model="formData.semesterPartisipan" />
             </FormField>
         </div>
 

@@ -72,6 +72,7 @@ const dataUpdate = reactive({
     name: '',
     nim: '',
     semester: '',
+    ipk: '',
     regular_schedule: '',
 
 })
@@ -84,6 +85,7 @@ const fillData = (participant) => {
     dataUpdate.id = participant.id
     dataUpdate.name = participant.name
     dataUpdate.nim = participant.nim
+    dataUpdate.ipk = participant.ipk
     dataUpdate.semester = participant.semester.id
     dataUpdate.regular_schedule = participant.regular_schedule
 }
@@ -153,6 +155,7 @@ const disabledButton = ref(false)
             <tr>
                 <th>Name</th>
                 <th>NIM</th>
+                <th>IPK</th>
                 <th>Group</th>
                 <th>Semester</th>
                 <th />
@@ -166,6 +169,9 @@ const disabledButton = ref(false)
                     </td>
                     <td data-label="NIM">
                         {{ participant.nim }}
+                    </td>
+                    <td data-label="IPK">
+                        {{ participant.ipk }}
                     </td>
                     <td data-label="Group">
                         <PillTag v-if="participant.groups.length === 0" color="danger" label="No Group" small />
