@@ -94,6 +94,9 @@ const formReset = () => {
 //Submit
 //Database operation
 const formSubmit = async () => {
+    if (!validateDate()) {
+        return
+    }
     const data = {
         name: formData.namaModul,
         laboratory: formData.labModul,
@@ -117,6 +120,9 @@ const formSubmit = async () => {
 //Update
 //Database operation
 const formUpdate = async () => {
+    if (!validateDate()) {
+        return
+    }
     const data = {
         id: props.data.id,
         name: formData.namaModul,
@@ -174,6 +180,15 @@ const errorAlert = () => {
     })
 }
 
+const validateDate = () => {
+    if (formData.startModule > formData.endModule) {
+        document.getElementsByName('endModule')[0].setCustomValidity('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai')
+        document.getElementsByName('endModule')[0].reportValidity()
+        return false
+    }
+    return true
+}
+
 const dateToReadable = (date) => {
     return new Date(date).toISOString().split('T')[0]
 }
@@ -185,7 +200,7 @@ const dateToReadable = (date) => {
 
         <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 md:grid-cols-2">
             <FormField label="Nama Module" help="Nama modul yang akan diajarkan">
-                <FormControl :icon="mdiAccount" placeholder="E.g: Pengukuran Listrik" name="namaModule"
+                <FormControl :icon="mdiAccount" placeholder="E.g: Pengukuran Listrik" name="namaModule" required
                     v-model="formData.namaModul" />
             </FormField>
 
@@ -200,12 +215,13 @@ const dateToReadable = (date) => {
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField label="Start Date" help="Tanggal dimulainya modul ini">
-                <FormControl :icon="mdiCalendar" name="startModule" type="date"
+                <FormControl :icon="mdiCalendar" name="startModule" type="date" required
                     v-model="formData.startModule" />
             </FormField>
 
             <FormField label="End Date" help="Tanggal berakhirnya modul ini">
-                <FormControl :icon="mdiCalendar" name="endModule" type="date" v-model="formData.endModule" />
+                <FormControl :icon="mdiCalendar" name="endModule" type="date" required
+                v-model="formData.endModule" />
             </FormField>
 
         </div>
