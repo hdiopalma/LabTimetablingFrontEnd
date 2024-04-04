@@ -1,134 +1,110 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
+
+// Store
 import { useMainStore } from '@/stores/main'
+import { useSemesterStore } from '@/stores/semester'
+
+// Icons
 import {
   mdiAccountMultiple,
   mdiCartOutline,
   mdiChartTimelineVariant,
   mdiMonitorCellphone,
-  mdiReload,
   mdiGithub,
-  mdiChartPie
 } from '@mdi/js'
+
+// Components
 import * as chartConfig from '@/components/Charts/chart.config.js'
-import LineChart from '@/components/Charts/LineChart.vue'
 import SectionMain from '@/components/SectionMain.vue'
 import CardBoxWidget from '@/components/CardBoxWidget.vue'
 import CardBox from '@/components/CardBox.vue'
-import TableSampleClients from '@/components/TableSampleClients.vue'
 import NotificationBar from '@/components/NotificationBar.vue'
 import BaseButton from '@/components/BaseButton.vue'
-import CardBoxTransaction from '@/components/CardBoxTransaction.vue'
-import CardBoxClient from '@/components/CardBoxClient.vue'
-import LayoutAuthenticated from '@/layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
-import SectionBannerStarOnGitHub from '@/components/SectionBannerStarOnGitHub.vue'
+import TableSemester from '@/components/Semester/Table.vue'
 
 const chartData = ref(null)
-
+const activeSemester= computed(() => semesterStore.activeSemester)
 const fillChartData = () => {
   chartData.value = chartConfig.sampleChartData()
 }
+
+const mainStore = useMainStore()
+const semesterStore = useSemesterStore()
+
+const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
+const transactionBarItems = computed(() => mainStore.history)
 
 onMounted(() => {
   fillChartData()
 })
 
-const mainStore = useMainStore()
-
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-
-const transactionBarItems = computed(() => mainStore.history)
 </script>
 
 <template>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" :title="activeSemester ? activeSemester.name : 'Semester Data'">
         <BaseButton
           href="https://github.com/hdiopalma/jte-lab-timetabling"
           target="_blank"
           :icon="mdiGithub"
-          label="Say Hi on GitHub"
+          label="Github"
           color="contrast"
           rounded-full
           small
         />
       </SectionTitleLineWithButton>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6" v-if="activeSemester">
         <CardBoxWidget
-          trend="12%"
-          trend-type="up"
+          trend="Jumlah Laboratorium"
           color="text-emerald-500"
           :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
+          :number="activeSemester.count.laboratory"
+          label="Lab"
         />
         <CardBoxWidget
-          trend="12%"
-          trend-type="down"
+          trend="Jumlah Modul"
           color="text-blue-500"
           :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
+          :number="activeSemester.count.module"
+          label="Modul"
         />
         <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
+          trend="Jumlah Kelompok"
           color="text-red-500"
           :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          :number="activeSemester.count.group"
+          label="Group"
         />
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="flex flex-col justify-between">
-          <CardBoxTransaction
-            v-for="(transaction, index) in transactionBarItems"
-            :key="index"
-            :amount="transaction.amount"
-            :date="transaction.date"
-            :business="transaction.business"
-            :type="transaction.type"
-            :name="transaction.name"
-            :account="transaction.account"
-          />
-        </div>
-        <div class="flex flex-col justify-between">
-          <CardBoxClient
-            v-for="client in clientBarItems"
-            :key="client.id"
-            :name="client.name"
-            :login="client.login"
-            :date="client.created"
-            :progress="client.progress"
-          />
-        </div>
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6" v-if="activeSemester">
+        <CardBoxWidget
+          trend="Jumlah Peserta"
+          color="text-emerald-500"
+          :icon="mdiAccountMultiple"
+          :number="activeSemester.count.participant"
+          label="Partisipan"
+        />
+        <CardBoxWidget
+          trend="Jumlah Asisten"
+          color="text-blue-500"
+          :icon="mdiCartOutline"
+          :number="activeSemester.count.assistant"
+          label="Asisten"
+        />
       </div>
 
-      <SectionBannerStarOnGitHub class="mt-6 mb-6" />
-
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-        <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
-      </SectionTitleLineWithButton>
-
-      <CardBox class="mb-6">
-        <div v-if="chartData">
-          <line-chart :data="chartData" class="h-96" />
-        </div>
-      </CardBox>
-
-      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
-
-      <NotificationBar color="info" :icon="mdiMonitorCellphone">
-        <b>Responsive table.</b> Collapses on mobile
+      <NotificationBar color="danger" :icon="mdiMonitorCellphone" v-else>
+        <b>Perhatian!</b> Tidak ada semester aktif. Silahkan buat atau pilih semester aktif terlebih dahulu.
       </NotificationBar>
 
+      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Data Semester" />
+
       <CardBox has-table>
-        <TableSampleClients />
+        <TableSemester />
       </CardBox>
     </SectionMain>
 </template>
