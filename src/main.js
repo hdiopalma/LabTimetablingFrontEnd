@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
+import { useSemesterStore } from './stores/semester'
 import { useAuthService } from '@/services/authService.js'
 import { useAssistantStore } from './stores/assistant'
 import { useLabStore } from './stores/lab'
@@ -43,13 +44,12 @@ app.use(router)
 
 // Init main store
 const mainStore = useMainStore(pinia)
-const authService = useAuthService(pinia)
-const assistantStore = useAssistantStore(pinia)
-const labStore = useLabStore(pinia)
+const semesterStore = useSemesterStore(pinia)
 
 // Fetch sample data
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
+semesterStore.fetchActiveSemester('all')
 
 
 app.mount('#app')
