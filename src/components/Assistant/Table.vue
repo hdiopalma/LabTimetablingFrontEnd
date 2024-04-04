@@ -1,9 +1,9 @@
 <script setup>
 //vue
-import { computed, ref, onMounted, defineProps, watch, reactive } from 'vue'
+import { computed, ref, onMounted, watch, reactive } from 'vue'
 
 //icons
-import { mdiEye, mdiTrashCan, mdiPencilBox } from '@mdi/js'
+import { mdiEye, mdiPencilBox } from '@mdi/js'
 
 //store
 import { useAssistantStore } from '@/stores/assistant'
@@ -136,7 +136,7 @@ const disabledButton = ref(false)
 </script>
 
 <template>
-    <CardBoxModal v-model="isModalActive" title="Update Data Assistant" :hasFooter=false has-cancel>
+    <CardBoxModal v-model="isModalActive" title="Update Data Assistant" :hasFooter=false has-cancel is-scrollable>
         <FormInputAssistant :data="computedData" update @dataUpdated="isModalActive = false" />
     </CardBoxModal>
 

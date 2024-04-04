@@ -51,10 +51,13 @@ const semesterStore = useSemesterStore()
 
 const load = async () => {
   try {
-    const response = await semesterStore.fetchItem(props.id)
+    const response = await semesterStore.fetchItem(props.id, 'all')
     data.value.id = response.id
     data.value.name = response.name
     data.value.status = response.status
+    countData.value.module = response.count.module
+    countData.value.group = response.count.group
+    countData.value.participant = response.count.participant
     pageData.value.title = 'Semester ' + response.name
     disabled.value = false
   } catch (error) {
@@ -62,21 +65,10 @@ const load = async () => {
   }
 }
 
-const loadCount = async () => {
-  try {
-    const response = await semesterStore.countItem(props.id)
-    countData.value.module = response.module_count
-    countData.value.group = response.group_count
-    countData.value.participant = response.participant_count
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 //Load data before page loaded
 onMounted(async () => {
   await load()
-  await loadCount()
 })
 
 

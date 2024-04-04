@@ -1,5 +1,7 @@
 <script setup>
-import { mdiCog } from '@mdi/js'
+import { 
+  mdiChevronRight,
+  } from '@mdi/js'
 import CardBox from '@/components/CardBox.vue'
 import NumberDynamic from '@/components/NumberDynamic.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
@@ -47,7 +49,7 @@ defineProps({
   <CardBox>
     <BaseLevel v-if="trend" class="mb-3" mobile>
       <PillTagTrend :trend="trend" :trend-type="trendType" small />
-      <BaseButton :icon="mdiCog" icon-w="w-4" icon-h="h-4" color="lightDark" small />
+      <BaseButton :icon="mdiChevronRight" icon-w="w-4" icon-h="h-4" color="lightDark" small />
     </BaseLevel>
     <BaseLevel mobile>
       <div>
