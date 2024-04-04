@@ -16,11 +16,20 @@ export const useSemesterStore = defineStore('semester', {
     state: () => ({
         items: [],
         itemsCount: 0,
+        activeSemester: null,
     }),
     actions: {
-
         setItems(items) {
             this.items = items;
+        },
+        setActiveSemester(semester) {
+            this.activeSemester = semester;
+            //save active semester id to local storage
+            if (semester) {
+                localStorage.setItem('activeSemester', semester.id);
+            } else {
+                localStorage.removeItem('activeSemester');
+            }
         },
         setCount(count) {
             this.itemsCount = count;
@@ -34,9 +43,15 @@ export const useSemesterStore = defineStore('semester', {
             });
         },
 
-        async fetchItems(page = 1, page_size = 10) {
+        async fetchItems(page = 1, page_size = 10, search = '', statusFilter = null) {
             try {
-                const response = await this.$apiURL.get(apiPath, { params: { page, page_size } });
+                const response = await this.$apiURL.get(apiPath, { 
+                    params: { 
+                        page,
+                        page_size,
+                        search,
+                        status: statusFilter 
+                    } });
                 this.setItems(response.data.results);
                 this.setCount(response.data.count);
             } catch (error) {
@@ -48,6 +63,7 @@ export const useSemesterStore = defineStore('semester', {
             try {
                 const response = await this.$apiURL.post(apiPath, semester, header);
                 this.items.push(response.data);
+                await this.fetchActiveSemester('all');
                 return response;
             } catch (error) {
                 console.error('Error adding semester:', error);
@@ -62,6 +78,7 @@ export const useSemesterStore = defineStore('semester', {
                     this.setAllStatus(false);
                 }
                 this.items[index] = response.data;
+                await this.fetchActiveSemester('all');
                 return response;
             } catch (error) {
                 console.error('Error updating semester:', error);
@@ -72,15 +89,16 @@ export const useSemesterStore = defineStore('semester', {
             try {
                 const response = await this.$apiURL.delete(`${apiPath}${id}`, header);
                 this.items = this.items.filter((semester) => semester.id !== id);
+                await this.fetchActiveSemester('all');
                 return response;
             } catch (error) {
                 console.error('Error deleting semester:', error.response);
                 return error.response;
             }
         },
-        async fetchItem(id) {
+        async fetchItem(id, include_count = '') {
             try {
-                const response = await this.$apiURL.get(`${apiPath}${id}`);
+                const response = await this.$apiURL.get(`${apiPath}${id}`, { params: { include_count } });
                 return response.data;
             } catch (error) {
                 console.error('Error fetching semester:', error);
@@ -96,7 +114,20 @@ export const useSemesterStore = defineStore('semester', {
                 console.error('Error counting semester:', error);
                 return error.response;
             }
-        }
+        },
+
+        // add other actions here
+        async fetchActiveSemester(include_count = '') {
+            try {
+                const response = await this.$apiURL.get(`${apiPath}active/`, { params: { include_count } });
+                this.setActiveSemester(response.data);
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching active semester:', error);
+                this.setActiveSemester(null);
+                return error.response;
+            }
+        },
     },
 });
 
