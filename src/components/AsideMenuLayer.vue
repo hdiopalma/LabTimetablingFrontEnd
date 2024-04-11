@@ -5,7 +5,6 @@ import AsideMenuList from '@/components/AsideMenuList.vue'
 import AsideMenuItem from '@/components/AsideMenuItem.vue'
 import AsideMenuLogOut from '@/components/Auth/AsideMenuLogOut.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
-import { useRouter } from 'vue-router'
 
 import { useAuthService } from '@/services/authService'
 import router from '@/router'

@@ -29,7 +29,7 @@ const routes = [
       title: 'Semesters'
     },
     path: '/semesters',
-    name: 'semesters',
+    name: 'semester.index',
     component: () => import('@/views/Semester/Index.vue'),
   },
 
@@ -39,7 +39,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/semesters/input',
-    name: 'inputSemester',
+    name: 'semester.input',
     component: () => import('@/views/Semester/Input.vue')
   },
 
@@ -49,7 +49,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/semesters/:id',
-    name: 'showSemester',
+    name: 'semester.show',
     component: () => import('@/views/Semester/Show.vue'),
     props: true
   },
@@ -59,7 +59,7 @@ const routes = [
       title: 'Labs'
     },
     path: '/labs',
-    name: 'labs',
+    name: 'lab.index',
     component: () => import('@/views/Lab/Index.vue')
   },
   {
@@ -68,7 +68,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/labs/input',
-    name: 'inputLab',
+    name: 'lab.input',
     component: () => import('@/views/Lab/Input.vue')
   },
   {
@@ -77,7 +77,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/labs/:id',
-    name: 'showLab',
+    name: 'lab.show',
     component: () => import('@/views/Lab/Show.vue'),
     props: true
   },
@@ -88,7 +88,7 @@ const routes = [
       title: 'Assistants'
     },
     path: '/assistants',
-    name: 'assistants',
+    name: 'assistant.index',
     component: () => import('@/views/Assistant/Index.vue')
   },
   {
@@ -97,7 +97,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/assistants/input',
-    name: 'inputAssistant',
+    name: 'assistant.input',
     component: () => import('@/views/Assistant/Input.vue')
   },
   {
@@ -106,7 +106,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/assistants/:id',
-    name: 'showAssistant',
+    name: 'assistant.show',
     component: () => import('@/views/Assistant/Show.vue'),
     props: true
   },
@@ -116,7 +116,7 @@ const routes = [
       title: 'Participants'
     },
     path: '/participants',
-    name: 'participants',
+    name: 'participant.index',
     component: () => import('@/views/Participant/Index.vue')
   },
   {
@@ -125,7 +125,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/participants/input',
-    name: 'inputParticipant',
+    name: 'participant.input',
     component: () => import('@/views/Participant/Input.vue')
   },
   {
@@ -134,7 +134,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/participants/:id',
-    name: 'showParticipant',
+    name: 'participant.show',
     component: () => import('@/views/Participant/Show.vue'),
     props: true
   },
@@ -144,7 +144,7 @@ const routes = [
       title: 'Modules'
     },
     path: '/modules',
-    name: 'modules',
+    name: 'module.index',
     component: () => import('@/views/Module/Index.vue')
   },
   {
@@ -153,7 +153,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/modules/input',
-    name: 'inputModule',
+    name: 'module.input',
     component: () => import('@/views/Module/Input.vue')
   },
   {
@@ -162,7 +162,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/modules/:id',
-    name: 'showModule',
+    name: 'module.show',
     component: () => import('@/views/Module/Show.vue'),
     props: true
   },
@@ -172,7 +172,7 @@ const routes = [
       title: 'Chapters'
     },
     path: '/chapters',
-    name: 'chapters',
+    name: 'chapter.index',
     component: () => import('@/views/Chapter/Index.vue')
   },
   {
@@ -181,7 +181,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/chapters/input',
-    name: 'inputChapter',
+    name: 'chapter.input',
     component: () => import('@/views/Chapter/Input.vue')
   },
   {
@@ -190,7 +190,7 @@ const routes = [
       requiresAuth: true
     },
     path: '/chapters/:id',
-    name: 'showChapter',
+    name: 'chapter.show',
     component: () => import('@/views/Chapter/Show.vue'),
     props: true
   },
@@ -200,7 +200,7 @@ const routes = [
       title: 'Groups'
     },
     path: '/groups',
-    name: 'groups',
+    name: 'group.index',
     component: () => import('@/views/Group/Index.vue')
   },
 

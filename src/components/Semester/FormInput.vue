@@ -4,7 +4,7 @@
 import { mdiAccount } from '@mdi/js'
 
 //Vue
-import { reactive, ref, computed, defineProps , watch, toRef, defineEmits } from 'vue'
+import { reactive, ref, computed , watch } from 'vue'
 
 //Component
 import CardBox from '@/components/CardBox.vue'

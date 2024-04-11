@@ -41,6 +41,10 @@ defineProps({
   trendType: {
     type: String,
     default: null
+  },
+  to: {
+    type: [String, Object],
+    default: null
   }
 })
 </script>
@@ -49,7 +53,7 @@ defineProps({
   <CardBox>
     <BaseLevel v-if="trend" class="mb-3" mobile>
       <PillTagTrend :trend="trend" :trend-type="trendType" small />
-      <BaseButton :icon="mdiChevronRight" icon-w="w-4" icon-h="h-4" color="lightDark" small />
+      <BaseButton :icon="mdiChevronRight" icon-w="w-4" icon-h="h-4" color="lightDark" small :to="to" />
     </BaseLevel>
     <BaseLevel mobile>
       <div>

@@ -1,9 +1,9 @@
 <script setup>
 //vue
-import { computed, ref, onMounted, defineProps, watch, reactive } from 'vue'
+import { computed, ref, onMounted, watch, reactive } from 'vue'
 
 //icons
-import { mdiEye, mdiTrashCan, mdiPencilBox } from '@mdi/js'
+import { mdiEye, mdiPencilBox } from '@mdi/js'
 
 //store
 import { useSemesterStore } from '@/stores/semester'
@@ -11,7 +11,6 @@ import { useSemesterStore } from '@/stores/semester'
 //components
 import PillTag from '@/components/PillTag.vue'
 import CardBoxModal from '@/components/CardBoxModal.vue'
-import TableCheckboxCell from '@/components/TableCheckboxCell.vue'
 import BaseLevel from '@/components/BaseLevel.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 import BaseButton from '@/components/BaseButton.vue'

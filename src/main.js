@@ -5,13 +5,8 @@ import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
 import { useSemesterStore } from './stores/semester'
-import { useAuthService } from '@/services/authService.js'
-import { useAssistantStore } from './stores/assistant'
-import { useLabStore } from './stores/lab'
 
 import { AppConfig } from './services/appConfig'
-
-import axios from 'axios'
 
 const tokenKey = AppConfig.tokenKey
 const apiURL = AppConfig.apiURL

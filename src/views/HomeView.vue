@@ -24,21 +24,10 @@ import BaseButton from '@/components/BaseButton.vue'
 import SectionTitleLineWithButton from '@/components/SectionTitleLineWithButton.vue'
 import TableSemester from '@/components/Semester/Table.vue'
 
-const chartData = ref(null)
 const activeSemester= computed(() => semesterStore.activeSemester)
-const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
-}
 
-const mainStore = useMainStore()
 const semesterStore = useSemesterStore()
 
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-const transactionBarItems = computed(() => mainStore.history)
-
-onMounted(() => {
-  fillChartData()
-})
 
 </script>
 
@@ -63,6 +52,7 @@ onMounted(() => {
           :icon="mdiAccountMultiple"
           :number="activeSemester.count.laboratory"
           label="Lab"
+          :to="{ name: 'lab.index' }"
         />
         <CardBoxWidget
           trend="Jumlah Modul"
@@ -70,6 +60,7 @@ onMounted(() => {
           :icon="mdiCartOutline"
           :number="activeSemester.count.module"
           label="Modul"
+          :to="{ name: 'module.index' }"
         />
         <CardBoxWidget
           trend="Jumlah Kelompok"
@@ -77,6 +68,7 @@ onMounted(() => {
           :icon="mdiChartTimelineVariant"
           :number="activeSemester.count.group"
           label="Group"
+          :to="{ name: 'group.index' }"
         />
       </div>
 
@@ -87,6 +79,7 @@ onMounted(() => {
           :icon="mdiAccountMultiple"
           :number="activeSemester.count.participant"
           label="Partisipan"
+          :to="{ name: 'participant.index' }"
         />
         <CardBoxWidget
           trend="Jumlah Asisten"
@@ -94,6 +87,7 @@ onMounted(() => {
           :icon="mdiCartOutline"
           :number="activeSemester.count.assistant"
           label="Asisten"
+          :to="{ name: 'assistant.index' }"
         />
       </div>
 
