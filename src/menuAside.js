@@ -69,6 +69,12 @@ export default [
     ]
   },
 
+  {
+    to: '/solutions',
+    label: 'Solution',
+    icon: mdiTable
+  },
+
 
   {
     to: '/tables',

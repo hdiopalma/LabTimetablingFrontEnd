@@ -204,6 +204,25 @@ const routes = [
     component: () => import('@/views/Group/Index.vue')
   },
 
+  {
+    meta: {
+      title: 'Solution'
+    },
+    path: '/solutions',
+    name: 'solution.index',
+    component: () => import('@/views/Solution/Index.vue')
+  },
+  {
+    meta: {
+      title: 'Show Solution',
+      requiresAuth: true
+    },
+    path: '/solutions/:id',
+    name: 'solution.show',
+    component: () => import('@/views/Solution/Show.vue'),
+    props: true
+  },
+
 
   {
     meta: {
