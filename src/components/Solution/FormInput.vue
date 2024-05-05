@@ -1,10 +1,9 @@
-
 <script setup>
 //Icon
-import { mdiAccount } from '@mdi/js'
+import { mdiAccount, mdiInformation } from '@mdi/js'
 
 //Vue
-import { reactive, ref, computed , watch } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 //Component
 import CardBox from '@/components/CardBox.vue'
@@ -12,11 +11,23 @@ import CardBox from '@/components/CardBox.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import BaseButtons from '@/components/BaseButtons.vue'
 
+import SectionTitle from '@/components/SectionTitle.vue'
 import BaseDivider from '@/components/BaseDivider.vue'
 
+import CardBoxComponentTitle from '@/components/CardBoxComponentTitle.vue'
+import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
+import CardBoxComponentBody from '@/components/CardBoxComponentBody.vue'
+import CardBoxComponentFooter from '@/components/CardBoxComponentFooter.vue'
+
+import NotificationBarInCard from '@/components/NotificationBarInCard.vue'
 import FormCheckRadioGroup from '@/components/FormCheckRadioGroup.vue'
 import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
+
+//Configuration Component
+import LocalSearchConfig from '@/components/Solution/LocalSearch/LocalSearchConfig.vue'
+import AlgorithmConfig from '@/components/Solution/AlgorithmConfig.vue'
+import SelectSemester from '@/components/Semester/SelectOption.vue'
 
 //Store
 import { useSemesterStore } from '@/stores/semester'
@@ -35,16 +46,16 @@ const semesterStore = useSemesterStore()
 const props = defineProps({
   data: {
     type: Object,
-    default: null,
+    default: null
   },
   update: {
     type: Boolean,
-    default: false,
+    default: false
   },
   disabled: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 //Define emits for updated message
@@ -55,29 +66,8 @@ const dataUpdated = () => {
 
 //Data
 const formData = reactive({
-  namaSemester: '',
-  statusSemester: false,
+  semesterSolution: ''
 })
-
-const tempData = computed(() => {
-  return {
-    id: props.data ? props.data.id : null,
-    namaSemester: props.data ? props.data.name : '',
-    statusSemester: props.data ? props.data.status : false,
-  }
-})
-
-//Updata form data when props.data is changed
-watch(tempData, (value) => {
-  formData.namaSemester = value.namaSemester
-  formData.statusSemester = value.statusSemester
-})
-
-
-const customElementsFormRef = ref({
-  switchStatus: false,
-})
-
 
 //Method
 const formReset = () => {
@@ -85,23 +75,11 @@ const formReset = () => {
   formData.statusSemester = props.data ? props.data.status : false
 }
 
-// Change the switch label based on the switch status
-const switchLabel = computed(() => {
-    return formData.statusSemester ? 'Aktif' : 'Tidak Aktif'
-})
-const switchLabelColor = computed(() => {
-  return formData.statusSemester ? 'text-green-500 font-medium' : 'text-red-500'
-})
-const toggleSwitch = () => {
-  customElementsFormRef.value.switchStatus = !customElementsFormRef.value.switchStatus
-}
-
 //Submit
 //Database operation
 const formSubmit = async () => {
   const data = {
-    name: formData.namaSemester,
-    status: formData.statusSemester,
+    name: formData.semesterSolution
   }
   try {
     const response = await semesterStore.addItem(data)
@@ -123,7 +101,7 @@ const formUpdate = async () => {
   const data = {
     id: props.data.id,
     name: formData.namaSemester,
-    status: formData.statusSemester,
+    status: formData.statusSemester
   }
   try {
     const response = await semesterStore.updateItem(data)
@@ -156,7 +134,7 @@ const successAlert = (id) => {
     showCloseButton: true,
     confirmButtonText: 'Lihat Table',
     cancelButtonText: 'Lihat Data',
-    cancelButtonColor: '#d33',
+    cancelButtonColor: '#d33'
   }).then((result) => {
     if (result.isConfirmed) {
       router.push('/semesters')
@@ -170,37 +148,55 @@ const errorAlert = () => {
   Swal.fire({
     title: 'Data gagal disimpan',
     icon: 'error',
-    confirmButtonText: 'OK',
+    confirmButtonText: 'OK'
   })
 }
-
 </script>
 
 <template>
-    <CardBox is-form @submit.prevent="submit" @reset.prevent="formReset">
-        <FormField label="Nama Semester">
-          <FormControl :icon="mdiAccount" placeholder="Nama Semester" name="namaSemester" v-model="formData.namaSemester" :disabled="props.disabled" />
+  <CardBox :has-component-layout="true">
+    <div>
+      <CardBoxComponentHeader title="Konfigurasi Dasar" />
+      <CardBoxComponentBody :no-padding="false">
+        <FormField label="Pilih Semester">
+          <SelectSemester v-model="formData.semesterSolution" :disabled="props.disabled" />
         </FormField>
+      </CardBoxComponentBody>
+    </div>
+  </CardBox>
 
-        <BaseDivider />
+  <BaseDivider />
 
-        <FormField label="Status Semester" help="Ketika diaktifkan semester yang lain otomatis akan dinonaktifkan">
-          <FormCheckRadioGroup
-            v-model="formData.statusSemester"
-            name="statusSemester"
-            type="switch"
-            :options="{statusSemester: switchLabel}"
-            @change="toggleSwitch"
-            :label-color="switchLabelColor"
-            :disabled="props.disabled"
-          />
-        </FormField>
+  <CardBox :has-component-layout="true">
+    <div>
+      <CardBoxComponentHeader title="Konfigurasi Algoritma" :buttonIcon="mdiInformation" />
 
-        <template #footer>
-          <BaseButtons>
-            <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" :disabled="props.disabled" />
-            <BaseButton type="reset" color="info" outline label="Reset" />
-          </BaseButtons>
-        </template>
-      </CardBox>
+      <CardBoxComponentBody :no-padding="false">
+
+        <AlgorithmConfig />
+
+      </CardBoxComponentBody>
+    </div>
+  </CardBox>
+
+  <BaseDivider />
+
+  <CardBox :has-component-layout="true">
+    <div>
+      <CardBoxComponentHeader title="Konfigurasi Local Search" />
+
+      <CardBoxComponentBody :no-padding="false">
+        
+          <LocalSearchConfig />
+       
+      </CardBoxComponentBody>
+    </div>
+  </CardBox>
+
+  <BaseDivider />
+
+  <BaseButtons type="justify-end">
+    <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" :disabled="props.disabled" />
+    <BaseButton type="reset" color="info" outline label="Reset" />
+  </BaseButtons>
 </template>
