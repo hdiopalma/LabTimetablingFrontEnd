@@ -222,6 +222,15 @@ const routes = [
     component: () => import('@/views/Solution/Show.vue'),
     props: true
   },
+  {
+    meta: {
+      title: 'Input Solution',
+      requiresAuth: true
+    },
+    path: '/solutions/input',
+    name: 'solution.input',
+    component: () => import('@/views/Solution/Input.vue')
+  },
 
 
   {
