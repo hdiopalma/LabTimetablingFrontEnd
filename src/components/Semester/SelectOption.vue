@@ -1,7 +1,7 @@
 <script setup>
 
 import { mdiCalendar } from '@mdi/js';
-import { reactive, ref, computed, onMounted , defineEmits} from 'vue'
+import { reactive, ref, computed, onMounted} from 'vue'
 import { useSemesterStore } from '@/stores/semester'
 
 import FormControl from '@/components/FormControl.vue'

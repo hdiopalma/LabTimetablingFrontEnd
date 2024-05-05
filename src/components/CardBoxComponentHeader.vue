@@ -24,8 +24,8 @@ const buttonClick = (event) => {
 </script>
 
 <template>
-  <header class="flex items-stretch border-b border-gray-100 dark:border-slate-800">
-    <div class="flex items-center py-3 grow font-bold" :class="[icon ? 'px-4' : 'px-6']">
+  <header class="flex items-stretch border-b border-gray-100 dark:border-slate-800 bg-slate-800 dark:bg-white">
+    <div class="flex items-center py-3 grow font-bold text-gray-200 dark:text-black" :class="[icon ? 'px-4' : 'px-6']">
       <BaseIcon v-if="icon" :path="icon" class="mr-3" />
       {{ title }}
     </div>
