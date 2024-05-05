@@ -15,9 +15,8 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const goToInput = () => {
-  // router.push('/solutions/input')
-  console.log('goToInput')
+function goToInput() {
+  router.push('/solutions/input')
 }
 
 </script>
