@@ -1,7 +1,7 @@
 <script setup>
 import { mdiCalendar } from '@mdi/js'
 import { reactive, ref, computed, onMounted, defineEmits } from 'vue'
-import { useSemesterStore } from '@/stores/semester'
+import { useSolutionConfigurationStore } from '@/stores/solution_configuration'
 
 import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
@@ -12,17 +12,17 @@ import CardBoxComponentTitle from '@/components/CardBoxComponentTitle.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import CardBoxComponentBody from '@/components/CardBoxComponentBody.vue'
 
-//operator config
-const selection = reactive({
-  roulette_wheel: true,
-  tournament: false,
-  tournament_size: 2,
-  elitism: true
-})
+const solutionConfigurationStore = useSolutionConfigurationStore()
 
-const algorithm = ref('random_swap')
+const neighborhood = solutionConfigurationStore.getNeighborhood
+const algorithm = ref(neighborhood.algorithm)
+const random_swap = ref(neighborhood.random_swap)
+const random_range_swap = ref(neighborhood.random_range_swap)
+const distance_swap = ref(neighborhood.distance_swap)
+//swap is true when algorithm is swap
+// const swap = computed(() => algorithm.value === 'swap')
 
-const neighborhood_algorithm = [
+const neighborhood_option = [
   {
     id: 'random_swap',
     label: 'Random Swap'
@@ -41,29 +41,19 @@ const neighborhood_algorithm = [
   }
 ]
 
-const random_swap = ref({
-  neighborhood_size: 100
-})
-
-const random_range_swap = ref({
-  neighborhood_size_factor: 0.1,
-  range_size_factor: 0.1
-})
-
-const distance_swap = ref({
-  neighborhood_size: 100
-})
-
-//swap is true when algorithm is swap
-const swap = computed(() => algorithm.value === 'swap')
-
-function activeLabel(bool) {
-  return bool ? '' : ''
+const onAlgorithmChange = () => {
+  solutionConfigurationStore.$state.configuration.local_search.config.neighborhood.swap = algorithm.value === 'swap'
 }
 
-function activeColor(bool) {
-  return bool ? 'text-slate-900 font-medium' : 'text-slate-500'
+const onNeighborhoodChange = () => {
+  solutionConfigurationStore.setNeighborhood({
+    algorithm: algorithm.value,
+    random_swap: random_swap.value,
+    random_range_swap: random_range_swap.value,
+    distance_swap: distance_swap.value,
+  })
 }
+
 </script>
 
 <template>
@@ -72,44 +62,85 @@ function activeColor(bool) {
     <CardBoxComponentBody>
       <div class="grid grid-cols-1 gap-x-4 mb-4">
         <FormField label="Algoritma Neighborhood">
-          <FormControl
-            v-model="algorithm"
-            :options="neighborhood_algorithm"
-            name="neighborhoodAlgorithm"
-            :icon="mdiCalendar"
-          />
+          <FormControl v-model="algorithm" :options="neighborhood_option" name="neighborhoodAlgorithm" @change="onAlgorithmChange"
+            :icon="mdiCalendar" />
         </FormField>
       </div>
 
-        <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md" v-if="algorithm === 'random_swap'">
-            <CardBoxComponentHeader title="Random Swap" />
-            <CardBoxComponentBody>
-            <FormField label="Ukuran Neighborhood">
-                <FormControl v-model="random_swap.neighborhood_size" name="neighborhoodSize" :icon="mdiCalendar" />
-            </FormField>
-            </CardBoxComponentBody>
-        </CardBox>
+      <!-- Random Swap -->
 
-        <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md" v-if="algorithm === 'random_range_swap'">
-            <CardBoxComponentHeader title="Random Range Swap" />
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md"
+        v-if="algorithm === 'random_swap'">
+        <CardBoxComponentHeader title="Random Swap" />
+        <CardBoxComponentBody>
+          <CardBox :has-component-layout="true" :is-nested="true" :nested-level="3" rounded="rounded-md">
             <CardBoxComponentBody>
-            <FormField label="Faktor Ukuran Neighborhood">
-                <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" :icon="mdiCalendar" />
-            </FormField>
-            <FormField label="Faktor Ukuran Range">
-                <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" :icon="mdiCalendar" />
-            </FormField>
+              <p class="text-md text-slate-500">Random Swap akan mempertukarkan gen secara acak. Algoritma yang digunakan sama dengan algoritma swap, hanya saja gen yang dipertukarkan dipilih secara acak. Paling konsisten dari segi kecepatan dan hasil.</p>
             </CardBoxComponentBody>
-        </CardBox>
+          </CardBox>
+          <br>
+          <FormField label="Ukuran Neighborhood">
+            <FormControl v-model="random_swap.neighborhood_size" name="neighborhoodSize" :icon="mdiCalendar" @change="onNeighborhoodChange" />
+          </FormField>
+        </CardBoxComponentBody>
+      </CardBox>
 
-        <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md" v-if="algorithm === 'distance_swap'">
-            <CardBoxComponentHeader title="Distance Swap" />
+      <!-- Random Range Swap -->
+
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md"
+        v-if="algorithm === 'random_range_swap'">
+        <CardBoxComponentHeader title="Random Range Swap" />
+        <CardBoxComponentBody>
+          <CardBox :has-component-layout="true" :is-nested="true" :nested-level="3" rounded="rounded-md">
             <CardBoxComponentBody>
-            <FormField label="Ukuran Neighborhood">
-                <FormControl v-model="distance_swap.neighborhood_size" name="neighborhoodSize" :icon="mdiCalendar" />
-            </FormField>
+              <p class="text-md text-slate-500">Random Range Swap akan mempertukarkan gen pada persentase jarak
+                tertentu. Jarak dihitung dari posisi gen pada solusi. <b>Faktor ukuran neighborhood</b> menentukan besar ukuran
+                neighborhood yang dihasilkan berdasarkan persentase ukuran solusi. <b>Faktor ukuran range</b> menentukan jarak
+                gen yang akan dipertukarkan.</p>
             </CardBoxComponentBody>
-        </CardBox>
+          </CardBox>
+          <br>
+          <FormField label="Faktor Ukuran Neighborhood">
+            <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" @change="onNeighborhoodChange"
+              :icon="mdiCalendar" />
+          </FormField>
+          <FormField label="Faktor Ukuran Range">
+            <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" @change="onNeighborhoodChange"
+            :icon="mdiCalendar" />
+          </FormField>
+        </CardBoxComponentBody>
+      </CardBox>
+
+      <!-- Distance Swap -->
+
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md"
+        v-if="algorithm === 'distance_swap'">
+        <CardBoxComponentHeader title="Distance Swap" />
+        <CardBoxComponentBody>
+          <CardBox :has-component-layout="true" :is-nested="true" :nested-level="3" rounded="rounded-md">
+            <CardBoxComponentBody>
+              <p class="text-md text-slate-500">Distance Swap akan mempertukarkan gen pada persentase jarak euclidean
+                tertentu. Jarak dihitung dari posisi gen pada solusi.</p>
+            </CardBoxComponentBody>
+          </CardBox>
+          <br>
+          <FormField label="Persentase Jarak">
+            <FormControl v-model="distance_swap.distance_percentage" name="distancePercentage" @change="onNeighborhoodChange"
+            :icon="mdiCalendar" />
+          </FormField>
+        </CardBoxComponentBody>
+      </CardBox>
+
+      <!-- Swap -->
+
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md" v-if="algorithm === 'swap'">
+        <CardBoxComponentHeader title="Swap" />
+        <CardBoxComponentBody>
+          <p class="text-md text-slate-500">Swap tidak memiliki konfigurasi, tiap gen akan dipertukarkan dengan gen
+            lainnya. Besar ukuran neighborhood yang dihasilkan eksponensial dari ukuran solusi. Sangat lambat dan tidak
+            disarankan untuk digunakan.</p>
+        </CardBoxComponentBody>
+      </CardBox>
 
     </CardBoxComponentBody>
   </CardBox>
