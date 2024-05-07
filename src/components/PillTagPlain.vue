@@ -1,5 +1,6 @@
 <script setup>
 import BaseIcon from '@/components/BaseIcon.vue'
+import { mdiLoading } from '@mdi/js'
 
 defineProps({
   label: {
@@ -9,6 +10,10 @@ defineProps({
   icon: {
     type: String,
     default: null
+  },
+  loading: {
+    type: Boolean,
+    default: false
   },
   small: Boolean
 })
@@ -21,12 +26,14 @@ defineProps({
   >
     <BaseIcon
       v-if="icon"
-      :path="icon"
+      :path="loading ? mdiLoading : icon"
       h="h-4"
       w="w-4"
       :class="small ? 'mr-1' : 'mr-2'"
       :size="small ? 14 : null"
+      :loading="loading"
     />
-    <span>{{ label }}</span>
+    <span>{{ label }}
+    </span>
   </div>
 </template>

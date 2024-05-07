@@ -62,24 +62,23 @@ const formData = reactive({
   semesterSolution: ''
 })
 
-const onSemesterChange = (event) => {
-  console.log('Semester Changed', event.target.value)
-}
-
-const submit = () => {
-  solutionConfigurationStore.setSemester(formData.semesterSolution)
-  solutionConfigurationStore.applyConfiguration()
-  // if (props.update) {
-  //   updateData()
-  // } else {
-  //   saveData()
-  // }
+const submit = async () => {
+  try {
+    solutionConfigurationStore.setSemester(formData.semesterSolution)
+    const response = await solutionConfigurationStore.applyConfiguration()
+    if (response.status === 200) {
+      successAlert(response.data.message)
+    }
+  } catch (error) {
+    errorAlert()
+  }
 }
 
 //Sweetalert2
 const successAlert = (id) => {
   Swal.fire({
-    title: 'Data berhasil disimpan',
+    title: 'Proses berhasil ditugaskan!',
+    text: 'Anda dapat melihat status proses pada table atau data yang bersangkutan',
     icon: 'success',
     showCancelButton: true,
     showCloseButton: true,
@@ -88,7 +87,7 @@ const successAlert = (id) => {
     cancelButtonColor: '#d33'
   }).then((result) => {
     if (result.isConfirmed) {
-      router.push('/semesters')
+      router.push('/solutions')
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       router.push('/semesters/' + id)
     }
@@ -112,7 +111,7 @@ const errorAlert = () => {
         <CardBoxComponentHeader title="Konfigurasi Dasar" />
         <CardBoxComponentBody :no-padding="false">
           <FormField label="Pilih Semester">
-            <SelectSemester v-model="formData.semesterSolution" :disabled="props.disabled" @change="onSemesterChange" />
+            <SelectSemester v-model="formData.semesterSolution" :disabled="props.disabled" />
           </FormField>
         </CardBoxComponentBody>
       </div>

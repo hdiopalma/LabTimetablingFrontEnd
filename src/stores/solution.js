@@ -69,8 +69,9 @@ export const useSolutionStore = defineStore('solution', {
         },
         async deleteItem(id) {
             try {
-                await this.$apiURL.delete(`${apiPath}${id}/`);
+                const response = await this.$apiURL.delete(`${apiPath}${id}/`, header);
                 this.fetchItems();
+                return response;
             } catch (error) {
                 console.error('Error deleting item:', error);
                 return error;

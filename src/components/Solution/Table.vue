@@ -35,10 +35,9 @@ const isFailed = ref(false)
 onMounted(async () => {
     try {
         await load()
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise((resolve) => setTimeout(resolve, 500))
         itemsLoaded.value = true
         isFailed.value = false
-        
     } catch (error) {
         isFailed.value = true
     }
@@ -79,7 +78,7 @@ const pagesList = computed(() => {
     //     pagesList.push(i)
     // }
     for (let i = 0; i < numPages.value; i++) {
-        if ((i >= currentPage.value - margin && i <= currentPage.value + margin)) {
+        if (i >= currentPage.value - margin && i <= currentPage.value + margin) {
             pagesList.push(i)
         }
     }
@@ -104,20 +103,19 @@ const goToPage = () => {
 const disabledButton = ref(false)
 
 const statusHandler = (status) => {
-    return status === 'Pending' ? 'warning' : (status === 'Completed' ? 'success' : 'error')
+    return status === 'Pending' ? 'warning' : status === 'Completed' ? 'success' : 'error'
 }
-
 </script>
 
 <template>
     <div>
-
-        <CardBoxComponentLoading height="h-12" duration="1.5s" margin="mb-4" v-if="!itemsLoaded" v-for="i in displayCount" :key="i" />
+        <CardBoxComponentLoading height="h-12" duration="1.5s" margin="mb-4" v-if="!itemsLoaded"
+            v-for="i in displayCount" :key="i" />
         <table v-else class="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Status </th>
+                    <th>Status</th>
                     <th>Semester</th>
                     <th>Best Fitness</th>
                     <th>Time Elapsed</th>
@@ -130,7 +128,7 @@ const statusHandler = (status) => {
                     <td data-label="Name">
                         {{ solution.name }}
                     </td>
-                    <td data-label="Status">
+                    <td data-label="Status" class="flex items-end">
                         <PillTag :label="solution.status" :color="statusHandler(solution.status)" />
                     </td>
                     <td data-label="Semester">
@@ -147,11 +145,11 @@ const statusHandler = (status) => {
                     </td>
                     <td class="before:hidden lg:w-1 whitespace-nowrap">
                         <BaseButtons type="justify-start lg:justify-end" no-wrap>
-                            <BaseButton color="info" :icon="mdiEye" small :disabled="disabledButton" :to="`/solutions/${solution.id}`" />
-                            <DeleteModal :id="solution.id" :delete="solutionStore.deleteItem"
-                                @onDeleted="handleDeleted" 
-                                @isLoading="disabledButton = $event"
-                                />
+                            <BaseButton color="info" :icon="mdiEye" small :disabled="disabledButton"
+                                :to="`/solutions/${solution.id}`" />
+                            <DeleteModal :id="solution.id" :delete="solutionStore.deleteItem" @onDeleted="handleDeleted"
+                            @isLoading="disabledButton = $event"
+                            :disabled="disabledButton || solution.status === 'Pending'" />
                         </BaseButtons>
                     </td>
                 </tr>
@@ -172,9 +170,9 @@ const statusHandler = (status) => {
                         class="appearance-none border-blue-500 bottom bg-transparent w-12 text-gray-700 mr-1 ml-1 py-1 px-2 leading-tight focus:outline-none text-center dark:text-gray-300"
                         @keyup.enter="goToPage" :max="numPages" />
                     of
-                    {{ numPages }} </small>
+                    {{ numPages }}
+                </small>
             </BaseLevel>
         </div>
     </div>
-
 </template>

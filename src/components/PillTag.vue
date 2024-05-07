@@ -1,4 +1,5 @@
 <script setup>
+//icons
 import { computed } from 'vue'
 import { colorsBgLight, colorsOutline } from '@/colors.js'
 import PillTagPlain from '@/components/PillTagPlain.vue'
@@ -16,8 +17,12 @@ const props = defineProps({
     type: String,
     default: null
   },
+  loading: {
+    type: Boolean,
+    default: false
+  },
   small: Boolean,
-  outline: Boolean
+  outline: Boolean,
 })
 
 const componentClass = computed(() => [
@@ -33,5 +38,6 @@ const componentClass = computed(() => [
     :icon="icon"
     :label="label"
     :small="small"
+    :loading="loading"
   />
 </template>

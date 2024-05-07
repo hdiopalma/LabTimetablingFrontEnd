@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { AppConfig } from '@/services/appConfig';
-const algoPath = 'algorihtm/';
+const algoPath = 'algorithm/generate_timetabling/';
 
 export const useSolutionConfigurationStore = defineStore('solutionConfiguration', {
     state: () => ({
@@ -206,11 +206,12 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
             this.configuration.local_search.config.tabu_search = tabu_search;
         },
 
-        applyConfiguration() {
+        async applyConfiguration() {
             try {
-                console.log('Configuration:', JSON.stringify(this.configuration));
-                // const response = await this.$apiURL.post(algoPath, this.configuration);
-                // return response;
+                //console.log('Configuration:', JSON.stringify(this.configuration));
+                const response = await this.$apiURL.post(algoPath, this.configuration);
+                console.log('Configuration applied:', response);
+                return response;
             } catch (error) {
                 console.error('Error applying configuration:', error);
                 return error.response;

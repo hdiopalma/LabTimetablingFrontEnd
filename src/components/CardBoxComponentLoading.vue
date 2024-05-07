@@ -4,7 +4,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Loading...'
+      default: 'LOADING'
     },
     duration: {
       type: String,
@@ -13,6 +13,10 @@ export default {
     height: {
       type: String,
       default: 'h-24'
+    },
+    spacing: {
+      type: String,
+      default: 'space-x-2'
     },
     padding: {
       type: String,
@@ -44,21 +48,21 @@ export default {
 </script>
 
 <template>
-  <div class='flex space-x-2 justify-center items-center text-gray-500 dark:text-gray-400 md:p-4'
-    :class="`${height} ${padding} ${bold ? 'font-bold' : ''} ${margin}`"
+  <div class='flex justify-center items-center text-gray-500 dark:text-gray-400 md:p-4'
+    :class="`${height} ${padding} ${bold ? 'font-bold' : ''} ${margin} ${spacing}`"
     :style="cssProps">
     <span class='sr-only'>{{ title }}</span>
 
-    <div v-for="(letter, index) in ['L', 'O', 'A', 'D', 'I', 'N', 'G']"
+    <div v-for="(letter, index) in title.split('')"
       :key="index"
-      class='h-4 w-4 animate-bounce'
+      class='animate-bounce'
       :style="getAnimationDelay(index)">
       {{ letter }}
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 .animate-bounce {
   animation-duration: var(--animation-duration);
   animation-iteration-count: infinite;

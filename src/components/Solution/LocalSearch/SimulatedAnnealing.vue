@@ -27,28 +27,13 @@ const onSimulatedAnnealingChange = () => {
   <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
     <CardBoxComponentHeader title="Konfigurasi Simulated Annealing" />
     <CardBoxComponentBody>
-
-      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md">
-        <CardBoxComponentBody>
-          <p class="text-md text-slate-500">
-            <b>Simulated Annealing</b> adalah algoritma optimasi yang mengikuti proses pendinginan logam. Algoritma ini
-            mengikuti proses pendinginan logam yang dikenal sebagai proses annealing. Proses ini mengacu pada
-            penurunan suhu secara perlahan untuk mengurangi energi dalam sistem. Seiring berjalannya iterasi, suhu akan
-            turun
-            pada rasio tertentu. Pada suhu tinggi, algoritma ini akan berfokus pada eksplorasi, dimana ia akan memiliki
-            peluang
-            besar untuk menerima solusi yang lebih buruk. Sebaliknya, pada suhu rendah, algoritma ini akan berfokus pada
-            eksploitasi,
-            dimana ia berfokus untuk menerima solusi yang paling baik. <br><br> Paling konsisten dari segi kecepatan dan
-            hasil.
-          </p>
-        </CardBoxComponentBody>
-      </CardBox>
-      <br>
-
       <div class="grid grid-cols-1 gap-x-4 gap-y-1 xl:grid-cols-2">
         <FormField label="Suhu Awal" class="mb-0">
           <FormControl v-model="simulated_annealing.initial_temperature" name="initialTemperature"
+            @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
+        </FormField>
+        <FormField label="Tingkat Pendinginan" class="mb-0">
+          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Iterasi" class="mb-0">
@@ -59,9 +44,9 @@ const onSimulatedAnnealingChange = () => {
           <FormControl v-model="simulated_annealing.max_time" name="maxTime" @change="onSimulatedAnnealingChange"
             :icon="mdiCalendar" />
         </FormField>
-        <FormField label="Tingkat Pendinginan" class="mb-0">
-          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate"
-            @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
+        <FormField label="Maksimum Iterasi Tanpa Perkembangan" class="mb-0">
+          <FormControl v-model="simulated_annealing.max_iteration_without_improvement"
+            name="maxIterationWithoutImprovement" @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Waktu Tanpa Perkembangan (detik)" class="mb-0">
           <FormControl v-model="simulated_annealing.max_time_without_improvement" name="maxTimeWithoutImprovement"

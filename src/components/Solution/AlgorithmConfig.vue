@@ -54,7 +54,7 @@ const onConfigChange = () => {
                 </FormField>
                 <CardBox :has-component-layout="true" :is-nested="true" :nested-level="3" rounded="rounded-md" v-if="algorithm == 'genetic_algorithm'">
                     <CardBoxComponentBody>
-                        <p class="text-md text-slate-500">Algoritma Genetika menggunakan prisinsip seleksi alami untuk
+                        <p class="text-md text-slate-500"><b>Algoritma Genetika</b> menggunakan prisinsip seleksi alami untuk
                             memilih solusi akhir terbaik. Algortima akan membuat populasi awal sebagai nenek moyang
                             pertama, lalu berdasarkan populasi tersebut akan dilakukan berbagai kawin silang dan seleksi
                             berdasarkan nilai fitness terbaik untuk mendapatkan solusi akhir. </p>
@@ -62,7 +62,7 @@ const onConfigChange = () => {
                 </CardBox>
                 <CardBox :has-component-layout="true" :is-nested="true" :nested-level="3" rounded="rounded-md" v-if="algorithm == 'genetic_local_search'">
                     <CardBoxComponentBody>
-                        <p class="text-md text-slate-500">Hybrid Genetic Algorithm + Local Search merupakan kombinasi
+                        <p class="text-md text-slate-500"><b>Hybrid Genetic Algorithm + Local Search</b> merupakan kombinasi
                             algoritma genetika dengan algoritma pencarian lokal. Algoritma ini akan melakukan pencarian
                             lokal pada solusi terbaik yang dihasilkan oleh algoritma genetika untuk mengeksplorasi dan mengeksploitasi guna mendapatkan solusi yang lebih baik.</p>
                     </CardBoxComponentBody>
