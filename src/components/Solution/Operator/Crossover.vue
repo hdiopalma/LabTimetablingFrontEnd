@@ -1,62 +1,92 @@
 <script setup>
-
-import { mdiCalendar } from '@mdi/js';
+import { mdiCalendar } from '@mdi/js'
 import { reactive, ref, computed, onMounted, defineEmits } from 'vue'
-import { useSemesterStore } from '@/stores/semester'
+import { useSolutionConfigurationStore } from '@/stores/solution_configuration'
 
 import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
-import FormCheckRadioGroup from '@/components/FormCheckRadioGroup.vue';
+import FormCheckRadioGroup from '@/components/FormCheckRadioGroup.vue'
 import CardBox from '@/components/CardBox.vue'
-import BaseDivider from '@/components/BaseDivider.vue'
-import CardBoxComponentTitle from '@/components/CardBoxComponentTitle.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import CardBoxComponentBody from '@/components/CardBoxComponentBody.vue'
 
-const crossover = ref({
-    crossover_probability: 0.1,
-    single_point: true,
-    two_point: false,
-    uniform: false,
-    uniform_probability: 0.5
-})
+//Store
+const solutionConfigurationStore = useSolutionConfigurationStore()
+const crossover = ref(solutionConfigurationStore.getCrossover)
+const onCrossoverChange = () => {
+  solutionConfigurationStore.setCrossover(crossover.value)
+  console.log(solutionConfigurationStore.getCrossover)
+}
 
 function activeLabel(bool) {
-    return bool ? '' : ''
+  return bool ? '' : ''
 }
 
 function activeColor(bool) {
-    return bool ? 'text-slate-900 font-medium' : 'text-slate-500'
+  return bool ? 'text-slate-900 font-medium' : 'text-slate-500'
 }
-
 </script>
 
-
 <template>
-    <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md" is-hoverable>
-        <CardBoxComponentHeader title="Konfigurasi Crossover" />
-        <CardBoxComponentBody>
-            <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-3 mb-4">
-                <FormCheckRadioGroup v-model="crossover.single_point" name="crossover" type="switch" :options="{
-        'single_point': 'Single Point ' + activeLabel(crossover.single_point),
-    }" :label-color="activeColor(crossover.single_point)" />
-                <FormCheckRadioGroup v-model="crossover.two_point" name="crossover" type="switch" :options="{
-        'two_point': 'Two Point ' + activeLabel(crossover.two_point),
-    }" :label-color="activeColor(crossover.two_point)" />
-                <FormCheckRadioGroup v-model="crossover.uniform" name="crossover" type="switch" :options="{
-        'uniform': 'Uniform ' + activeLabel(crossover.uniform),
-    }" :label-color="activeColor(crossover.uniform)" />
-            </div>
-            <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-2">
-                <FormField label="Probabilitas Crossover" class="mb-0">
-                    <FormControl v-model="crossover.crossover_probability" name="crossoverProbability"
-                        :icon="mdiCalendar" />
-                </FormField>
-                <FormField label="Probabilitas Uniform" v-if="crossover.uniform">
-                    <FormControl v-model="crossover.uniform_probability" name="uniformProbability"
-                        :icon="mdiCalendar" />
-                </FormField>
-            </div>
-        </CardBoxComponentBody>
-    </CardBox>
+  <CardBox
+    :has-component-layout="true"
+    :is-nested="true"
+    :nested-level="1"
+    rounded="rounded-md"
+    is-hoverable
+  >
+    <CardBoxComponentHeader title="Konfigurasi Crossover" />
+    <CardBoxComponentBody>
+      <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-3 mb-4">
+        <FormCheckRadioGroup
+          v-model="crossover.single_point"
+          name="crossover"
+          type="switch"
+          :options="{
+            single_point: 'Single Point ' + activeLabel(crossover.single_point)
+          }"
+          :label-color="activeColor(crossover.single_point)"
+            @change="onCrossoverChange"
+        />
+        <FormCheckRadioGroup
+          v-model="crossover.two_point"
+          name="crossover"
+          type="switch"
+          :options="{
+            two_point: 'Two Point ' + activeLabel(crossover.two_point)
+          }"
+          :label-color="activeColor(crossover.two_point)"
+            @change="onCrossoverChange"
+        />
+        <FormCheckRadioGroup
+          v-model="crossover.uniform"
+          name="crossover"
+          type="switch"
+          :options="{
+            uniform: 'Uniform ' + activeLabel(crossover.uniform)
+          }"
+          :label-color="activeColor(crossover.uniform)"
+          @change="onCrossoverChange"
+        />
+      </div>
+      <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-2">
+        <FormField label="Probabilitas Crossover" class="mb-0">
+          <FormControl
+            v-model="crossover.crossover_probability"
+            name="crossoverProbability"
+            :icon="mdiCalendar"
+            @change="onCrossoverChange"
+          />
+        </FormField>
+        <FormField label="Probabilitas Uniform" v-if="crossover.uniform">
+          <FormControl
+            v-model="crossover.uniform_probability"
+            name="uniformProbability"
+            :icon="mdiCalendar"
+            @change="onCrossoverChange"
+          />
+        </FormField>
+      </div>
+    </CardBoxComponentBody>
+  </CardBox>
 </template>
