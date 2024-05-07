@@ -25,12 +25,11 @@ import FormField from '@/components/FormField.vue'
 import FormControl from '@/components/FormControl.vue'
 
 //Configuration Component
-import LocalSearchConfig from '@/components/Solution/LocalSearch/LocalSearchConfig.vue'
 import AlgorithmConfig from '@/components/Solution/AlgorithmConfig.vue'
 import SelectSemester from '@/components/Semester/SelectOption.vue'
 
 //Store
-import { useSemesterStore } from '@/stores/semester'
+import { useSolutionConfigurationStore } from '@/stores/solution_configuration'
 
 //Router
 import { useRouter } from 'vue-router'
@@ -40,7 +39,7 @@ import Swal from 'sweetalert2'
 
 //Variable
 const router = useRouter()
-const semesterStore = useSemesterStore()
+const solutionConfigurationStore = useSolutionConfigurationStore()
 
 //Props (optional, for update data)
 const props = defineProps({
@@ -58,71 +57,23 @@ const props = defineProps({
   }
 })
 
-//Define emits for updated message
-const emit = defineEmits(['data-updated'])
-const dataUpdated = () => {
-  emit('data-updated')
-}
-
 //Data
 const formData = reactive({
   semesterSolution: ''
 })
 
-//Method
-const formReset = () => {
-  formData.namaSemester = props.data ? props.data.name : ''
-  formData.statusSemester = props.data ? props.data.status : false
-}
-
-//Submit
-//Database operation
-const formSubmit = async () => {
-  const data = {
-    name: formData.semesterSolution
-  }
-  try {
-    const response = await semesterStore.addItem(data)
-    if (response.status === 201) {
-      formReset()
-      successAlert(response.data.id)
-    } else {
-      errorAlert()
-    }
-  } catch (error) {
-    console.log(error)
-    errorAlert()
-  }
-}
-
-//Update
-//Database operation
-const formUpdate = async () => {
-  const data = {
-    id: props.data.id,
-    name: formData.namaSemester,
-    status: formData.statusSemester
-  }
-  try {
-    const response = await semesterStore.updateItem(data)
-    if (response.status === 200) {
-      successAlert(props.data.id)
-      dataUpdated()
-    } else {
-      errorAlert()
-    }
-  } catch (error) {
-    console.log(error)
-    errorAlert()
-  }
+const onSemesterChange = (event) => {
+  console.log('Semester Changed', event.target.value)
 }
 
 const submit = () => {
-  if (props.update) {
-    formUpdate()
-  } else {
-    formSubmit()
-  }
+  solutionConfigurationStore.setSemester(formData.semesterSolution)
+  solutionConfigurationStore.applyConfiguration()
+  // if (props.update) {
+  //   updateData()
+  // } else {
+  //   saveData()
+  // }
 }
 
 //Sweetalert2
@@ -151,52 +102,31 @@ const errorAlert = () => {
     confirmButtonText: 'OK'
   })
 }
+
 </script>
 
 <template>
-  <CardBox :has-component-layout="true">
-    <div>
-      <CardBoxComponentHeader title="Konfigurasi Dasar" />
-      <CardBoxComponentBody :no-padding="false">
-        <FormField label="Pilih Semester">
-          <SelectSemester v-model="formData.semesterSolution" :disabled="props.disabled" />
-        </FormField>
-      </CardBoxComponentBody>
-    </div>
-  </CardBox>
+  <form @submit.prevent="submit">
+    <CardBox :has-component-layout="true">
+      <div>
+        <CardBoxComponentHeader title="Konfigurasi Dasar" />
+        <CardBoxComponentBody :no-padding="false">
+          <FormField label="Pilih Semester">
+            <SelectSemester v-model="formData.semesterSolution" :disabled="props.disabled" @change="onSemesterChange" />
+          </FormField>
+        </CardBoxComponentBody>
+      </div>
+    </CardBox>
 
-  <BaseDivider />
+    <BaseDivider />
 
-  <CardBox :has-component-layout="true">
-    <div>
-      <CardBoxComponentHeader title="Konfigurasi Algoritma" :buttonIcon="mdiInformation" />
+    <AlgorithmConfig />
 
-      <CardBoxComponentBody :no-padding="false">
+    <BaseDivider />
 
-        <AlgorithmConfig />
-
-      </CardBoxComponentBody>
-    </div>
-  </CardBox>
-
-  <BaseDivider />
-
-  <CardBox :has-component-layout="true">
-    <div>
-      <CardBoxComponentHeader title="Konfigurasi Local Search" />
-
-      <CardBoxComponentBody :no-padding="false">
-        
-          <LocalSearchConfig />
-       
-      </CardBoxComponentBody>
-    </div>
-  </CardBox>
-
-  <BaseDivider />
-
-  <BaseButtons type="justify-end">
-    <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" :disabled="props.disabled" />
-    <BaseButton type="reset" color="info" outline label="Reset" />
-  </BaseButtons>
+    <BaseButtons type="justify-end">
+      <BaseButton type="submit" color="info" :label="update ? 'Update' : 'Submit'" :disabled="props.disabled" />
+      <BaseButton type="reset" color="info" outline label="Reset" />
+    </BaseButtons>
+  </form>
 </template>

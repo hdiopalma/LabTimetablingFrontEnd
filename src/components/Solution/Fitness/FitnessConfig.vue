@@ -3,6 +3,7 @@
 import { mdiCalendar } from '@mdi/js';
 import { reactive, ref, computed, onMounted, defineEmits } from 'vue'
 import { useSemesterStore } from '@/stores/semester'
+import { useSolutionConfigurationStore } from '@/stores/solution_configuration'
 
 import FormControl from '@/components/FormControl.vue'
 import FormField from '@/components/FormField.vue'
@@ -11,24 +12,18 @@ import CardBoxComponentTitle from '@/components/CardBoxComponentTitle.vue'
 import CardBoxComponentHeader from '@/components/CardBoxComponentHeader.vue'
 import CardBoxComponentBody from '@/components/CardBoxComponentBody.vue'
 
+const solutionConfigurationStore = useSolutionConfigurationStore()
+const fitness = solutionConfigurationStore.getFitness
+const groupAssignmentConflict = ref(fitness.group_assignment_conflict)
+const assistantDistribution = ref(fitness.assistant_distribution)
 
-const groupAssignmentConflict = ref({
-    max_threshold: 3,
-    conflict_penalty: 1
-})
+const onGroupAssignmentConflictChange = () => {
+    solutionConfigurationStore.setFitness({ group_assignment_conflict: groupAssignmentConflict.value })
+}
 
-const assistantDistribution = ref({
-    max_group_threshold: 15,
-    max_shift_threshold: 50,
-    group_penalty: 1,
-    shift_penalty: 1
-})
-
-const fitness = ref({
-    "group_assignment_conflict": groupAssignmentConflict,
-    "assistant_distribution": assistantDistribution
-})
-
+const onAssistantDistributionChange = () => {
+    solutionConfigurationStore.setFitness({ assistant_distribution: assistantDistribution.value })
+}
 
 </script>
 
@@ -40,10 +35,10 @@ const fitness = ref({
         <CardBoxComponentHeader title="Konflik Penugasan Kelompok" />
         <CardBoxComponentBody>
             <FormField label="Maksimal Threshold" class="pb-4">
-                <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar" />
+                <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" />
             </FormField>
             <FormField label="Penalti Konflik">
-                <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty" :icon="mdiCalendar" />
+                <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" />
             </FormField>
         </CardBoxComponentBody>
     </CardBox>
@@ -52,16 +47,16 @@ const fitness = ref({
         <CardBoxComponentHeader title="Distribusi Asisten" />
         <CardBoxComponentBody class="grid grid-cols-1 gap-4 xl:grid-cols-2">
             <FormField label="Max Kelompok per Asisten">
-                <FormControl v-model="assistantDistribution.max_group_threshold" name="maxGroupThreshold" :icon="mdiCalendar" />
+                <FormControl v-model="assistantDistribution.max_group_threshold" name="maxGroupThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
             </FormField>
             <FormField label="Penalti Kelompok">
-                <FormControl v-model="assistantDistribution.group_penalty" name="groupPenalty" :icon="mdiCalendar" />
+                <FormControl v-model="assistantDistribution.group_penalty" name="groupPenalty" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
             </FormField>
             <FormField label="Max Shift per Asisten">
-                <FormControl v-model="assistantDistribution.max_shift_threshold" name="maxShiftThreshold" :icon="mdiCalendar" />
+                <FormControl v-model="assistantDistribution.max_shift_threshold" name="maxShiftThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
             </FormField>
             <FormField label="Penalti Shift">
-                <FormControl v-model="assistantDistribution.shift_penalty" name="shiftPenalty" :icon="mdiCalendar" />
+                <FormControl v-model="assistantDistribution.shift_penalty" name="shiftPenalty" :icon="mdiCalendar" @change="onAssistantDistributionChange" type="number" />
             </FormField>
         </CardBoxComponentBody>
     </CardBox>

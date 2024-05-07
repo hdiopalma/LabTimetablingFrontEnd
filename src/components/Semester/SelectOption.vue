@@ -15,7 +15,6 @@ onMounted(async () => {
     if (computedValue.value === '') {
         computedValue.value = semesterItems.value[0].id
     }
-    console.log(computedValue.value)
 })
 
 const props = defineProps({
