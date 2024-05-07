@@ -3,7 +3,6 @@ import { AppConfig } from '@/services/appConfig';
 
 // get globalProperties from app, 
 const apiPath = 'data/solution/';
-const algoPath = 'algorihtm/';
 const token = localStorage.getItem(AppConfig.tokenKey) || null;
 const header = {
     headers: {
