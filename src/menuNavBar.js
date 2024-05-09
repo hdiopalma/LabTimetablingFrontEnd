@@ -10,10 +10,18 @@ import {
   mdiThemeLightDark,
   mdiGithub,
   mdiReact,
-  mdiLogin
+  mdiLogin,
+  mdiBell,
 } from '@mdi/js'
 
 export default [
+  {
+    icon: mdiBell,
+    label: 'Notifications',
+    isDesktopNoLabel: true,
+    isNotification: true,
+    needAuth: true
+  },
   {
     icon: mdiMenu,
     label: 'Semester Aktif',
@@ -35,6 +43,12 @@ export default [
         label: 'Item Last'
       }
     ]
+  },
+  {
+    icon: mdiThemeLightDark,
+    label: 'Light/Dark',
+    isDesktopNoLabel: true,
+    isToggleLightDark: true,
   },
   {
     isCurrentUser: true,
@@ -67,19 +81,14 @@ export default [
       }
     ]
   },
-  {
-    icon: mdiThemeLightDark,
-    label: 'Light/Dark',
-    isDesktopNoLabel: true,
-    isToggleLightDark: true,
-  },
-  {
-    icon: mdiLogout,
-    label: 'Log out',
-    isDesktopNoLabel: true,
-    isLogout: true,
-    needAuth: true
-  },
+  
+  // {
+  //   icon: mdiLogout,
+  //   label: 'Log out',
+  //   isDesktopNoLabel: true,
+  //   isLogout: true,
+  //   needAuth: true
+  // },
   {
     icon: mdiLogin,
     label: 'Log In',

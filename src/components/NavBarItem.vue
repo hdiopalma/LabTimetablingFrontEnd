@@ -10,8 +10,8 @@ import BaseDivider from '@/components/BaseDivider.vue'
 import { defineProps, defineEmits } from 'vue'
 import { useAuthService } from '@/services/authService'
 import { useRouter } from 'vue-router'
+import NavbarNotification from '@/components/NavbarNotification.vue'
 import Swal from 'sweetalert2'
-
 
 const authService = useAuthService()
 const router = useRouter()
@@ -19,7 +19,7 @@ const isAuthenticated = computed(() => authService.isAuthenticated())
 
 const props = defineProps({
   item: {
-    type: Object,
+    type: Object, //icon, label, to, href, target, menu, isDesktopNoLabel, isCurrentUser, isDivider, isLogout, needAuth
     required: true
   }
 })
@@ -49,7 +49,7 @@ const componentClass = computed(() => {
   if (props.item.isDesktopNoLabel) {
     base.push('lg:w-16', 'lg:justify-center')
   }
-  
+
   return base
 })
 
@@ -69,10 +69,31 @@ const menuClick = (event) => {
   if (props.item.isLogout) {
     handleLogout()
   }
+
+  // if (props.item.isNotification) {
+  //   notificationClick(event)
+  // }
 }
 
 const menuClickDropdown = (event, item) => {
   emit('menu-click', event, item)
+}
+
+const isNotificationActive = ref(false)
+const notificationClick = (event) => {
+  if (event) {
+    console.log('notificationClick', event)
+    if (isNotificationActive.value === false) {
+      isNotificationActive.value = !isNotificationActive.value
+      setTimeout(() => {
+        const notification = document.getElementById('notification')
+        notification.focus()
+      }, 100)
+      
+    } else {
+      isNotificationActive.value = !isNotificationActive.value
+    }
+  }
 }
 
 const root = ref(null)
@@ -80,6 +101,7 @@ const root = ref(null)
 const forceClose = (event) => {
   if (root.value && !root.value.contains(event.target)) {
     isDropdownActive.value = false
+    isNotificationActive.value = false
   }
 }
 
@@ -95,53 +117,50 @@ onBeforeUnmount(() => {
   }
 })
 
-
 const handleLogout = async () => {
-    Swal.fire({
-        title: 'Logout',
-        text: 'Are you sure you want to logout?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Logging out...',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading(),
-                    logout()
-                }
-            })
-        } else if (result.isDenied) {
-            Swal.fire('Logout cancelled', '', 'info')
+  Swal.fire({
+    title: 'Logout',
+    text: 'Are you sure you want to logout?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: 'Logging out...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading(), logout()
         }
-    })
+      })
+    } else if (result.isDenied) {
+      Swal.fire('Logout cancelled', '', 'info')
+    }
+  })
 }
 
 const handleLogoutSuccess = () => {
-    Swal.fire({
-        icon: 'success',
-        title: 'Goodbye!',
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 1500
-    })
+  Swal.fire({
+    icon: 'success',
+    title: 'Goodbye!',
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 1500
+  })
 }
 
 const logout = async () => {
-    try {
-        await authService.logout()
-        handleLogoutSuccess()
-        router.push('/login')
-    } catch (error) {
-        handleLoginError(error)
-    }
+  try {
+    await authService.logout()
+    handleLogoutSuccess()
+    router.push('/login')
+  } catch (error) {
+    handleLoginError(error)
+  }
 }
-
 </script>
 
 <template>
@@ -156,7 +175,7 @@ const logout = async () => {
     :href="item.href ?? null"
     :target="item.target ?? null"
     @click="menuClick"
-    v-if= "item.needAuth == null ? true : item.needAuth === isAuthenticated" 
+    v-if="item.needAuth == null ? true : item.needAuth === isAuthenticated"
   >
     <div
       class="flex items-center"
@@ -164,9 +183,21 @@ const logout = async () => {
         'bg-gray-100 dark:bg-slate-800 lg:bg-transparent lg:dark:bg-transparent p-3 lg:p-0':
           item.menu
       }"
+      @click="notificationClick(item.isNotification)"
     >
-      <UserAvatarCurrentUser v-if="item.isCurrentUser" class="w-6 h-6 mr-3 inline-flex" frame-shape="full" />
+
+    <div v-if="item.isNotification" class="w-3 h-3 bg-red-500 rounded-full absolute lg:right-1/2 lg:bottom-1/2 animate-ping">
+      <span class="sr-only">Notification</span>
+    </div>
+
+      <UserAvatarCurrentUser
+        v-if="item.isCurrentUser"
+        class="w-6 h-6 mr-3 inline-flex"
+        frame-shape="full"
+      />
+
       <BaseIcon v-if="item.icon" :path="item.icon" class="transition-colors" />
+
       <span
         class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
@@ -185,5 +216,13 @@ const logout = async () => {
     >
       <NavBarMenuList :menu="item.menu" @menu-click="menuClickDropdown" />
     </div>
+
+    <div
+      v-if="isNotificationActive"
+      class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-800 dark:border-slate-700"
+    >
+      <NavbarNotification @focusout="isNotificationActive = false" />
+    </div>
+
   </component>
 </template>

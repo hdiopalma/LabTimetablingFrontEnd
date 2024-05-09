@@ -8,6 +8,8 @@ import { useSemesterStore } from './stores/semester'
 
 import { AppConfig } from './services/appConfig'
 
+import '@/stores/notifications'
+
 const tokenKey = AppConfig.tokenKey
 const apiURL = AppConfig.apiURL
 const localURL = AppConfig.localURL
@@ -45,6 +47,20 @@ const semesterStore = useSemesterStore(pinia)
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
 semesterStore.fetchActiveSemester('all')
+
+app.directive('click-outside', {
+  beforeMount(el, binding) {
+    el.clickOutsideEvent = function (event) {
+      if (!(el === event.target || el.contains(event.target))) {
+        binding.value()
+      }
+    }
+    document.body.addEventListener('click', el.clickOutsideEvent)
+  },
+  unmounted(el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent)
+  },
+})
 
 
 app.mount('#app')
