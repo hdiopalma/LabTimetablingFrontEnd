@@ -3,6 +3,8 @@ import { RouterView } from 'vue-router'
 import LayoutAuthenticatedVue from './layouts/LayoutAuthenticated.vue';
 import LayoutGuestVue from './layouts/LayoutGuest.vue';
 
+//insert script notification.js
+
 const getLayout = (route) => {
   if (route.meta.layout === 'guest') {
     return LayoutGuestVue

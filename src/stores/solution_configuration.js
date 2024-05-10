@@ -210,7 +210,7 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
             try {
                 //console.log('Configuration:', JSON.stringify(this.configuration));
                 const response = await this.$apiURL.post(algoPath, this.configuration);
-                console.log('Configuration applied:', response);
+                // console.log('Configuration applied:', response);
                 return response;
             } catch (error) {
                 console.error('Error applying configuration:', error);

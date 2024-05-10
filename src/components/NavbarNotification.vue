@@ -1,9 +1,13 @@
 <script setup>
 import {mdiClose, mdiTrashCan } from '@mdi/js'
 
+import { useNotificationsStore } from '@/stores/notifications'
+
 import BaseButton from '@/components/BaseButton.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
 import { defineProps, defineEmits, ref, computed, onMounted, reactive } from 'vue'
+
+const notifications = useNotificationsStore()
 
 const props = defineProps({
   menu: {
@@ -16,25 +20,7 @@ const props = defineProps({
   }
 })
 
-const message = ref(
-  [
-  {
-    id: 1,
-    title: 'New message',
-    message: 'Task has been updated'
-  },
-  {
-    id: 2,
-    title: 'New message',
-    message: 'Task has been updated'
-  },
-  {
-    id: 3,
-    title: 'New message',
-    message: 'Task has been updated'
-  }
-]
-)
+const message = ref(notifications.getNotifications)
 
 const emit = defineEmits(['focusout'])
 const unFocusAble = ref(false)
@@ -47,6 +33,7 @@ const handLeUnfocus = (e) => {
 const clearAll = () => {
   unFocusAble.value = false
   message.value = []
+  notifications.clearNotifications()
   setTimeout(() => {
     unFocusAble.value = true
   }, 100)
@@ -55,6 +42,7 @@ const closeClick = (e, item) => {
   e.preventDefault()
   unFocusAble.value = false
   message.value = message.value.filter((msg) => msg.id !== item.id)
+  notifications.removeNotification(item.id)
   setTimeout(() => {
     unFocusAble.value = true
   }, 100)
@@ -75,7 +63,7 @@ onMounted(() => {
   <div class="absolute right-0 w-80 mt-2 dark:bg-slate-900 bg-white rounded-lg shadow-lg z-10 focus:outline-none"
   tabindex="0" v-click-outside="handLeUnfocus"  
   id="notification">
-    <div class="p-4">
+    <div class="p-4 border-b border-gray-200 dark:border-slate-700">
       <div class="flex items-center justify-between" v-if="message.length > 0">
         <h1 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Notification</h1>
         <button @click="clearAll" class="text-gray-600 hover:text-gray-800">

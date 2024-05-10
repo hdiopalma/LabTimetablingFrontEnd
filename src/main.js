@@ -5,10 +5,8 @@ import App from './App.vue'
 import router from './router'
 import { useMainStore } from '@/stores/main.js'
 import { useSemesterStore } from './stores/semester'
-
+import { useNotificationsStore } from './stores/notifications'
 import { AppConfig } from './services/appConfig'
-
-import '@/stores/notifications'
 
 const tokenKey = AppConfig.tokenKey
 const apiURL = AppConfig.apiURL
@@ -42,11 +40,13 @@ app.use(router)
 // Init main store
 const mainStore = useMainStore(pinia)
 const semesterStore = useSemesterStore(pinia)
+const notificationsStore = useNotificationsStore(pinia)
 
 // Fetch sample data
 mainStore.fetchSampleClients()
 mainStore.fetchSampleHistory()
 semesterStore.fetchActiveSemester('all')
+notificationsStore.connect()
 
 app.directive('click-outside', {
   beforeMount(el, binding) {
@@ -61,7 +61,6 @@ app.directive('click-outside', {
     document.body.removeEventListener('click', el.clickOutsideEvent)
   },
 })
-
 
 app.mount('#app')
 

@@ -3,6 +3,7 @@ import { mdiChevronUp, mdiChevronDown } from '@mdi/js'
 import { RouterLink } from 'vue-router'
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMainStore } from '@/stores/main.js'
+import { useNotificationsStore } from '@/stores/notifications'
 import BaseIcon from '@/components/BaseIcon.vue'
 import UserAvatarCurrentUser from '@/components/UserAvatarCurrentUser.vue'
 import NavBarMenuList from '@/components/NavBarMenuList.vue'
@@ -14,6 +15,7 @@ import NavbarNotification from '@/components/NavbarNotification.vue'
 import Swal from 'sweetalert2'
 
 const authService = useAuthService()
+const notificationsStore = useNotificationsStore()
 const router = useRouter()
 const isAuthenticated = computed(() => authService.isAuthenticated())
 
@@ -80,14 +82,19 @@ const menuClickDropdown = (event, item) => {
 }
 
 const isNotificationActive = ref(false)
+const newNotification = computed(() => {
+  return notificationsStore.newNotificationStatus
+})
+
 const notificationClick = (event) => {
   if (event) {
-    console.log('notificationClick', event)
     if (isNotificationActive.value === false) {
       isNotificationActive.value = !isNotificationActive.value
       setTimeout(() => {
         const notification = document.getElementById('notification')
         notification.focus()
+        notificationsStore.setNewNotificationStatus(false)
+        console.log(newNotification)
       }, 100)
       
     } else {
@@ -186,7 +193,8 @@ const logout = async () => {
       @click="notificationClick(item.isNotification)"
     >
 
-    <div v-if="item.isNotification" class="w-3 h-3 bg-red-500 rounded-full absolute lg:right-1/2 lg:bottom-1/2 animate-ping">
+    <div v-if="item.isNotification && newNotification"
+    class="w-3 h-3 bg-red-500 rounded-full absolute lg:right-1/2 lg:bottom-1/2 animate-ping">
       <span class="sr-only">Notification</span>
     </div>
 
