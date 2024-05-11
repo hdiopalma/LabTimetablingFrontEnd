@@ -13,6 +13,8 @@ import NavBarItemPlain from '@/components/NavBarItemPlain.vue'
 import AsideMenu from '@/components/AsideMenu.vue'
 import FooterBar from '@/components/FooterBar.vue'
 
+
+
 const layoutAsidePadding = 'xl:pl-60'
 
 const darkModeStore = useDarkModeStore()
@@ -27,9 +29,6 @@ const menuClick = (event, item) => {
     darkModeStore.set()
   }
 
-  if (item.isLogout) {
-    //
-  }
 }
 </script>
 
