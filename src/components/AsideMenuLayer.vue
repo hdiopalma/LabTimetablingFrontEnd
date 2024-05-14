@@ -6,6 +6,7 @@ import AsideMenuItem from '@/components/AsideMenuItem.vue'
 import AsideMenuLogOut from '@/components/Auth/AsideMenuLogOut.vue'
 import BaseIcon from '@/components/BaseIcon.vue'
 import UserAvatarCurrentUser from '@/components/UserAvatarCurrentUser.vue'
+import UnderlayImage from './Misc/UnderlayImage.vue'
 
 import { useAuthService } from '@/services/authService'
 import router from '@/router'
@@ -44,7 +45,7 @@ const asideLgCloseClick = (event) => {
 <template>
   <aside id="aside" class="w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden">
     <div class="aside flex-1 flex flex-col overflow-hidden dark:bg-slate-900">
-
+      <UnderlayImage src="/assets/plum_branch.png" position="bottom-12 left-0" opacity="50" size="w-96" relative-position="absolute" />
       <div class="aside-brand flex flex-row h-36 items-center justify-between dark:bg-slate-900 overflow-hidden">
         <div class="relative">
           <div class="flex flex-row h-auto items-center justify-between dark:bg-slate-900 overflow-hidden relative">
@@ -67,7 +68,7 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuLogOut v-if="isAuthenticated" />
+        <AsideMenuLogOut v-if="isAuthenticated" class="z-20" />
         <AsideMenuItem v-if="!isAuthenticated" :item="loginItem" @menu-click="loginClick" />
       </ul>
     </div>

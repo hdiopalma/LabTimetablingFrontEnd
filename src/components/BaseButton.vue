@@ -113,6 +113,7 @@ const componentClass = computed(() => {
 <template>
   <component
     :is="is"
+    class="z-10"
     :class="componentClass"
     :href="href"
     :type="computedType"

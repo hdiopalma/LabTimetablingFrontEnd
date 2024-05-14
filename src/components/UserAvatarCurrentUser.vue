@@ -18,7 +18,10 @@ const props = defineProps({
 </script>
 
 <template>
-  <UserAvatar :username="mainStore.userName" :avatar="mainStore.userAvatar" :frame-shape="frameShape" :class="layoutPosition">
+  <UserAvatar :username="mainStore.userName" 
+  :avatar="mainStore.userAvatar" 
+  :frame-shape="frameShape" 
+  :class="layoutPosition">
     <slot />
   </UserAvatar>
 </template>
