@@ -42,7 +42,8 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
+    // require("@tailwindcss/forms"), // import tailwind forms
+    require("daisyui"), // import daisyUI
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

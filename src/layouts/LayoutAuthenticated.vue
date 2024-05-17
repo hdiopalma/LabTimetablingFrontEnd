@@ -35,6 +35,8 @@ const menuClick = (event, item) => {
     darkModeStore.set()
   }
 
+const vibeMode = ref(false)
+
 }
 
 const bgImageClass = ref('bg-fixed bg-no-repeat bg-right-bottom')
@@ -42,8 +44,8 @@ const bgImageClass = ref('bg-fixed bg-no-repeat bg-right-bottom')
 </script>
 
 <template>
-  <UnderlayImage src="/assets/sparkle.png" opacity="50" size="w-1/4" index="z-0" />
-  <UnderlayImage src="/assets/plum_tree.png" position="top-0 right-0" opacity="50" size="w-2/5" index="z-1" />
+  <UnderlayImage src="/assets/sparkle.png" opacity="50" size="w-1/4" index="z-0" v-if="vibeMode" />
+  <UnderlayImage src="/assets/plum_tree.png" position="top-0 right-0" opacity="50" size="w-2/5" index="z-1" v-if="vibeMode" />
   <div
   :class="{
     'overflow-hidden lg:overflow-visible': isAsideMobileExpanded
@@ -66,7 +68,7 @@ const bgImageClass = ref('bg-fixed bg-no-repeat bg-right-bottom')
       
       <AsideMenu :is-aside-mobile-expanded="isAsideMobileExpanded" :is-aside-lg-active="isAsideLgActive"
         :menu="menuAside" @menu-click="menuClick" @aside-lg-close-click="isAsideLgActive = false" />
-        <AudioVisual/>
+        <AudioVisual v-if="vibeMode" />
           <slot />
       <FooterBar> 
 
