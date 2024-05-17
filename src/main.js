@@ -12,6 +12,10 @@ const tokenKey = AppConfig.tokenKey
 const apiURL = AppConfig.apiURL
 const localURL = AppConfig.localURL
 
+//v-calendar
+import 'v-calendar/style.css';
+import { setupCalendar } from 'v-calendar'
+
 //add auth header
 apiURL.interceptors.request.use((config) => {
   const token = localStorage.getItem(tokenKey)
@@ -36,6 +40,7 @@ pinia.use(({ store }) => {
 
 app.use(pinia)
 app.use(router)
+app.use(setupCalendar, {})
 
 // Init main store
 const mainStore = useMainStore(pinia)

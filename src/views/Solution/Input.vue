@@ -28,7 +28,7 @@ const goToBack = () => {
         <SectionMain>
             <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Konfigurasi Algoritma" main>
                 <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast"
-                    rounded-full small />
+                    rounded-full small class="z-10" />
             </SectionTitleLineWithButton>
 
             <FormInputSolution />

@@ -61,7 +61,8 @@ export const useSolutionStore = defineStore('solution', {
         async fetchItem(id) {
             try {
                 const response = await this.$apiURL.get(`${apiPath}${id}/`);
-                this.setActiveSolution(response.data);
+                // this.setActiveSolution(response.data);
+                return response.data;
             } catch (error) {
                 console.error('Error fetching item:', error);
                 return error;
