@@ -29,27 +29,27 @@ const onSimulatedAnnealingChange = () => {
     <CardBoxComponentBody>
       <div class="grid grid-cols-1 gap-x-4 gap-y-1 xl:grid-cols-2">
         <FormField label="Suhu Awal" class="mb-0">
-          <FormControl v-model="simulated_annealing.initial_temperature" name="initialTemperature"
+          <FormControl v-model="simulated_annealing.initial_temperature" name="initialTemperature" type="number"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Tingkat Pendinginan" class="mb-0">
-          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate"
+          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate" type="number"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Iterasi" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_iteration" name="maxIteration"
+          <FormControl v-model="simulated_annealing.max_iteration" name="maxIteration" type="number"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Waktu (detik)" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_time" name="maxTime" @change="onSimulatedAnnealingChange"
+          <FormControl v-model="simulated_annealing.max_time" name="maxTime" @change="onSimulatedAnnealingChange" type="number"
             :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Iterasi Tanpa Perkembangan" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_iteration_without_improvement"
+          <FormControl v-model="simulated_annealing.max_iteration_without_improvement" type="number"
             name="maxIterationWithoutImprovement" @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Waktu Tanpa Perkembangan (detik)" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_time_without_improvement" name="maxTimeWithoutImprovement"
+          <FormControl v-model="simulated_annealing.max_time_without_improvement" name="maxTimeWithoutImprovement" type="number"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
       </div>

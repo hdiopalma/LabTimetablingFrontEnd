@@ -76,6 +76,7 @@ function activeColor(bool) {
             name="crossoverProbability"
             :icon="mdiCalendar"
             @change="onCrossoverChange"
+            type="number"
           />
         </FormField>
         <FormField label="Probabilitas Uniform" v-if="crossover.uniform">
@@ -84,6 +85,7 @@ function activeColor(bool) {
             name="uniformProbability"
             :icon="mdiCalendar"
             @change="onCrossoverChange"
+            type="number"
           />
         </FormField>
       </div>

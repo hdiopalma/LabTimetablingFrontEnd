@@ -42,7 +42,6 @@ const onConfigChange = () => {
 
 </script>
 
-
 <template>
     <CardBox :has-component-layout="true">
         <div>

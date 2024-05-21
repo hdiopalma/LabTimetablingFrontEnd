@@ -67,6 +67,8 @@ app.directive('click-outside', {
   },
 })
 
+document.documentElement.setAttribute('data-theme', 'light')
+
 app.mount('#app')
 
 // Dark mode

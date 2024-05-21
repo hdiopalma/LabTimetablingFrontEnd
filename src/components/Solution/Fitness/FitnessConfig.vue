@@ -35,10 +35,10 @@ const onAssistantDistributionChange = () => {
         <CardBoxComponentHeader title="Konflik Penugasan Kelompok" />
         <CardBoxComponentBody>
             <FormField label="Maksimal Threshold" class="pb-4">
-                <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" />
+                <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" type="number" />
             </FormField>
             <FormField label="Penalti Konflik">
-                <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" />
+                <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty" :icon="mdiCalendar" @change="onGroupAssignmentConflictChange" type="number" />
             </FormField>
         </CardBoxComponentBody>
     </CardBox>
@@ -47,13 +47,13 @@ const onAssistantDistributionChange = () => {
         <CardBoxComponentHeader title="Distribusi Asisten" />
         <CardBoxComponentBody class="grid grid-cols-1 gap-4 xl:grid-cols-2">
             <FormField label="Max Kelompok per Asisten">
-                <FormControl v-model="assistantDistribution.max_group_threshold" name="maxGroupThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
+                <FormControl v-model="assistantDistribution.max_group_threshold" name="maxGroupThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" type="number" />
             </FormField>
             <FormField label="Penalti Kelompok">
-                <FormControl v-model="assistantDistribution.group_penalty" name="groupPenalty" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
+                <FormControl v-model="assistantDistribution.group_penalty" name="groupPenalty" :icon="mdiCalendar" @change="onAssistantDistributionChange" type="number" />
             </FormField>
             <FormField label="Max Shift per Asisten">
-                <FormControl v-model="assistantDistribution.max_shift_threshold" name="maxShiftThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" />
+                <FormControl v-model="assistantDistribution.max_shift_threshold" name="maxShiftThreshold" :icon="mdiCalendar" @change="onAssistantDistributionChange" type="number" />
             </FormField>
             <FormField label="Penalti Shift">
                 <FormControl v-model="assistantDistribution.shift_penalty" name="shiftPenalty" :icon="mdiCalendar" @change="onAssistantDistributionChange" type="number" />

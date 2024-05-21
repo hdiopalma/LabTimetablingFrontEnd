@@ -80,7 +80,7 @@ const onNeighborhoodChange = () => {
           </CardBox>
           <br>
           <FormField label="Ukuran Neighborhood">
-            <FormControl v-model="random_swap.neighborhood_size" name="neighborhoodSize" :icon="mdiCalendar" @change="onNeighborhoodChange" />
+            <FormControl v-model="random_swap.neighborhood_size" name="neighborhoodSize" :icon="mdiCalendar" type="number" @change="onNeighborhoodChange" />
           </FormField>
         </CardBoxComponentBody>
       </CardBox>
@@ -101,11 +101,11 @@ const onNeighborhoodChange = () => {
           </CardBox>
           <br>
           <FormField label="Faktor Ukuran Neighborhood">
-            <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" @change="onNeighborhoodChange"
+            <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" @change="onNeighborhoodChange" type="number"
               :icon="mdiCalendar" />
           </FormField>
           <FormField label="Faktor Ukuran Range">
-            <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" @change="onNeighborhoodChange"
+            <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" @change="onNeighborhoodChange" type="number"
             :icon="mdiCalendar" />
           </FormField>
         </CardBoxComponentBody>
@@ -125,7 +125,7 @@ const onNeighborhoodChange = () => {
           </CardBox>
           <br>
           <FormField label="Persentase Jarak">
-            <FormControl v-model="distance_swap.distance_percentage" name="distancePercentage" @change="onNeighborhoodChange"
+            <FormControl v-model="distance_swap.distance_percentage" name="distancePercentage" @change="onNeighborhoodChange" type="number"
             :icon="mdiCalendar" />
           </FormField>
         </CardBoxComponentBody>

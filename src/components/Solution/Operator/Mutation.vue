@@ -69,6 +69,7 @@ function activeColor(bool) {
             name="mutationProbability"
             :icon="mdiCalendar"
             @change="onMutationChange"
+            type="number"
           />
         </FormField>
       </div>
