@@ -55,7 +55,7 @@ const onConfigChange = () => {
                     <CardBoxComponentBody>
                         <p class="text-md text-slate-500"><b>Algoritma Genetika</b> menggunakan prisinsip seleksi alami untuk
                             memilih solusi akhir terbaik. Algortima akan membuat populasi awal sebagai nenek moyang
-                            pertama, lalu berdasarkan populasi tersebut akan dilakukan berbagai kawin silang dan seleksi
+                            pertama, lalu berdasarkan populasi tersebut akan dilakukan berbagai operasi seperti kawin silang, mutasi dan seleksi
                             berdasarkan nilai fitness terbaik untuk mendapatkan solusi akhir. </p>
                     </CardBoxComponentBody>
                 </CardBox>
@@ -82,7 +82,7 @@ const onConfigChange = () => {
                     </FormField>
                 </div>
                 <BaseDivider />
-                <CardBoxComponentTitle title="Konfigurasi Fitness" size="text-md" font="font-bold" />
+                <CardBoxComponentTitle title="Konfigurasi Fungsi Fitness" size="text-md" font="font-bold" />
                 <FitnessConfig />
                 <BaseDivider />
                 <CardBoxComponentTitle title="Konfigurasi Operator" size="text-md" font="font-bold" />

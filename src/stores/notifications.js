@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { watch } from 'vue'
 import Swal from 'sweetalert2'
 
+import { useSolutionStore } from './solution'
+
 const alert = (title, text) => {
   //toast notification
   Swal.fire({
@@ -60,6 +62,11 @@ export const useNotificationsStore = defineStore('notifications', {
     },
     setNewNotificationStatus(value) {
       this.newNotificationStatus = value
+    },
+
+    updateSolutionStore(){
+      const solutionStore = useSolutionStore()
+      solutionStore.fetchItems()
     },
 
     connect() {

@@ -70,6 +70,9 @@ function activeColor(bool) {
             :icon="mdiCalendar"
             @change="onMutationChange"
             type="number"
+            min="0"
+            max="1"
+            step="0.05"
           />
         </FormField>
       </div>

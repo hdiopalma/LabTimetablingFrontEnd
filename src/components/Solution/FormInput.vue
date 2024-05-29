@@ -65,6 +65,7 @@ const formData = reactive({
 const submit = async () => {
   try {
     solutionConfigurationStore.setSemester(formData.semesterSolution)
+    // console.log(solutionConfigurationStore.configuration)
     const response = await solutionConfigurationStore.applyConfiguration()
     if (response.status === 200) {
       successAlert(response.data.message)

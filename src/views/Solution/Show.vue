@@ -75,7 +75,6 @@ const goToBack = () => {
 //Lifecycle
 onMounted(async () => {
   await load()
-  console.log(data.value.schedule_data)
 })
 
 const scheduleData = reactive({})

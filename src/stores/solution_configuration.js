@@ -56,7 +56,7 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                     neighborhood:{
                         algorithm: 'random_swap',
                         random_swap:{
-                            neighborhood_size: 100,
+                            neighborhood_size: 50,
                         },
                         random_range_swap:{
                             neighborhood_size_factor: 0.1,
@@ -68,19 +68,19 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                         swap: false,
                     },
                     simulated_annealing:{
-                        initial_temperature: 100,
+                        initial_temperature: 50,
                         cooling_rate: 0.1,
-                        max_iteration: 1000,
-                        max_time: 60,
-                        max_iteration_without_improvement: 100,
-                        max_time_without_improvement: 60,
+                        max_iteration: 25,
+                        max_time: 30,
+                        max_iteration_without_improvement: 10,
+                        max_time_without_improvement: 10,
                     },
                     tabu_search:{
                         tabu_list_size: 50,
-                        max_iteration: 1000,
-                        max_time: 60,
-                        max_iteration_without_improvement: 100,
-                        max_time_without_improvement: 60,
+                        max_iteration: 25,
+                        max_time: 30,
+                        max_iteration_without_improvement: 20,
+                        max_time_without_improvement: 10,
                     },
                 },
             },

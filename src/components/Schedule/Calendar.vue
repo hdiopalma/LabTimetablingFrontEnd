@@ -79,6 +79,16 @@ async function moveToInitialPage() {
 <template>
     <div>
         <Calendar expanded :rows="1" :columns="2" :attributes="attributes" :initial-page="initialPage" ref="calendar" @dayclick="dayClick">
+            <template #popover="{ date, customData }">
+                <div class="bg-white p-2 rounded-lg shadow-lg">
+                    <div class="text-sm font-semibold text-gray-800">Detail</div>
+                    <div class="text-xs text-gray-600">
+                        <div v-for="data in customData" :key="data.group">
+                            <div>{{ data.lab }} - {{ data.assistant }} - {{ data.module }} - {{ data.chapter }} - {{ data.group }}</div>
+                        </div>
+                    </div>
+                </div>
+            </template>
         </Calendar>
 
     </div>

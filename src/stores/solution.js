@@ -43,6 +43,7 @@ export const useSolutionStore = defineStore('solution', {
         },
 
         async fetchItems(page = 1, page_size = 10, search = '', statusFilter = null) {
+            console.log('fetchItems');
             try {
                 const response = await this.$apiURL.get(apiPath, { 
                     params: { 

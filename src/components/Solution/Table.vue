@@ -63,7 +63,7 @@ const handleDeleted = () => {
 }
 
 //Pagination
-const perPage = ref(5)
+const perPage = ref(10)
 const currentPage = ref(0)
 const currentPageWatcher = watch(currentPage, () => {
     currentPageData.value = currentPage.value + 1
@@ -105,6 +105,21 @@ const disabledButton = ref(false)
 const statusHandler = (status) => {
     return status === 'Pending' ? 'warning' : status === 'Completed' ? 'success' : 'error'
 }
+
+const secondToTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    //round seconds
+    const sec = Math.round(seconds % 60)
+    
+    if (hours > 0) {
+        return `${hours}h ${minutes}m ${sec}s`
+    } else if (minutes > 0) {
+        return `${minutes}m ${sec}s`
+    } else {
+        return `${sec}s`
+    }
+}
 </script>
 
 <template>
@@ -117,7 +132,7 @@ const statusHandler = (status) => {
                     <th>Name</th>
                     <th>Status</th>
                     <th>Semester</th>
-                    <th>Best Fitness</th>
+                    <th>Fitness</th>
                     <th>Time Elapsed</th>
                     <th>Gene Length</th>
                     <th />
@@ -138,7 +153,7 @@ const statusHandler = (status) => {
                         {{ solution.best_fitness ?? '-' }}
                     </td>
                     <td data-label="Time Elapsed">
-                        {{ solution.time_elapsed ?? '-' }}
+                        {{ secondToTime(solution.time_elapsed) }}
                     </td>
                     <td data-label="Gene Length">
                         {{ solution.gene_count ?? '-' }}
