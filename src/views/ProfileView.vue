@@ -40,7 +40,7 @@ const submitPass = () => {
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiAccount" title="Profile" main>
         <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
+          href="https://github.com/hdiopalma/jte-lab-timetabling"
           target="_blank"
           :icon="mdiGithub"
           label="Star on GitHub"

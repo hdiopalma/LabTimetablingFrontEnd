@@ -10,6 +10,8 @@ export const useMainStore = defineStore('main', () => {
   const state = {
     userName: localStorage.getItem('userName') ? ref(JSON.parse(localStorage.getItem('userName'))) : ref('Hu Tao as a guest'),
     userEmail: localStorage.getItem('userEmail') ? ref(JSON.parse(localStorage.getItem('userEmail'))) : ref('hutaowansheng.com'),
+    userAvatar: localStorage.getItem('userAvatar') ? ref(JSON.parse(localStorage.getItem('userAvatar'))) : ref('/aaa.png'),
+    userLastLogin: localStorage.getItem('lastLogin') ? ref(JSON.parse(localStorage.getItem('lastLogin'))) : ref(new Date()),
     isFieldFocusRegistered: ref(false),
     clients: ref([]),
     history: ref([]),
@@ -22,8 +24,9 @@ export const useMainStore = defineStore('main', () => {
 
   // Getters
   const getters = {
-    userAvatar: computed(() => '/taopattern.jpg'),
+    userAvatar: computed(() => '/aaa.png'),
     assetImage: (file) => '/assets/' + file,
+    //lastLogin
   }
 
   // Actions
@@ -31,6 +34,7 @@ export const useMainStore = defineStore('main', () => {
     if (payload.name) {
       state.userName.value = payload.name
       localStorage.setItem('userName', JSON.stringify(state.userName.value))
+      localStorage.setItem('lastLogin', JSON.stringify(new Date()))
     } else {
       state.userName.value = 'Hu Tao as a guest'
       localStorage.setItem('userName', JSON.stringify(state.userName.value))
@@ -39,6 +43,7 @@ export const useMainStore = defineStore('main', () => {
     if (payload.email) {
       state.userEmail.value = payload.email
       localStorage.setItem('userEmail', JSON.stringify(state.userEmail.value))
+      localStorage.setItem('lastLogin', JSON.stringify(new Date()))
     } else {
       state.userEmail.value = 'hutaowansheng.com'
       localStorage.setItem('userEmail', JSON.stringify(state.userEmail.value))
