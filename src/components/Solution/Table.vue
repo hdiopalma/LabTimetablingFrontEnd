@@ -128,14 +128,18 @@ const secondToTime = (seconds) => {
             v-for="i in displayCount" :key="i" />
         <table v-else class="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Semester</th>
-                    <th>Fitness</th>
-                    <th>Time Elapsed</th>
-                    <th>Gene Length</th>
-                    <th />
+                <tr class="">
+                    <th class="text-center">
+                        Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Semester</th>
+                    <th class="text-center">Fitness <br>
+                        (Nilai Pelanggaran)
+                    </th>
+                    <th class="text-center">Time Elapsed</th>
+                    <th class="text-center">Gene Length <br>
+                        (Total Jadwal)</th>
+                    <th class="text-center" />
                 </tr>
             </thead>
             <tbody class="divide-gray-200 dark:divide-slate-800">
@@ -143,7 +147,7 @@ const secondToTime = (seconds) => {
                     <td data-label="Name">
                         {{ solution.name }}
                     </td>
-                    <td data-label="Status" class="flex items-end">
+                    <td data-label="Status" class="flex items-end justify-center">
                         <PillTag :label="solution.status" :color="statusHandler(solution.status)" />
                     </td>
                     <td data-label="Semester">
