@@ -77,7 +77,7 @@ const onConfigChange = () => {
                             :icon="mdiCalendar" />
                     </FormField>
                     <FormField label="Ukuran Elitisme">
-                        <FormControl v-model="config.elitism_size" type="number" name="elitismSize" @change="onConfigChange"
+                        <FormControl v-model="config.elitism_size" type="number" name="elitismSize" @change="onConfigChange" :max="config.population_size/2" min="0"
                             :icon="mdiCalendar" />
                     </FormField>
                 </div>

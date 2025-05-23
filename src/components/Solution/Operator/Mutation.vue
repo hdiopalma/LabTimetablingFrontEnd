@@ -15,7 +15,7 @@ const solutionConfigurationStore = useSolutionConfigurationStore()
 const mutation = ref(solutionConfigurationStore.getMutation)
 const onMutationChange = () => {
   solutionConfigurationStore.setMutation(mutation.value)
-//   console.log(solutionConfigurationStore.getMutation)
+  //console.log(solutionConfigurationStore.getMutation)
 }
 
 function activeLabel(bool) {
@@ -72,7 +72,7 @@ function activeColor(bool) {
             type="number"
             min="0"
             max="1"
-            step="0.05"
+            step="0.01"
           />
         </FormField>
       </div>

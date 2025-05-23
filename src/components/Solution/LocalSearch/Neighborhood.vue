@@ -101,11 +101,11 @@ const onNeighborhoodChange = () => {
           </CardBox>
           <br>
           <FormField label="Faktor Ukuran Neighborhood">
-            <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" @change="onNeighborhoodChange" type="number"
+            <FormControl v-model="random_range_swap.neighborhood_size_factor" name="neighborhoodSizeFactor" @change="onNeighborhoodChange" type="number" max="1" min="0.01" step="0.001"
               :icon="mdiCalendar" />
           </FormField>
           <FormField label="Faktor Ukuran Range">
-            <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" @change="onNeighborhoodChange" type="number"
+            <FormControl v-model="random_range_swap.range_size_factor" name="rangeSizeFactor" @change="onNeighborhoodChange" type="number" max="1" min="0.01" step="0.001"
             :icon="mdiCalendar" />
           </FormField>
         </CardBoxComponentBody>

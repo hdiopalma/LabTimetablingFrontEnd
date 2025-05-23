@@ -79,7 +79,7 @@ function activeColor(bool) {
             type="number"
             min="0"
             max="1"
-            step="0.05"
+            step="0.01"
           />
         </FormField>
         <FormField label="Probabilitas Uniform" v-if="crossover.uniform">
@@ -91,10 +91,20 @@ function activeColor(bool) {
             type="number"
             min="0"
             max="1"
-            step="0.05"
+            step="0.01"
           />
         </FormField>
       </div>
+
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md" class="mt-4">
+                <CardBoxComponentBody>
+                    <p class="text-md text-slate-500"><b>Crossover</b> atau <b>kawin silang</b> menentukan bagaimana dua orang tua (parent) akan menghasilkan anak (child).
+                        <br>
+                        Jika dipilih lebih dari satu metode, maka metode yang dipilih akan dijalankan secara random pada tiap generasi.
+                    </p>
+                </CardBoxComponentBody>
+    </CardBox>
+
     </CardBoxComponentBody>
   </CardBox>
 </template>

@@ -33,9 +33,9 @@ const onSimulatedAnnealingChange = () => {
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Tingkat Pendinginan" class="mb-0">
-          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate" type="number" min="0"
-            max="5"
-            step="0.05"
+          <FormControl v-model="simulated_annealing.cooling_rate" name="coolingRate" type="number" min="0.01"
+            max="0.99"
+            step="0.001"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
         <FormField label="Maksimum Iterasi" class="mb-0">

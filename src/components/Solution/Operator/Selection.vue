@@ -76,9 +76,24 @@ function activeColor(bool) {
             name="tournamentSize"
             :icon="mdiCalendar"
             @change="onSelectionChange"
+            type="number"
+            min="2"
+            step="1"
+
           />
         </FormField>
       </div>
+
+      <CardBox :has-component-layout="true" :is-nested="true" :nested-level="2" rounded="rounded-md">
+                <CardBoxComponentBody>
+                    <p class="text-md text-slate-500"><b>Jenis Seleksi</b> merupakan metode yang digunakan untuk memilih individu yang akan
+                        dijadikan sebagai orang tua dalam proses reproduksi. 
+                        <br>
+                        Jika dipilih lebih dari satu metode, maka metode yang dipilih akan dijalankan secara random pada tiap generasi.
+                    </p>
+                </CardBoxComponentBody>
+    </CardBox>
+
     </CardBoxComponentBody>
   </CardBox>
 </template>
