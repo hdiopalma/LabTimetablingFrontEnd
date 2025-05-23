@@ -61,7 +61,7 @@ const props = defineProps({
     default: null
   },
   max: {
-    type: String,
+    type: [String, Number],
     default: null
   },
   required: Boolean,

@@ -65,11 +65,11 @@ export default [
         label: 'Settings',
         needAuth: true
       },
-      {
-        icon: mdiEmail,
-        label: 'Messages',
-        needAuth: true
-      },
+      // {
+      //   icon: mdiEmail,
+      //   label: 'Messages',
+      //   needAuth: true
+      // },
       {
         isDivider: true
       },
