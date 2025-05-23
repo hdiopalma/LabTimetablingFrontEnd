@@ -15,14 +15,18 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                     fitness:{
                         group_assignment_conflict: {
                             max_threshold: 3,
-                            conflict_penalty: 1,
+                            conflict_penalty: 0.5,
                         },
                         assistant_distribution: {
                             max_group_threshold: 15,
-                            max_shift_threshold: 50,
-                            group_penalty: 1,
-                            shift_penalty: 1,
-                        }
+                            max_shift_threshold: 15,
+                            group_penalty: 0.25,
+                            shift_penalty: 0.75,
+                        },
+                        timeslot_conflict: {
+                            assistant_conflict_penalty: 1,
+                            group_conflict_penalty: 0.5,
+                        },
                     },
                     operator:{
                         selection:{
