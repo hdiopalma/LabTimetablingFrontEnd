@@ -79,5 +79,15 @@ export const useSolutionStore = defineStore('solution', {
                 return error;
             }
         },
+
+        async fetchDetail(id) {
+            try {
+                const response = await this.$apiURL.get(`${apiPath}${id}/`);
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching detail:', error);
+                return error;
+            }
+        }
     },
 });
