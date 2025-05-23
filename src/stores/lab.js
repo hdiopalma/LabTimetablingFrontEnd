@@ -15,13 +15,19 @@ const header = {
 export const useLabStore = defineStore('lab', {
     state: () => ({
         items: [],
+        itemsName: [],
         itemsCount: 0,
     }),
+    
     actions: {
-
         setItems(items) {
             this.items = items;
+            this.itemsName = items.reduce((acc, item) => {
+                acc[item.id] = item.name;
+                return acc;
+            }, {});
         },
+
         setCount(count) {
             this.itemsCount = count;
             localStorage.setItem('labCount', count);
@@ -84,7 +90,12 @@ export const useLabStore = defineStore('lab', {
                 console.error('Error fetching count:', error);
                 return error.response;
             }
-        }
+        },
+
+        getLabName(id) {
+            const lab = this.items.find((l) => l.id === id);
+            return lab ? lab.name : '';
+        },
     },
 });
 

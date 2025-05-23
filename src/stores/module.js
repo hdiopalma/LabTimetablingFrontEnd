@@ -6,13 +6,19 @@ const apiPath = 'data/module/';
 export const useModuleStore = defineStore('module', {
     state: () => ({
         items: [],
+        itemsName: [],
         itemsCount: 0,
     }),
+    
     actions: {
-
         setItems(items) {
             this.items = items;
+            this.itemsName = items.reduce((acc, item) => {
+                acc[item.id] = item.name;
+                return acc;
+            }, {});
         },
+        
         setCount(count) {
             this.itemsCount = count;
             localStorage.setItem('moduleCount', count);

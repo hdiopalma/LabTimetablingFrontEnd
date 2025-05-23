@@ -13,13 +13,19 @@ const header = {
 export const useAssistantStore = defineStore('assistant', {
     state: () => ({
         items: [],
+        itemsName: [],
         itemsCount: 0,
     }),
+    
     actions: {
-
         setItems(items) {
             this.items = items;
+            this.itemsName = items.reduce((acc, item) => {
+                acc[item.id] = item.name;
+                return acc;
+            }, {});
         },
+        
         setCount(count) {
             this.itemsCount = count;
             localStorage.setItem('assistantCount', count);
