@@ -41,8 +41,8 @@ const bgImageClass = ref('bg-fixed bg-no-repeat bg-right-bottom')
 </script>
 
 <template>
-  <!-- <UnderlayImage src="/assets/hutao.png" opacity="50" size="w-1/4" index="z-0" /> -->
-  <!-- <UnderlayImage src="/assets/plum_tree.png" position="top-0 right-0" opacity="50" size="w-2/5" index="z-1" /> -->
+  <!-- <UnderlayImage src="/assets/sparkle.png" opacity="50" size="w-1/5" index="z-0" />
+  <UnderlayImage src="/assets/plum_tree.png" position="top-0 right-0" opacity="50" size="w-2/5" index="z-1" /> -->
   <div
   :class="{
     'overflow-hidden lg:overflow-visible': isAsideMobileExpanded
@@ -59,7 +59,7 @@ const bgImageClass = ref('bg-fixed bg-no-repeat bg-right-bottom')
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
         <NavBarItemPlain use-margin>
-          <FormControl placeholder="Search (ctrl+k)" ctrl-k-focus transparent borderless />
+          <!-- <FormControl placeholder="Search (ctrl+k)" ctrl-k-focus transparent borderless /> -->
         </NavBarItemPlain>
       </NavBar>
       
