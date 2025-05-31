@@ -29,22 +29,15 @@ const onTabuSearchChange = () => {
     <CardBoxComponentBody>
       <div class="grid grid-cols-1 gap-x-4 gap-y-1 xl:grid-cols-2">
         <FormField label="Ukuran Tabu List" class="mb-0">
-          <FormControl v-model="tabu_search.tabu_list_size" name="tabuListSize" :icon="mdiCalendar" @change="onTabuSearchChange" type="number" />
+          <FormControl v-model="tabu_search.tabu_size" name="tabuListSize" :icon="mdiCalendar" @change="onTabuSearchChange" type="number" />
         </FormField>
         <FormField label="Maksimum Iterasi" class="mb-0">
           <FormControl v-model="tabu_search.max_iteration" name="maxIteration" :icon="mdiCalendar" @change="onTabuSearchChange" type="number" />
         </FormField>
-        <FormField label="Maksimum Waktu (detik)" class="mb-0">
-          <FormControl v-model="tabu_search.max_time" name="maxTime" :icon="mdiCalendar" @change="onTabuSearchChange" type="number" />
+        <FormField label="Maksimum stagnasi" class="mb-0">
+          <FormControl v-model="tabu_search.max_stagnation" name="maxStagnation" :icon="mdiCalendar" @change="onTabuSearchChange" type="number" />
         </FormField>
-        <FormField label="Maksimum Iterasi Tanpa Perkembangan" class="mb-0">
-          <FormControl v-model="tabu_search.max_iteration_without_improvement" name="maxIterationWithoutImprovement" @change="onTabuSearchChange" type="number"
-            :icon="mdiCalendar" />
-        </FormField>
-        <FormField label="Maksimum Waktu Tanpa Perkembangan (detik)" class="mb-0">
-          <FormControl v-model="tabu_search.max_time_without_improvement" name="maxTimeWithoutImprovement" @change="onTabuSearchChange" type="number"
-            :icon="mdiCalendar" />
-        </FormField>
+        
       </div>
     </CardBoxComponentBody>
   </CardBox>

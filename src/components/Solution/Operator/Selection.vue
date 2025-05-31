@@ -69,7 +69,7 @@ function activeColor(bool) {
         />
       </div>
 
-      <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-1">
+      <div class="grid grid-cols-1 gap-x-4 gap-y-4 xl:grid-cols-1 mb-4">
         <FormField label="Ukuran Tournament" v-if="selection.tournament">
           <FormControl
             v-model="selection.tournament_size"

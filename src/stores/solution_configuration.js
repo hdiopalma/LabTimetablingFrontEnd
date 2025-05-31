@@ -12,6 +12,11 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                     max_iteration: 500,
                     population_size: 25,
                     elitism_size: 2,
+                    max_stagnation: 100,
+                    // hybrid parameters
+                    local_search_frequency: 10,
+                    num_local_search_candidates: 1,
+                    adaptive_local_search: false,
                     fitness:{
                         group_assignment_conflict: {
                             max_threshold: 3,
@@ -60,7 +65,7 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                     neighborhood:{
                         algorithm: 'random_swap',
                         random_swap:{
-                            neighborhood_size: 50,
+                            neighborhood_size: 10,
                         },
                         random_range_swap:{
                             neighborhood_size_factor: 0.1,
@@ -72,19 +77,14 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                         swap: false,
                     },
                     simulated_annealing:{
-                        initial_temperature: 50,
+                        initial_temperature: 500,
                         cooling_rate: 0.1,
-                        max_iteration: 25,
-                        max_time: 30,
-                        max_iteration_without_improvement: 10,
-                        max_time_without_improvement: 10,
+                        max_iteration: 250,
                     },
                     tabu_search:{
-                        tabu_list_size: 50,
-                        max_iteration: 25,
-                        max_time: 30,
-                        max_iteration_without_improvement: 20,
-                        max_time_without_improvement: 10,
+                        tabu_size: 50,
+                        max_iteration: 250,
+                        max_stagnation: 100,
                     },
                 },
             },

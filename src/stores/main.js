@@ -24,7 +24,7 @@ export const useMainStore = defineStore('main', () => {
 
   // Getters
   const getters = {
-    userAvatar: computed(() => '/aaa.png'),
+    userAvatar: computed(() => '/assets/images/img2.jpg'),
     assetImage: (file) => '/assets/' + file,
     //lastLogin
   }

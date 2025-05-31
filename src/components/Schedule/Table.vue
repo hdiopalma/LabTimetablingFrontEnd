@@ -184,4 +184,7 @@ const assistantName = (id) => assistantStore.itemsName[id] || 'Unknown Assistant
     </tbody>
   </table>
   <CardBoxComponentEmpty v-else />
+
+  
+
 </template>

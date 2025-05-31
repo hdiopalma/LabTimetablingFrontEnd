@@ -42,18 +42,6 @@ const onSimulatedAnnealingChange = () => {
           <FormControl v-model="simulated_annealing.max_iteration" name="maxIteration" type="number"
             @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
         </FormField>
-        <FormField label="Maksimum Waktu (detik)" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_time" name="maxTime" @change="onSimulatedAnnealingChange" type="number"
-            :icon="mdiCalendar" />
-        </FormField>
-        <FormField label="Maksimum Iterasi Tanpa Perkembangan" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_iteration_without_improvement" type="number"
-            name="maxIterationWithoutImprovement" @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
-        </FormField>
-        <FormField label="Maksimum Waktu Tanpa Perkembangan (detik)" class="mb-0">
-          <FormControl v-model="simulated_annealing.max_time_without_improvement" name="maxTimeWithoutImprovement" type="number"
-            @change="onSimulatedAnnealingChange" :icon="mdiCalendar" />
-        </FormField>
       </div>
     </CardBoxComponentBody>
   </CardBox>

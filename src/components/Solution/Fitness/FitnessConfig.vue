@@ -42,19 +42,21 @@ const onFitnessChange = () => {
     <br/>
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+
         <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
-            <CardBoxComponentHeader title="Target Jumlah Kelompok per Shift Asisten" />
-            <CardBoxComponentBody class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                <FormField label="Target">
-                    <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar"
-                        @change="onFitnessChange" type="number" />
+            <CardBoxComponentHeader title="Konflik Jadwal Asisten dan Kelompok" />
+            <CardBoxComponentBody>
+                <FormField label="Penalti Bentrok Asisten">
+                    <FormControl v-model="timeSlotConflict.assistant_conflict_penalty" name="assistantConflictPenalty"
+                        :icon="mdiCalendar" @change="onFitnessChange" type="number" step="0.05" />
                 </FormField>
-                <FormField label="Penalti overflow">
-                    <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty"
+                <FormField label="Penalti Bentrok Kelompok">
+                    <FormControl v-model="timeSlotConflict.group_conflict_penalty" name="groupConflictPenalty"
                         :icon="mdiCalendar" @change="onFitnessChange" type="number" step="0.05" />
                 </FormField>
             </CardBoxComponentBody>
         </CardBox>
+
 
         <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
             <CardBoxComponentHeader title="Distribusi Tugas Asisten (Per Minggu)" />
@@ -79,20 +81,22 @@ const onFitnessChange = () => {
         </CardBox>
 
         <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
-            <CardBoxComponentHeader title="Konflik Jadwal Asisten dan Kelompok" />
-            <CardBoxComponentBody>
-                <FormField label="Penalti Bentrok Asisten">
-                    <FormControl v-model="timeSlotConflict.assistant_conflict_penalty" name="assistantConflictPenalty"
-                        :icon="mdiCalendar" @change="onFitnessChange" type="number" step="0.05" />
+            <CardBoxComponentHeader title="Target Jumlah Kelompok per Shift Asisten" />
+            <CardBoxComponentBody class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+                <FormField label="Target">
+                    <FormControl v-model="groupAssignmentConflict.max_threshold" name="maxThreshold" :icon="mdiCalendar"
+                        @change="onFitnessChange" type="number" />
                 </FormField>
-                <FormField label="Penalti Bentrok Kelompok">
-                    <FormControl v-model="timeSlotConflict.group_conflict_penalty" name="groupConflictPenalty"
+                <FormField label="Penalti overflow">
+                    <FormControl v-model="groupAssignmentConflict.conflict_penalty" name="conflictPenalty"
                         :icon="mdiCalendar" @change="onFitnessChange" type="number" step="0.05" />
                 </FormField>
             </CardBoxComponentBody>
         </CardBox>
 
-        <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
+        
+
+        <!-- <CardBox :has-component-layout="true" :is-nested="true" :nested-level="1" rounded="rounded-md">
             <CardBoxComponentHeader title="Kapasitas Lab (Jika Offline) (Belum diimplementasi)" />
             <CardBoxComponentBody>
 
@@ -104,7 +108,7 @@ const onFitnessChange = () => {
                     <FormControl :icon="mdiCalendar" type="number" step="0.05" />
                 </FormField>
             </CardBoxComponentBody>
-        </CardBox>
+        </CardBox> -->
 
         
 
