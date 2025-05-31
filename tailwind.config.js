@@ -38,13 +38,18 @@ module.exports = {
       animation: {
         "fade-out": "fade-out 250ms ease-in-out",
         "fade-in": "fade-in 250ms ease-in-out",
+        // spin slowly right
+        "spin-slow": "spin 35s linear infinite",
+        "spin-slow-reverse": "spin 25s linear infinite reverse",
+        
+    
       },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
     //daisyui
-    require("daisyui"),
+    
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

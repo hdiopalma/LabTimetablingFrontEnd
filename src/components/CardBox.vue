@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: 'flex-col'
   },
+  bgColor: {
+    type: String,
+    default: 'bg-white dark:bg-slate-900'
+  },
   hasFooter: {
     type: Boolean,
     default: true},
@@ -48,6 +52,7 @@ const componentClass = computed(() => {
     props.isScrollable ? 'overflow-y-auto' : 'overflow-hidden',
     props.isNested ? `ml-${props.nestedLevel}` : '',
     props.isNested ? 'border-l-4 dark:border-slate-800' : '',
+    props.bgColor,
   ]
 
   if (props.isHoverable) {
@@ -66,7 +71,7 @@ const submit = (event) => {
   <component
     :is="isForm ? 'form' : 'div'"
     :class="componentClass"
-    class="bg-white flex"
+    class="flex"
     @submit="submit"
   >
     <slot v-if="hasComponentLayout" />

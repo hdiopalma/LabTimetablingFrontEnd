@@ -1,10 +1,14 @@
 <script setup>
 import { computed, useSlots } from 'vue'
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: null
+  },
+  labelColor: {
+    type: String,
+    default: 'text-gray-700 dark:text-slate-300'
   },
   labelFor: {
     type: String,
@@ -32,11 +36,22 @@ const wrapperClass = computed(() => {
 
   return base
 })
+
+const colorClass = computed(() => {
+  return props.labelColor
+})
 </script>
 
 <template>
   <div class="mb-6 last:mb-0">
-    <label v-if="label" :for="labelFor" class="block font-bold mb-2">{{ label }}</label>
+    <label
+      v-if="label"
+      :for="labelFor"
+      class="block font-bold mb-2"
+      :class="colorClass"
+    >
+      {{ label }}
+    </label>
     <div :class="wrapperClass">
       <slot />
     </div>

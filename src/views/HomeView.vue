@@ -8,10 +8,14 @@ import { useSemesterStore } from '@/stores/semester'
 // Icons
 import {
   mdiAccountMultiple,
+  mdiAccount,
   mdiCartOutline,
   mdiChartTimelineVariant,
   mdiMonitorCellphone,
   mdiGithub,
+  mdiBookOpen,
+  mdiDns,
+  mdiAccountCard
 } from '@mdi/js'
 
 // Components
@@ -49,7 +53,7 @@ const semesterStore = useSemesterStore()
         <CardBoxWidget
           trend="Jumlah Laboratorium"
           color="text-emerald-500"
-          :icon="mdiAccountMultiple"
+          :icon="mdiDns"
           :number="activeSemester.count.laboratory"
           label="Lab"
           :to="{ name: 'lab.index' }"
@@ -57,7 +61,7 @@ const semesterStore = useSemesterStore()
         <CardBoxWidget
           trend="Jumlah Modul"
           color="text-blue-500"
-          :icon="mdiCartOutline"
+          :icon="mdiBookOpen"
           :number="activeSemester.count.module"
           label="Modul"
           :to="{ name: 'module.index' }"
@@ -65,7 +69,7 @@ const semesterStore = useSemesterStore()
         <CardBoxWidget
           trend="Jumlah Kelompok"
           color="text-red-500"
-          :icon="mdiChartTimelineVariant"
+          :icon="mdiAccountMultiple"
           :number="activeSemester.count.group"
           label="Group"
           :to="{ name: 'group.index' }"
@@ -76,7 +80,7 @@ const semesterStore = useSemesterStore()
         <CardBoxWidget
           trend="Jumlah Peserta"
           color="text-emerald-500"
-          :icon="mdiAccountMultiple"
+          :icon="mdiAccount"
           :number="activeSemester.count.participant"
           label="Partisipan"
           :to="{ name: 'participant.index' }"
@@ -84,7 +88,7 @@ const semesterStore = useSemesterStore()
         <CardBoxWidget
           trend="Jumlah Asisten"
           color="text-blue-500"
-          :icon="mdiCartOutline"
+          :icon="mdiAccountCard"
           :number="activeSemester.count.assistant"
           label="Asisten"
           :to="{ name: 'assistant.index' }"

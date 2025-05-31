@@ -98,6 +98,7 @@ const startPlayback = () => {
 
 onMounted(() => {
     // audioContextRef = new AudioContext();
+    startPlayback();
 })
 
 </script>
