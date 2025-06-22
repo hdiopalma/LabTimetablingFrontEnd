@@ -6,6 +6,7 @@ import { useLabStore } from '@/stores/lab'
 import { useModuleStore } from '@/stores/module'
 import { useChapterStore } from '@/stores/chapter'
 import { useAssistantStore } from '@/stores/assistant'
+import { useGroupStore } from '@/stores/group'
 
 const props = defineProps({
   data: { type: Object, required: true }
@@ -15,12 +16,14 @@ const labStore = useLabStore()
 const moduleStore = useModuleStore()
 const chapterStore = useChapterStore()
 const assistantStore = useAssistantStore()
+const groupStore = useGroupStore()
 
 onMounted(() => {
   labStore.fetchItems()
   moduleStore.fetchItems()
   chapterStore.fetchItems()
   assistantStore.fetchItems()
+  groupStore.fetchItems()
 })
 
 const parentColumns = {
@@ -99,6 +102,7 @@ const labName = (id) => labStore.itemsName[id] || 'Unknown Lab'
 const moduleName = (id) => moduleStore.itemsName[id] || 'Unknown Module'
 const chapterName = (id) => chapterStore.itemsName[id] || 'Unknown Chapter'
 const assistantName = (id) => assistantStore.itemsName[id] || 'Unknown Assistant'
+const groupName = (id) => groupStore.itemsName[id] || 'Unknown Group'
 </script>
 
 <template>

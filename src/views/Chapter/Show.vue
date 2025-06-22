@@ -96,7 +96,7 @@ const goToBack = () => {
 <template>
   <div>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Lab Form" main>
+      <SectionTitleLineWithButton :icon="mdiBallotOutline" title="Chapter Form" main>
         <BaseButton @click="goToBack" target="_blank" :icon="mdiRefresh" label="Go back" color="contrast" rounded-full
           small />
       </SectionTitleLineWithButton>

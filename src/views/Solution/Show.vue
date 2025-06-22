@@ -9,11 +9,13 @@ import { useLabStore } from '@/stores/lab'
 import { useModuleStore } from '@/stores/module'
 import { useChapterStore } from '@/stores/chapter'
 import { useAssistantStore } from '@/stores/assistant'
+import { useGroupStore } from '@/stores/group'
 
 const labStore = useLabStore()
 const moduleStore = useModuleStore()
 const chapterStore = useChapterStore()
 const assistantStore = useAssistantStore()
+const groupStore = useGroupStore()
 
 //icons
 import { mdiBallotOutline, mdiAccount, mdiRefresh, mdiAccountBox, mdiFolderAccountOutline, mdiAccountMultiple } from '@mdi/js'
@@ -92,6 +94,7 @@ onMounted(async () => {
     moduleStore.fetchItems(),
     chapterStore.fetchItems(),
     assistantStore.fetchItems(),
+    groupStore.fetchItems(),
     load()
   ])
 })

@@ -138,7 +138,7 @@ const dateToReadable = (date) => {
 </script>
 
 <template>
-    <CardBoxModal v-model="isModalActive" title="Update Data Assistant" :hasFooter=false has-cancel is-scrollable>
+    <CardBoxModal v-model="isModalActive" title="Update Data Modul" :hasFooter=false has-cancel is-scrollable>
         <FormInputModule :data="dataUpdate" update @dataUpdated="isModalActive = false" />
     </CardBoxModal>
 

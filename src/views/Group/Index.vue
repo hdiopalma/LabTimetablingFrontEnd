@@ -12,7 +12,7 @@ import CardBoxComponentEmpty from '@/components/CardBoxComponentEmpty.vue'
 
 <template>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiTableBorder" title="Tables" main>
+      <SectionTitleLineWithButton :icon="mdiTableBorder" title="Groups data" main>
         <BaseButton
           href="https://github.com/justboil/admin-one-vue-tailwind"
           target="_blank"
