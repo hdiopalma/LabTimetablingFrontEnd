@@ -7,15 +7,15 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
         configuration : {
             semester: null,
             algorithm: {
-                algorithm: 'genetic_local_search',
+                algorithm: 'genetic_local_search', // Will be set dynamically
                 config: {
                     max_iteration: 500,
-                    population_size: 25,
+                    population_size: 40,
                     elitism_size: 2,
-                    max_stagnation: 100,
+                    max_stagnation: 50,
                     // hybrid parameters
-                    local_search_frequency: 10,
-                    num_local_search_candidates: 1,
+                    local_search_frequency: 15,
+                    num_local_search_candidates: 5,
                     adaptive_local_search: false,
                     fitness:{
                         group_assignment_conflict: {
@@ -23,49 +23,49 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                             conflict_penalty: 0.5,
                         },
                         assistant_distribution: {
-                            max_group_threshold: 15,
-                            max_shift_threshold: 15,
-                            group_penalty: 0.25,
-                            shift_penalty: 0.75,
+                            max_group_threshold: 9,
+                            max_shift_threshold: 5,
+                            group_penalty: 0.4,
+                            shift_penalty: 0.6,
                         },
                         timeslot_conflict: {
-                            assistant_conflict_penalty: 1,
-                            group_conflict_penalty: 0.5,
+                            assistant_conflict_penalty: 1.2,
+                            group_conflict_penalty: 0.8,
                         },
                     },
                     operator:{
                         selection:{
-                            roulette_wheel:true,
-                            tournament:false,
-                            elitism:true,
+                            roulette_wheel: false,
+                            tournament: true,
+                            elitism: true,
                             tournament_size: 5,
                         },
                         crossover:{
-                            single_point:true,
-                            two_point:false,
-                            uniform:false,
-                            crossover_probability: 0.1,
-                            uniform_probability: 0.5,
+                            single_point: false,
+                            two_point: true,
+                            uniform: false,
+                            crossover_probability: 0.8,
+                            uniform_probability: 0.2,
                         },
                         mutation:{
-                            swap:true,
-                            shift:false,
-                            repair:false,
-                            mutation_probability: 0.1,
+                            swap: true,
+                            shift: true,
+                            repair: false,
+                            mutation_probability: 0.15,
                         },
                         repair:{
-                            time_slot:true,
+                            time_slot: true,
                         }
                     }
                 },
             },
             local_search: {
-                algorithm: 'simulated_annealing',
+                algorithm: 'tabu_search', // Will be set dynamically
                 config: {
                     neighborhood:{
                         algorithm: 'random_swap',
                         random_swap:{
-                            neighborhood_size: 10,
+                            neighborhood_size: 20,
                         },
                         random_range_swap:{
                             neighborhood_size_factor: 0.1,
@@ -77,14 +77,14 @@ export const useSolutionConfigurationStore = defineStore('solutionConfiguration'
                         swap: false,
                     },
                     simulated_annealing:{
-                        initial_temperature: 500,
-                        cooling_rate: 0.1,
-                        max_iteration: 250,
+                        initial_temperature: 1000,
+                        cooling_rate: 0.9,
+                        max_iteration: 150,
                     },
                     tabu_search:{
-                        tabu_size: 50,
-                        max_iteration: 250,
-                        max_stagnation: 100,
+                        tabu_size: 40,
+                        max_iteration: 150,
+                        max_stagnation: 75,
                     },
                 },
             },
